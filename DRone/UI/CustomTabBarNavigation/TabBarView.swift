@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TabBar: View {
+    
+    @StateObject private var viewModel: TabBarViewModel = TabBarViewModel()
+    
     var body: some View {
         
         ZStack {
@@ -29,14 +32,14 @@ struct TabBar: View {
                     Spacer()
                     
                     Button(action: {
-                        AppService.shared.selectedTab.value = item.0
+                        viewModel.selectedTab = item.0
                     }, label: {
                         Image(systemName: item.1)
                             .resizable()
                             .renderingMode(.template)
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 24)
-                            .foregroundColor(AppService.shared.selectedTab.value == item.0 ? Color("accent.blue") : .white)
+                            .foregroundColor(viewModel.selectedTab == item.0 ? Color("accent.blue") : .white)
                     })
                     
                     Spacer()

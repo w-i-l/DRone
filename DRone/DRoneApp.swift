@@ -11,7 +11,7 @@ import SwiftUI
 struct DRoneApp: App {
     var body: some Scene {
         WindowGroup {
-            TabBar()
+            MainView()
         }
     }
 }
