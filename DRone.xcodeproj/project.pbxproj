@@ -8,17 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		17599F472A80DE3B00501E0A /* DRoneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F462A80DE3B00501E0A /* DRoneApp.swift */; };
-		17599F492A80DE3B00501E0A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F482A80DE3B00501E0A /* ContentView.swift */; };
 		17599F4B2A80DE3D00501E0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17599F4A2A80DE3D00501E0A /* Assets.xcassets */; };
 		17599F4E2A80DE3D00501E0A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17599F4D2A80DE3D00501E0A /* Preview Assets.xcassets */; };
+		17599F592A80DF7C00501E0A /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F582A80DF7C00501E0A /* AppService.swift */; };
+		17599F5C2A80E11300501E0A /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F5B2A80E11300501E0A /* TabBar.swift */; };
+		17599F612A80E1E400501E0A /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F602A80E1E400501E0A /* ViewModifiers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		17599F432A80DE3B00501E0A /* DRone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DRone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17599F462A80DE3B00501E0A /* DRoneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DRoneApp.swift; sourceTree = "<group>"; };
-		17599F482A80DE3B00501E0A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		17599F4A2A80DE3D00501E0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17599F4D2A80DE3D00501E0A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		17599F582A80DF7C00501E0A /* AppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
+		17599F5B2A80E11300501E0A /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		17599F602A80E1E400501E0A /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +55,14 @@
 		17599F452A80DE3B00501E0A /* DRone */ = {
 			isa = PBXGroup;
 			children = (
-				17599F462A80DE3B00501E0A /* DRoneApp.swift */,
-				17599F482A80DE3B00501E0A /* ContentView.swift */,
-				17599F4A2A80DE3D00501E0A /* Assets.xcassets */,
 				17599F4C2A80DE3D00501E0A /* Preview Content */,
+				17599F462A80DE3B00501E0A /* DRoneApp.swift */,
+				17599F4A2A80DE3D00501E0A /* Assets.xcassets */,
+				17599F542A80DF3300501E0A /* API */,
+				17599F552A80DF3800501E0A /* Service */,
+				17599F562A80DF4300501E0A /* Models */,
+				17599F572A80DF4C00501E0A /* UI */,
+				17599F5E2A80E1BF00501E0A /* Utils */,
 			);
 			path = DRone;
 			sourceTree = "<group>";
@@ -65,6 +73,60 @@
 				17599F4D2A80DE3D00501E0A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		17599F542A80DF3300501E0A /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		17599F552A80DF3800501E0A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				17599F582A80DF7C00501E0A /* AppService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		17599F562A80DF4300501E0A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		17599F572A80DF4C00501E0A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				17599F5A2A80E10300501E0A /* CustomTabBarNavigation */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		17599F5A2A80E10300501E0A /* CustomTabBarNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				17599F5B2A80E11300501E0A /* TabBar.swift */,
+			);
+			path = CustomTabBarNavigation;
+			sourceTree = "<group>";
+		};
+		17599F5E2A80E1BF00501E0A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				17599F5F2A80E1CF00501E0A /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		17599F5F2A80E1CF00501E0A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				17599F602A80E1E400501E0A /* ViewModifiers.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +199,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17599F492A80DE3B00501E0A /* ContentView.swift in Sources */,
+				17599F612A80E1E400501E0A /* ViewModifiers.swift in Sources */,
+				17599F592A80DF7C00501E0A /* AppService.swift in Sources */,
 				17599F472A80DE3B00501E0A /* DRoneApp.swift in Sources */,
+				17599F5C2A80E11300501E0A /* TabBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
