@@ -53,7 +53,7 @@ struct HomeView: View {
                             
                             Spacer()
                             
-                            Image(systemName: viewModel.locationWeatherModel.weatherIcons)
+                            Image(systemName: viewModel.locationWeatherModel.weatherIcon)
                                 .resizable()
                                 .renderingMode(.template)
                                 .foregroundColor(.white)
@@ -117,7 +117,7 @@ struct HomeView: View {
                         HStack(spacing: 15) {
                             ForEach( [
                                 ("Wind \ndirection", viewModel.locationWeatherModel.windDirection),
-                                ("Satellites \navailible", "16"),
+                                ("Satellites \navailible", "\(viewModel.locationWeatherModel.satellites)"),
                                 ("Visibility", "\(viewModel.locationWeatherModel.visibility) km")
                             ], id: \.0) { item in
                                 

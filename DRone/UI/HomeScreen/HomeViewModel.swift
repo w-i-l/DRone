@@ -16,7 +16,7 @@ class HomeViewModel : BaseViewModel {
         temperature: 0,
         sunset: "-",
         weatherStatus: "-",
-        weatherIcons: "",
+        weatherIcon: "",
         precipitaionProbability: 0,
         windSpeed: 0,
         windDirection: "-",
@@ -29,7 +29,7 @@ class HomeViewModel : BaseViewModel {
         super.init()
         
         if let location = LocationService.shared.locationManager.location?.coordinate{
-            print(location)
+            
             WeatherService.shared.getWeatherFor(location: location)
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
@@ -41,7 +41,7 @@ class HomeViewModel : BaseViewModel {
                 }
                 .store(in: &bag)
         } else {
-            print("Failed to get location, location: \(LocationService.shared.locationManager.location?.coordinate)")
+            print("Failed to get location, location: \(String(describing: LocationService.shared.locationManager.location?.coordinate))")
         }
 
     }
