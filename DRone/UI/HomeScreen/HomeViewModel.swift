@@ -29,6 +29,13 @@ class HomeViewModel : BaseViewModel {
     
     override init() {
         super.init()
+        updateUI()
+  
+    }
+    
+    func updateUI() {
+        
+        self.fetchingState = .loading
         
         if let location = LocationService.shared.locationManager.location?.coordinate{
             
@@ -59,17 +66,6 @@ class HomeViewModel : BaseViewModel {
         } else {
             print("Failed to get location, location: \(String(describing: LocationService.shared.locationManager.location?.coordinate))")
         }
-        
-        LocationService.shared.getAdressForCurrentLocation()
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { value in
-                print(value)
-            }
-            .store(in: &bag)
-
-        
     }
     
 }

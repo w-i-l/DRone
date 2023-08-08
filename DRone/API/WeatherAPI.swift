@@ -114,11 +114,11 @@ class WeatherAPI {
                     let arrayIndex = Int(formattedTime)
                     guard let arrayIndex else { promise(.failure(NSError(domain: "Can't convert String to Int", code: 2048))); return }
                     
-                    // get the sunset hour
+                    // get the local sunset hour
                     let dateTimeString = json["daily"]["sunset"][0].stringValue
-                    let startIndex = dateTimeString.index(dateTimeString.startIndex, offsetBy: 11)
-                    let endIndex = dateTimeString.index(dateTimeString.startIndex, offsetBy: 15)
-                    let hourMinutes = String(dateTimeString[startIndex...endIndex])
+                    dateFormatter.dateFormat = "HH:MM"
+                    let sunsetTime = dateFormatter.string(from: ISO8601DateFormatter().date(from: dateTimeString + ":00+0:00")!)
+                    let hourMinutes = sunsetTime
                     
                     let weatherInfos = self.getWeatherImageFromWeatherCode(code: json["hourly"]["weathercode"][arrayIndex].intValue)
                     

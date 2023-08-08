@@ -15,8 +15,8 @@ struct HomeView: View {
         VStack {
             switch viewModel.fetchingState {
             case .loading :
-                ProgressView()
-                    .tint(Color.white)
+                
+                HomeViewShimmer()
                 
             case .loaded:
                 ScrollView(showsIndicators: false) {
@@ -198,6 +198,11 @@ struct HomeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
         )
+        .refreshable {
+            if viewModel.fetchingState != .loading {
+                viewModel.updateUI()
+            }
+        }
         
         
     }
