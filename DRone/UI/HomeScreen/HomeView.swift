@@ -25,12 +25,12 @@ struct HomeView: View {
                         // current location
                         HStack(spacing: 0) {
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("Bucharest, RO")
+                                Text(viewModel.locationWeatherModel.mainLocation)
                                     .font(.abel(size: 32))
                                     .foregroundColor(.white)
                                     .underline(true)
                                 
-                                Text("Calea Victoriei, Nr. 18, 153340")
+                                Text(viewModel.locationWeatherModel.secondaryLocation)
                                     .font(.abel(size: 20))
                                     .foregroundColor(Color("subtitle.gray"))
                             }

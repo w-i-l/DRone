@@ -17,4 +17,6 @@ struct LocationWeatherModel {
     let windDirection: String
     let visibility: Int
     let satellites: Int
+    let mainLocation: String
+    let secondaryLocation: String
 }

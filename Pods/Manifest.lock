@@ -1,0 +1,16 @@
+PODS:
+  - GooglePlaces (8.1.0)
+
+DEPENDENCIES:
+  - GooglePlaces (= 8.1.0)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - GooglePlaces
+
+SPEC CHECKSUMS:
+  GooglePlaces: 6a219644272d9c0f40d0b9ef2f111bfb2043bafc
+
+PODFILE CHECKSUM: 685eb994caa2ff050b44ce6ebb06b29302c74ce4
+
+COCOAPODS: 1.12.1

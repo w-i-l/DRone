@@ -131,7 +131,9 @@ class WeatherAPI {
                         windSpeed: json["hourly"]["windspeed_80m"][arrayIndex].intValue,
                         windDirection: self.getWindDirectionFromDegrees(windDirection: json["hourly"]["winddirection_80m"][arrayIndex].intValue),
                         visibility: Int(json["hourly"]["visibility"][arrayIndex].intValue / 1000),
-                        satellites: Int.random(in: 0..<20)
+                        satellites: Int.random(in: 0..<20),
+                        mainLocation: "",
+                        secondaryLocation: ""
                     )
                     promise(.success(weather))
                     
