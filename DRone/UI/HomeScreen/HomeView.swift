@@ -192,7 +192,7 @@ struct HomeView: View {
                 
                 
             case .failure :
-                Text("Failed to fetch data")
+                HomeViewFailed(viewModel: viewModel)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

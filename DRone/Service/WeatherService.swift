@@ -11,14 +11,49 @@ import CoreLocation
 
 class WeatherService: BaseViewModel {
     static let shared = WeatherService()
-    private var cachedCurrentLocationWeather: LocationWeatherModel?
-    private var lastTimeCached: Date?
+    private lazy var cachedCurrentLocationWeather = ReactiveData { [weak self] in
+        WeatherAPI.shared.getWeatherFor(location: LocationService.shared.locationManager.location!.coordinate)
+            .eraseToAnyPublisher()
+    }
+//    private var cachedCurrentLocationWeather: LocationWeatherModel?
+    private var lastTimeCached: Date? = nil
     
     private override init() {}
     
     func getWeatherFor(location: CLLocationCoordinate2D) -> AnyPublisher<LocationWeatherModel, Error> {
-        WeatherAPI.shared.getWeatherFor(location: location)
-           .eraseToAnyPublisher()
+//
+//        // if we cached in past
+//        // and if it passes 1h mark
+//        if lastTimeCached == nil ||
+//            cachedCurrentLocationWeather == nil ||
+//            Date.now.timeIntervalSince(lastTimeCached!) >= 3600 {
+//
+//                //caching
+//                lastTimeCached = Date.now
+//
+//                WeatherAPI.shared.getWeatherFor(location: location)
+//                    .sink(receiveCompletion: { _ in
+//
+//                    }, receiveValue: { value in
+//                        self.cachedCurrentLocationWeather = value
+//                    })
+//                    .store(in: &bag)
+//
+//                // we fecth the data again
+//                return WeatherAPI.shared.getWeatherFor(location: location)
+//                   .eraseToAnyPublisher()
+//        } else {
+//
+//            //caching
+//            lastTimeCached = Date.now
+//
+//            return Future<LocationWeatherModel, Error> { [weak self] promise in
+//                promise(.success((self?.cachedCurrentLocationWeather)!))
+//            }
+//            .eraseToAnyPublisher()
+//        }
+        
+        cachedCurrentLocationWeather.getPublisher()
     }
     
     func getWeatherVerdict(locationWeatherModel: LocationWeatherModel) -> (String, [Color]) {

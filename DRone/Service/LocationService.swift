@@ -11,6 +11,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     static private let GOOGLE_PLACES_API_KEY = "AIzaSyDesWSxP-UzdOqphqUQTF42thMrm0nqyhI"
     static private let GOOGLE_GEO_API_KEY = "AIzaSyCYSsg0ZYwdf86R_7N3vW0O6A-D8y-4qpk"
+    
     static let shared = LocationService()
     
     var locationManager = CLLocationManager()
@@ -57,6 +58,15 @@ class LocationService: NSObject, CLLocationManagerDelegate {
                 do{
                     let json = try JSON(data: data!)
                     
+                    // for the plus_code regions
+                    guard !json["results"][0]["types"].arrayValue.contains("plus_code") else {
+                        promise(.success((
+                            mainAdress: json["results"][0]["formatted_address"].stringValue,
+                            secondaryAdress: ""
+                        )))
+                        return
+                    }
+                    
                     // get the first array
                     let adressComponents = json["results"][0]["address_components"].arrayValue
                     
@@ -65,8 +75,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
                     let shortCountry = adressComponents.first { $0["types"].arrayValue.contains("country")}!["short_name"].stringValue
                     
                     // for some location we can't fetch the street
-                    if let street = adressComponents.first { $0["types"].arrayValue.contains("route")}{
-                        if let streetNumber = adressComponents.first { $0["types"].arrayValue.contains("street_number")}{
+                    if let street = adressComponents.first(where: { $0["types"].arrayValue.contains("route")}){
+                        if let streetNumber = adressComponents.first(where: { $0["types"].arrayValue.contains("street_number")}){
                             promise(.success((
                                 mainAdress: cityName + ", " + shortCountry,
                                 secondaryAdress: street["long_name"].stringValue + ", " + streetNumber["long_name"].stringValue
