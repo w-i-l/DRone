@@ -32,6 +32,9 @@
 		179D6AD32A839174005700B8 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD22A839174005700B8 /* Strings.swift */; };
 		179D6AD52A83938C005700B8 /* HomeViewLoaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD42A83938C005700B8 /* HomeViewLoaded.swift */; };
 		179D6AD72A8393F0005700B8 /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD62A8393F0005700B8 /* LocationAPI.swift */; };
+		179D6ADA2A8398A7005700B8 /* WeatherPrognosisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD92A8398A7005700B8 /* WeatherPrognosisView.swift */; };
+		179D6ADC2A83991C005700B8 /* WeatherPrognosisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6ADB2A83991C005700B8 /* WeatherPrognosisViewModel.swift */; };
+		179D6ADF2A83C75C005700B8 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6ADE2A83C75C005700B8 /* LoaderView.swift */; };
 		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
 		B81664878F5A4489154D1E4A /* libPods-DRone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30822F99450DF6E7667D8AD3 /* libPods-DRone.a */; };
@@ -63,6 +66,9 @@
 		179D6AD22A839174005700B8 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		179D6AD42A83938C005700B8 /* HomeViewLoaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoaded.swift; sourceTree = "<group>"; };
 		179D6AD62A8393F0005700B8 /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
+		179D6AD92A8398A7005700B8 /* WeatherPrognosisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPrognosisView.swift; sourceTree = "<group>"; };
+		179D6ADB2A83991C005700B8 /* WeatherPrognosisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPrognosisViewModel.swift; sourceTree = "<group>"; };
+		179D6ADE2A83C75C005700B8 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		17F796442A82829F005E4135 /* HomeViewLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoading.swift; sourceTree = "<group>"; };
 		17F796462A8283AE005E4135 /* CardShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShimmer.swift; sourceTree = "<group>"; };
 		30822F99450DF6E7667D8AD3 /* libPods-DRone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DRone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,8 +163,10 @@
 		17599F572A80DF4C00501E0A /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				179D6ADD2A83C749005700B8 /* LoaderView */,
 				17599F712A80FBF700501E0A /* MainView */,
 				17599F622A80E93600501E0A /* HomeScreen */,
+				179D6AD82A83978E005700B8 /* WeatherPrognossisScreen */,
 				17599F5A2A80E10300501E0A /* CustomTabBarNavigation */,
 			);
 			path = UI;
@@ -221,6 +229,23 @@
 				17599F732A80FC0900501E0A /* MainViewModel.swift */,
 			);
 			path = MainView;
+			sourceTree = "<group>";
+		};
+		179D6AD82A83978E005700B8 /* WeatherPrognossisScreen */ = {
+			isa = PBXGroup;
+			children = (
+				179D6AD92A8398A7005700B8 /* WeatherPrognosisView.swift */,
+				179D6ADB2A83991C005700B8 /* WeatherPrognosisViewModel.swift */,
+			);
+			path = WeatherPrognossisScreen;
+			sourceTree = "<group>";
+		};
+		179D6ADD2A83C749005700B8 /* LoaderView */ = {
+			isa = PBXGroup;
+			children = (
+				179D6ADE2A83C75C005700B8 /* LoaderView.swift */,
+			);
+			path = LoaderView;
 			sourceTree = "<group>";
 		};
 		7339BFCAA6BE72838CDE7180 /* Frameworks */ = {
@@ -365,6 +390,8 @@
 			files = (
 				17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */,
 				17599F6E2A80EFD800501E0A /* Fonts.swift in Sources */,
+				179D6ADC2A83991C005700B8 /* WeatherPrognosisViewModel.swift in Sources */,
+				179D6ADA2A8398A7005700B8 /* WeatherPrognosisView.swift in Sources */,
 				179D6AD32A839174005700B8 /* Strings.swift in Sources */,
 				17599F702A80FB7400501E0A /* MainView.swift in Sources */,
 				17599F612A80E1E400501E0A /* ViewModifiers.swift in Sources */,
@@ -383,6 +410,7 @@
 				179D6AD52A83938C005700B8 /* HomeViewLoaded.swift in Sources */,
 				172D63DF2A81137B006621F4 /* WeatherAPI.swift in Sources */,
 				179D6AD72A8393F0005700B8 /* LocationAPI.swift in Sources */,
+				179D6ADF2A83C75C005700B8 /* LoaderView.swift in Sources */,
 				17599F762A80FD0600501E0A /* TabBarViewModel.swift in Sources */,
 				17599F5C2A80E11300501E0A /* TabBarView.swift in Sources */,
 			);

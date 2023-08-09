@@ -61,6 +61,11 @@ class WeatherService: BaseViewModel {
         //        cachedCurrentLocationWeather.getPublisher()
     }
     
+    func getWeatherForLocationWeekPrognosis(location: CLLocationCoordinate2D) -> AnyPublisher<[LocationWeatherModel], Error> {
+        WeatherAPI.shared.getWeatherForLocationWeekPrognosis(location: location)
+            .eraseToAnyPublisher()
+    }
+    
     func getWeatherVerdict(locationWeatherModel: LocationWeatherModel) -> (String, [Color]) {
         if locationWeatherModel.precipitaionProbability <= 10 &&
             locationWeatherModel.satellites >= 12 &&

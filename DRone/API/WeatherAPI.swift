@@ -147,4 +147,83 @@ class WeatherAPI {
             dataTask.resume()
         }
     }
+    
+    func getWeatherForLocationWeekPrognosis(location: CLLocationCoordinate2D) -> Future<[LocationWeatherModel], Error> {
+        Future<[LocationWeatherModel], Error> { promise in
+            
+            var urlComponents = URLComponents(string: "https://api.open-meteo.com/v1/forecast")
+            urlComponents?.queryItems = [
+                URLQueryItem(name: "latitude", value: "\(location.latitude)"),
+                URLQueryItem(name: "longitude", value: "\(location.longitude)"),
+                URLQueryItem(name: "hourly", value: "temperature_2m,precipitation_probability,weathercode,visibility,windspeed_80m,winddirection_80m"),
+                URLQueryItem(name: "daily", value: "sunset"),
+                URLQueryItem(name: "timezone", value: "GMT")
+                
+            ]
+            
+            var urlRequest = URLRequest(url: (urlComponents?.url!)!)
+            urlRequest.httpMethod = "GET"
+            
+            let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, reponse, error in
+                
+                guard error == nil else { promise(.failure(error!)); return }
+                guard let data else { promise(.failure(error!)); return }
+                
+                do {
+                    let json = try JSON(data: data)
+                    
+                    var arrayToReturn = [LocationWeatherModel]()
+                    
+                    // take the current date
+                    let currentTime = Date()
+                    
+                    // iterate for every day of the week
+                    for dayOfWeek in 0..<7 {
+
+                        // take only the hour and convert to local hour
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "HH"
+                        dateFormatter.timeZone = TimeZone.current
+                        
+                        // convert to take array index
+                        // ex. 10:00:00 would be the 10th element in array
+                        let formattedTime = dateFormatter.string(from: currentTime)
+                        let initialArrayIndex = Int(formattedTime)
+                        guard let initialArrayIndex else { promise(.failure(NSError(domain: "Can't convert String to Int", code: 2048))); return }
+                        let arrayIndex = initialArrayIndex + (24 * dayOfWeek)
+
+                        // get the local sunset hour
+                        let dateTimeString = json["daily"]["sunset"][dayOfWeek].stringValue
+                        dateFormatter.dateFormat = "HH:MM"
+                        let sunsetTime = dateFormatter.string(from: ISO8601DateFormatter().date(from: dateTimeString + ":00+0:00")!)
+                        let hourMinutes = sunsetTime
+//
+                        let weatherInfos = self.getWeatherImageFromWeatherCode(code: json["hourly"]["weathercode"][arrayIndex].intValue)
+
+                        let weather = LocationWeatherModel(
+                            temperature: json["hourly"]["temperature_2m"][arrayIndex].intValue,
+                            sunset: hourMinutes,
+                            weatherStatus: weatherInfos.weatherStatus,
+                            weatherIcon: weatherInfos.weatherIcon ,
+                            precipitaionProbability: json["hourly"]["precipitation_probability"][arrayIndex].intValue,
+                            windSpeed: json["hourly"]["windspeed_80m"][arrayIndex].intValue,
+                            windDirection: self.getWindDirectionFromDegrees(windDirection: json["hourly"]["winddirection_80m"][arrayIndex].intValue),
+                            visibility: Int(json["hourly"]["visibility"][arrayIndex].intValue / 1000),
+                            satellites: Int.random(in: 0..<20),
+                            mainLocation: "",
+                            secondaryLocation: ""
+                        )
+                        
+                        arrayToReturn.append(weather)
+                    }
+                    
+                    promise(.success(arrayToReturn))
+                    
+                } catch (let error) {
+                    promise(.failure(error))
+                }
+            }
+            dataTask.resume()
+        }
+    }
 }

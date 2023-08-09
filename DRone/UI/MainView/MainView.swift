@@ -15,7 +15,10 @@ struct MainView: View {
         NavigationStack{
             ZStack{
                 
-                HomeView(viewModel: HomeViewModel())
+                HomeView(
+                    viewModel: HomeViewModel(),
+                    isShowingAsChild: false
+                )
                     
                 
                 VStack {

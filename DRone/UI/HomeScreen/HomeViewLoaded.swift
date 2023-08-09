@@ -9,7 +9,10 @@ import SwiftUI
 
 struct HomeViewLoaded: View {
     
+    @Environment(\.dismiss) private var dismiss
     @ObservedObject var viewModel: HomeViewModel
+    
+    let isShowingAsChild: Bool
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -145,36 +148,38 @@ struct HomeViewLoaded: View {
                 .frame(height: UIScreen.main.bounds.height / 8)
                 .padding(.top, 20)
                 
-                // see more button
-                NavigationLink {
-                    
-                } label: {
-                    ZStack(alignment: .trailing) {
-                        Color("accent.blue")
-                            .cornerRadius(12)
-                        HStack {
+                if !isShowingAsChild {
+                    // see more button
+                    NavigationLink {
+                        WeatherPrognosisView(viewModel: WeatherPrognosisViewModel())
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        ZStack(alignment: .trailing) {
+                            Color("accent.blue")
+                                .cornerRadius(12)
+                            HStack {
+                                
+                                Text("See more infos ")
+                                    .font(.abel(size: 20))
+                                    .foregroundColor(Color("background.first"))
+                                    .padding(.vertical, 12)
+                                
+                                
+                                
+                                Image(systemName: "arrow.forward")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color("background.first"))
+                                    .frame(width: 14, height: 14)
+                                    .padding(.trailing, 20)
+                            }
                             
-                            Text("See more infos ")
-                                .font(.abel(size: 20))
-                                .foregroundColor(Color("background.first"))
-                                .padding(.vertical, 12)
-                            
-                            
-                            
-                            Image(systemName: "arrow.forward")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Color("background.first"))
-                                .frame(width: 14, height: 14)
-                                .padding(.trailing, 20)
                         }
-                        
                     }
+                    .frame(width: 180)
+                    .frame(height: 55)
+                    .padding(.top, 30)
                 }
-                .frame(width: 180)
-                .frame(height: 55)
-                .padding(.top, 30)
-                
                 
                 Spacer()
                 
@@ -182,12 +187,38 @@ struct HomeViewLoaded: View {
             .padding(.bottom, UIScreen.main.bounds.height / 11.3)
         }
         .padding([.horizontal, .bottom], 20)
+        .toolbar( isShowingAsChild ? .visible : .hidden)
+        .toolbar {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                
+                Button {
+                    dismiss()
+                }
+            label: {
+                HStack(spacing: 14) {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 14, height: 14)
+                        .scaledToFit()
+                        .foregroundColor(.white)
+                    
+                    
+                    Text("Home")
+                        .font(.abel(size: 24))
+                        .foregroundColor(.white)
+                }
+            }}
+        }
         
     }
 }
 
 struct HomeViewLoaded_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewLoaded(viewModel: HomeViewModel())
+        HomeViewLoaded(
+            viewModel: HomeViewModel(),
+            isShowingAsChild: true
+        )
     }
 }

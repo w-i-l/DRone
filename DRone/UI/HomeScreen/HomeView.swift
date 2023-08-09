@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject var viewModel: HomeViewModel
+    let isShowingAsChild: Bool
     
     var body: some View {
         VStack {
@@ -19,7 +20,10 @@ struct HomeView: View {
                 HomeViewLoading()
                 
             case .loaded:
-                HomeViewLoaded(viewModel: viewModel)
+                HomeViewLoaded(
+                    viewModel: viewModel,
+                    isShowingAsChild: isShowingAsChild
+                )
                 
             case .failure :
                 HomeViewFailed(viewModel: viewModel)
@@ -40,6 +44,9 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(viewModel: HomeViewModel())
+        HomeView(
+            viewModel: HomeViewModel(),
+            isShowingAsChild: true
+        )
     }
 }

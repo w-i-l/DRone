@@ -33,6 +33,11 @@ class HomeViewModel : BaseViewModel {
   
     }
     
+    init(locationWeatherModel: LocationWeatherModel) {
+        self.locationWeatherModel = locationWeatherModel
+        self.fetchingState = .loaded
+    }
+    
     func updateUI() {
         
         self.fetchingState = .loading
