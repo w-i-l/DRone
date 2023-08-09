@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeViewShimmer: View {
+struct HomeViewLoading: View {
     
     private let width = UIScreen.main.bounds.width
     private let height = UIScreen.main.bounds.height
@@ -177,6 +177,6 @@ struct HomeViewShimmer: View {
 
 struct HomeViewShimmer_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewShimmer()
+        HomeViewLoading()
     }
 }

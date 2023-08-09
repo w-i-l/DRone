@@ -29,7 +29,10 @@
 		17599F762A80FD0600501E0A /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F752A80FD0600501E0A /* TabBarViewModel.swift */; };
 		179D6ACF2A837A33005700B8 /* HomeViewFailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6ACE2A837A33005700B8 /* HomeViewFailed.swift */; };
 		179D6AD12A83882B005700B8 /* ReactiveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD02A83882B005700B8 /* ReactiveData.swift */; };
-		17F796452A82829F005E4135 /* HomeViewShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewShimmer.swift */; };
+		179D6AD32A839174005700B8 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD22A839174005700B8 /* Strings.swift */; };
+		179D6AD52A83938C005700B8 /* HomeViewLoaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD42A83938C005700B8 /* HomeViewLoaded.swift */; };
+		179D6AD72A8393F0005700B8 /* LocationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AD62A8393F0005700B8 /* LocationAPI.swift */; };
+		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
 		B81664878F5A4489154D1E4A /* libPods-DRone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30822F99450DF6E7667D8AD3 /* libPods-DRone.a */; };
 /* End PBXBuildFile section */
@@ -57,7 +60,10 @@
 		17599F752A80FD0600501E0A /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		179D6ACE2A837A33005700B8 /* HomeViewFailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFailed.swift; sourceTree = "<group>"; };
 		179D6AD02A83882B005700B8 /* ReactiveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveData.swift; sourceTree = "<group>"; };
-		17F796442A82829F005E4135 /* HomeViewShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewShimmer.swift; sourceTree = "<group>"; };
+		179D6AD22A839174005700B8 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		179D6AD42A83938C005700B8 /* HomeViewLoaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoaded.swift; sourceTree = "<group>"; };
+		179D6AD62A8393F0005700B8 /* LocationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAPI.swift; sourceTree = "<group>"; };
+		17F796442A82829F005E4135 /* HomeViewLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoading.swift; sourceTree = "<group>"; };
 		17F796462A8283AE005E4135 /* CardShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShimmer.swift; sourceTree = "<group>"; };
 		30822F99450DF6E7667D8AD3 /* libPods-DRone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DRone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C0093FF0799CD9F1874A0C9 /* Pods-DRone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DRone.release.xcconfig"; path = "Target Support Files/Pods-DRone/Pods-DRone.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				172D63DE2A81137B006621F4 /* WeatherAPI.swift */,
+				179D6AD62A8393F0005700B8 /* LocationAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -181,6 +188,7 @@
 			children = (
 				17599F602A80E1E400501E0A /* ViewModifiers.swift */,
 				17599F6D2A80EFD800501E0A /* Fonts.swift */,
+				179D6AD22A839174005700B8 /* Strings.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -189,7 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				17599F632A80E94D00501E0A /* HomeView.swift */,
-				17F796442A82829F005E4135 /* HomeViewShimmer.swift */,
+				179D6AD42A83938C005700B8 /* HomeViewLoaded.swift */,
+				17F796442A82829F005E4135 /* HomeViewLoading.swift */,
 				179D6ACE2A837A33005700B8 /* HomeViewFailed.swift */,
 				17F796462A8283AE005E4135 /* CardShimmer.swift */,
 				17599F652A80E96D00501E0A /* HomeViewModel.swift */,
@@ -354,8 +363,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17F796452A82829F005E4135 /* HomeViewShimmer.swift in Sources */,
+				17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */,
 				17599F6E2A80EFD800501E0A /* Fonts.swift in Sources */,
+				179D6AD32A839174005700B8 /* Strings.swift in Sources */,
 				17599F702A80FB7400501E0A /* MainView.swift in Sources */,
 				17599F612A80E1E400501E0A /* ViewModifiers.swift in Sources */,
 				17599F662A80E96D00501E0A /* HomeViewModel.swift in Sources */,
@@ -370,7 +380,9 @@
 				172D63E12A8113E5006621F4 /* LocationWeatherModel.swift in Sources */,
 				17599F642A80E94D00501E0A /* HomeView.swift in Sources */,
 				179D6ACF2A837A33005700B8 /* HomeViewFailed.swift in Sources */,
+				179D6AD52A83938C005700B8 /* HomeViewLoaded.swift in Sources */,
 				172D63DF2A81137B006621F4 /* WeatherAPI.swift in Sources */,
+				179D6AD72A8393F0005700B8 /* LocationAPI.swift in Sources */,
 				17599F762A80FD0600501E0A /* TabBarViewModel.swift in Sources */,
 				17599F5C2A80E11300501E0A /* TabBarView.swift in Sources */,
 			);
