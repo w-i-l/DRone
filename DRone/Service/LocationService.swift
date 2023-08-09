@@ -50,6 +50,13 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         
     }
     
+    func getAdressForLocation(location: CLLocationCoordinate2D) -> AnyPublisher<(mainAdress: String, secondaryAdress: String), Error> {
+
+        return LocationAPI.shared.getAdressForCurrentLocation(location: location)
+            .eraseToAnyPublisher()
+        
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedAlways:
@@ -86,6 +93,14 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    func getPredictionsFromInput(textSearched: String) -> AnyPublisher<[(addressName: String, addressID: String)], Error> {
+        LocationAPI.shared.getPredictionsFromInput(textSearched: textSearched)
+            .eraseToAnyPublisher()
+    }
     
+    func getCoordinatesFromLocationID(ID: String) -> AnyPublisher<CLLocationCoordinate2D, Error> {
+        LocationAPI.shared.getCoordinatesFromLocationID(ID: ID)
+            .eraseToAnyPublisher()
+    }
     
 }

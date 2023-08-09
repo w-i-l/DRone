@@ -82,4 +82,78 @@ class LocationAPI {
         .eraseToAnyPublisher()
         
     }
+    
+    func getPredictionsFromInput(textSearched: String) -> Future<[(addressName: String, addressID: String)], Error> {
+        Future<[(addressName: String, addressID: String)], Error> { promise in
+            
+            var urlComponents = URLComponents(string: "https://maps.googleapis.com/maps/api/place/autocomplete/json")
+            urlComponents?.queryItems = [
+                URLQueryItem(name: "input", value: textSearched),
+                URLQueryItem(name: "types", value: "(regions)"),
+                URLQueryItem(name: "key", value: LocationAPI.GOOGLE_GEO_API_KEY)
+            ]
+            
+            var urlRequest = URLRequest(url: (urlComponents?.url!)!)
+            urlRequest.httpMethod = "GET"
+            
+            let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                
+                guard error == nil else { promise(.failure(error!)); return }
+                guard let data else { return }
+                
+                do {
+                    let json = try JSON(data: data)
+                    
+                    var arrayToReturn = [(addressName: String, addressID: String)]()
+                    
+                    for prediction in json["predictions"].arrayValue {
+                        arrayToReturn.append((
+                            addressName: prediction["description"].stringValue,
+                            addressID: prediction["place_id"].stringValue
+                        ))
+                    }
+                    
+                    promise(.success(arrayToReturn))
+                    
+                } catch (let error) {
+                    promise(.failure(error))
+                }
+            }
+            
+            dataTask.resume()
+        }
+    }
+
+    func getCoordinatesFromLocationID(ID: String) -> Future<CLLocationCoordinate2D, Error> {
+        Future<CLLocationCoordinate2D, Error> { promise in
+            
+            var urlComponents = URLComponents(string: "https://maps.googleapis.com/maps/api/geocode/json")
+            urlComponents?.queryItems = [
+                URLQueryItem(name: "place_id", value: ID),
+                URLQueryItem(name: "key", value: LocationAPI.GOOGLE_GEO_API_KEY)
+            ]
+            
+            var urlRequest = URLRequest(url: urlComponents!.url!)
+            urlRequest.httpMethod = "GET"
+            
+            let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                guard error == nil else { promise(.failure(error!)); return }
+                guard let data else { return }
+                
+                do {
+                    let json = try JSON(data: data)["results"][0]["geometry"]["location"]
+                    
+                    promise(.success(CLLocationCoordinate2D(
+                        latitude: json["lat"].doubleValue,
+                        longitude: json["lng"].doubleValue
+                    )))
+                    
+                } catch (let error) {
+                    promise(.failure(error))
+                }
+            }
+            
+            dataTask.resume()
+        }
+    }
 }

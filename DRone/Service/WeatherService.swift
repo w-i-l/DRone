@@ -27,7 +27,7 @@ class WeatherService: BaseViewModel {
         // and if it passes 1h mark
         if lastTimeCached == nil ||
             cachedCurrentLocationWeather == nil ||
-            Date.now.timeIntervalSince(lastTimeCached!) >= 3600 {
+            Date.now.timeIntervalSince(lastTimeCached!) >= 1 {
             
             //caching
             lastTimeCached = Date.now

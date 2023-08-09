@@ -19,21 +19,27 @@ struct HomeViewLoaded: View {
             VStack(spacing: 0) {
                 
                 // current location
-                HStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 20))
-                            .font(.abel(size: 32))
-                            .foregroundColor(.white)
-                            .underline(true)
+                NavigationLink {
+                    SearchingView(viewModel: SearchingViewModel(adressToFetchLocation: $viewModel.addressToFetchLocation))
+                        .navigationBarBackButtonHidden(true)
+                } label: {
+                    HStack(spacing: 0) {
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 20))
+                                .font(.abel(size: 32))
+                                .foregroundColor(.white)
+                                .underline(!isShowingAsChild)
+                            
+                            Text(viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30))
+                                .font(.abel(size: 20))
+                                .foregroundColor(Color("subtitle.gray"))
+                        }
                         
-                        Text(viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30))
-                            .font(.abel(size: 20))
-                            .foregroundColor(Color("subtitle.gray"))
+                        Spacer()
+                        
                     }
-                    
-                    Spacer()
-                    
                 }
+                .disabled(isShowingAsChild)
                 
                 // current temperature
                 HStack(spacing: 0) {
