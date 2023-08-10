@@ -21,7 +21,11 @@ class WeatherPrognosisViewModel: BaseViewModel {
         let secondsInDay = 24 * secondsInHour
         daysOfWeek = (0..<7)
             .map {
-                (Date.now + TimeInterval(secondsInDay * $0)).formatted(.dateTime.weekday(.wide))
+                
+                let dateFormmater = DateFormatter()
+                dateFormmater.dateFormat = "EEEE"
+                
+                return dateFormmater.string(from: Date() + TimeInterval(secondsInDay * $0))
             }
         
         super.init()

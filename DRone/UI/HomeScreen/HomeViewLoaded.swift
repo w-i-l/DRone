@@ -193,29 +193,30 @@ struct HomeViewLoaded: View {
             .padding(.bottom, UIScreen.main.bounds.height / 11.3)
         }
         .padding([.horizontal, .bottom], 20)
-        .toolbar( isShowingAsChild ? .visible : .hidden)
-        .toolbar {
-            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-                
-                Button {
-                    dismiss()
-                }
-            label: {
-                HStack(spacing: 14) {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 14, height: 14)
-                        .scaledToFit()
-                        .foregroundColor(.white)
-                    
-                    
-                    Text("Home")
-                        .font(.abel(size: 24))
-                        .foregroundColor(.white)
-                }
-            }}
-        }
+        .navigationBarBackButtonHidden(true)
+//        .toolbar( isShowingAsChild ? .visible : .hidden)
+//        .toolbar {
+//            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+//                
+//                Button {
+//                    dismiss()
+//                }
+//            label: {
+//                HStack(spacing: 14) {
+//                    Image(systemName: "chevron.left")
+//                        .resizable()
+//                        .renderingMode(.template)
+//                        .frame(width: 14, height: 14)
+//                        .scaledToFit()
+//                        .foregroundColor(.white)
+//                    
+//                    
+//                    Text("Home")
+//                        .font(.abel(size: 24))
+//                        .foregroundColor(.white)
+//                }
+//            }}
+//        }
         
     }
 }

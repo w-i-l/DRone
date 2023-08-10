@@ -12,7 +12,7 @@ struct MainView: View {
     @StateObject private var viewModel = MainViewModel()
     
     var body: some View {
-        NavigationStack{
+        NavigationView {
             ZStack{
                 
                 HomeView(
@@ -27,7 +27,7 @@ struct MainView: View {
                 }
                 .ignoresSafeArea()
             }
-            .toolbar(.hidden)
+//            .toolbar(.hidden)
         }
     }
 }

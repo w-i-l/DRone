@@ -184,11 +184,11 @@ struct HomeViewFailed: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
         )
-        .refreshable {
-            if viewModel.fetchingState != .loading {
-                viewModel.updateUI()
-            }
-        }
+//        .refreshable {
+//            if viewModel.fetchingState != .loading {
+//                viewModel.updateUI()
+//            }
+//        }
         
         
     }

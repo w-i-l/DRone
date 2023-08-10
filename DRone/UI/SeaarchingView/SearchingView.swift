@@ -31,11 +31,7 @@ struct SearchingView: View {
                             .frame(width: 24, height: 24)
                             .scaledToFit()
                         
-                        TextField(text: $viewModel.textSearched) {
-                            Text("Type for a location...")
-                                .font(.abel(size: 16))
-                                .foregroundColor(Color("subtitle.gray"))
-                        }
+                        TextField("Search for a location", text: $viewModel.textSearched)
                         .foregroundColor(Color("background.first"))
                         .font(.abel(size: 20))
                         
@@ -95,29 +91,29 @@ struct SearchingView: View {
             print("D")
             viewModel.searchForNearbyLocations()
         }
-        .toolbar(.visible)
-        .toolbar {
-            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-                
-                Button {
-                    dismiss()
-                }
-            label: {
-                HStack(spacing: 14) {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 14, height: 14)
-                        .scaledToFit()
-                        .foregroundColor(.white)
-                    
-                    
-                    Text("Home")
-                        .font(.abel(size: 24))
-                        .foregroundColor(.white)
-                }
-            }}
-        }
+//        .toolbar(.visible)
+//        .toolbar {
+//            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+//                
+//                Button {
+//                    dismiss()
+//                }
+//            label: {
+//                HStack(spacing: 14) {
+//                    Image(systemName: "chevron.left")
+//                        .resizable()
+//                        .renderingMode(.template)
+//                        .frame(width: 14, height: 14)
+//                        .scaledToFit()
+//                        .foregroundColor(.white)
+//                    
+//                    
+//                    Text("Home")
+//                        .font(.abel(size: 24))
+//                        .foregroundColor(.white)
+//                }
+//            }}
+//        }
     }
 }
 

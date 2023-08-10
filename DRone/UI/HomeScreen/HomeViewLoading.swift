@@ -40,7 +40,7 @@ struct HomeViewLoading: View {
                     Spacer()
 
                     ProgressView()
-                        .tint(.white)
+                        .accentColor(.white)
                         .frame(width: 100, height: 100)
                         .scaleEffect(3)
                     

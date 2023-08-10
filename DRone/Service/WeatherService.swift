@@ -27,10 +27,10 @@ class WeatherService: BaseViewModel {
         // and if it passes 1h mark
         if lastTimeCached == nil ||
             cachedCurrentLocationWeather == nil ||
-            Date.now.timeIntervalSince(lastTimeCached!) >= 1 {
+            Date().timeIntervalSince(lastTimeCached!) >= 1 {
             
             //caching
-            lastTimeCached = Date.now
+            lastTimeCached = Date()
             
             if !isFetching {
                 WeatherAPI.shared.getWeatherFor(location: location)
@@ -50,7 +50,7 @@ class WeatherService: BaseViewModel {
         } else {
             
             //caching
-            lastTimeCached = Date.now
+            lastTimeCached = Date()
             
             return Future<LocationWeatherModel, Error> { [weak self] promise in
                 promise(.success((self?.cachedCurrentLocationWeather)!))
