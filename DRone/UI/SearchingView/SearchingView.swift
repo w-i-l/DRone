@@ -16,12 +16,17 @@ struct SearchingView: View {
     var body: some View {
         
         
-        ScrollView(showsIndicators: false) {
-            VStack {
+        
+        VStack {
+            
+            HStack {
+                // searching bar
                 ZStack {
                     
                     Color.white
                         .cornerRadius(12)
+                        .frame(height: 45)
+                    
                     HStack {
                         
                         Image(systemName: "magnifyingglass")
@@ -31,9 +36,18 @@ struct SearchingView: View {
                             .frame(width: 24, height: 24)
                             .scaledToFit()
                         
-                        TextField("Search for a location", text: $viewModel.textSearched)
-                        .foregroundColor(Color("background.first"))
-                        .font(.abel(size: 20))
+                        TextField("", text: $viewModel.textSearched)
+                            .foregroundColor(Color("background.first"))
+                            .font(.abel(size: 20))
+                            .autocorrectionDisabled(true)
+                            .keyboardType(.asciiCapable)
+                            .autocapitalization(.words)
+                            .placeholder(when: viewModel.textSearched.isEmpty) {
+                                Text("Search for a location")
+                                    .font(.abel(size: 20))
+                                    .foregroundColor(Color("subtitle.gray"))
+                            }
+                        
                         
                         Spacer()
                         
@@ -52,14 +66,39 @@ struct SearchingView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
+                    .frame(height: 45)
                     
                 }
-                VStack(alignment: .leading) {
+                
+                Button {
+                    
+                    guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
+                    
+                    viewModel.matchLocationWithCurrentLocation(location: location)
+                    
+                    viewModel.predictedLocations = []
+                    dismiss()
+                } label: {
+                    Image(systemName: "paperplane")
+                        .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(.white)
+                        .frame(width: 24, height: 24)
+                        .scaledToFit()
+                }
+            }
+            
+            // results
+            VStack(alignment: .leading) {
+                ScrollView(showsIndicators: false) {
                     ForEach(viewModel.predictedLocations, id:\.addressID) { item in
                         Button {
                             viewModel.selectedAddress = item
                             viewModel.textSearched = item.addressName
                             viewModel.updateLocation()
+                            
+                            viewModel.predictedLocations = []
+                            dismiss()
                         } label: {
                             HStack(spacing: 15) {
                                 
@@ -68,52 +107,30 @@ struct SearchingView: View {
                                     .renderingMode(.template)
                                     .foregroundColor(Color("subtitle.gray"))
                                     .frame(width: 14, height: 14)
-                                  
+                                
                                 
                                 Text(item.addressName)
                                     .foregroundColor(Color("background.first"))
                                     .font(.abel(size: 18))
+                                    .multilineTextAlignment(.leading)
                                 
                                 Spacer()
                             }
                             .padding(10)
                         }
                     }
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        Color.white
+                            .cornerRadius(12)
+                    )
                 }
-                .frame(maxWidth: .infinity)
-                .background(
-                    Color.white
-                        .cornerRadius(12)
-                )
             }
         }
         .onChange(of: viewModel.textSearched) { newValue in
-            print("D")
             viewModel.searchForNearbyLocations()
         }
-//        .toolbar(.visible)
-//        .toolbar {
-//            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-//                
-//                Button {
-//                    dismiss()
-//                }
-//            label: {
-//                HStack(spacing: 14) {
-//                    Image(systemName: "chevron.left")
-//                        .resizable()
-//                        .renderingMode(.template)
-//                        .frame(width: 14, height: 14)
-//                        .scaledToFit()
-//                        .foregroundColor(.white)
-//                    
-//                    
-//                    Text("Home")
-//                        .font(.abel(size: 24))
-//                        .foregroundColor(.white)
-//                }
-//            }}
-//        }
+        
     }
 }
 

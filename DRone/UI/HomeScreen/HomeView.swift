@@ -18,6 +18,7 @@ struct HomeView: View {
             case .loading :
                 
                 HomeViewLoading()
+                Spacer()
                 
             case .loaded:
                 HomeViewLoaded(
@@ -31,6 +32,7 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
+            .ignoresSafeArea()
         )
 //        .refreshable {
 //            if viewModel.fetchingState != .loading {

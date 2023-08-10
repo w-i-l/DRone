@@ -19,6 +19,8 @@ struct MainView: View {
                     viewModel: HomeViewModel(),
                     isShowingAsChild: false
                 )
+                
+                
                     
                 
                 VStack {
@@ -29,6 +31,9 @@ struct MainView: View {
             }
 //            .toolbar(.hidden)
         }
+        .navigationBarBackButtonHidden(true)
+        
+        
     }
 }
 

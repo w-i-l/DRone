@@ -27,7 +27,19 @@ class SearchingViewModel: BaseViewModel {
                 
             } receiveValue: { [weak self] value in
                 self?.predictedLocations = value
-                print(value)
+            }
+            .store(in: &bag)
+
+    }
+    
+    func matchLocationWithCurrentLocation(location: CLLocationCoordinate2D) {
+        LocationService.shared.getAdressIDForCurrentLocation(location: location)
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] value in
+                self?.selectedAddress.addressID = value
+                self?.updateLocation()
             }
             .store(in: &bag)
 

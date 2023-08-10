@@ -15,31 +15,49 @@ struct HomeViewLoaded: View {
     let isShowingAsChild: Bool
     
     var body: some View {
+        
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
                 
-                // current location
-                NavigationLink {
-                    SearchingView(viewModel: SearchingViewModel(adressToFetchLocation: $viewModel.addressToFetchLocation))
-                        .navigationBarBackButtonHidden(true)
-                } label: {
-                    HStack(spacing: 0) {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 20))
-                                .font(.abel(size: 32))
-                                .foregroundColor(.white)
-                                .underline(!isShowingAsChild)
+                HStack {
+                    // current location
+                    NavigationLink {
+                        ChangeLocationView(viewModel: ChangeLocationViewModel(adressToFetchLocation: $viewModel.addressToFetchLocation))
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        HStack(spacing: 0) {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 20))
+                                    .font(.abel(size: 32))
+                                    .foregroundColor(.white)
+                                    .underline(!isShowingAsChild)
+                                
+                                Text(viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30))
+                                    .font(.abel(size: 20))
+                                    .foregroundColor(Color("subtitle.gray"))
+                            }
                             
-                            Text(viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30))
-                                .font(.abel(size: 20))
-                                .foregroundColor(Color("subtitle.gray"))
+                            Spacer()
+                            
                         }
-                        
-                        Spacer()
-                        
+                    }
+                    .disabled(isShowingAsChild)
+                    
+                    Spacer()
+                    
+                    if !isShowingAsChild {
+                        Button {
+                            viewModel.updateUI()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(.white)
+                                .frame(width: 24, height: 24)
+                                .scaledToFit()
+                        }
                     }
                 }
-                .disabled(isShowingAsChild)
                 
                 // current temperature
                 HStack(spacing: 0) {
@@ -157,7 +175,7 @@ struct HomeViewLoaded: View {
                 if !isShowingAsChild {
                     // see more button
                     NavigationLink {
-                        WeatherPrognosisView(viewModel: WeatherPrognosisViewModel())
+                        WeatherPrognosisView(viewModel: WeatherPrognosisViewModel(location: viewModel.addressToFetchLocation!))
                             .navigationBarBackButtonHidden(true)
                     } label: {
                         ZStack(alignment: .trailing) {
@@ -193,31 +211,28 @@ struct HomeViewLoaded: View {
             .padding(.bottom, UIScreen.main.bounds.height / 11.3)
         }
         .padding([.horizontal, .bottom], 20)
-        .navigationBarBackButtonHidden(true)
-//        .toolbar( isShowingAsChild ? .visible : .hidden)
-//        .toolbar {
-//            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-//                
-//                Button {
-//                    dismiss()
-//                }
-//            label: {
-//                HStack(spacing: 14) {
-//                    Image(systemName: "chevron.left")
-//                        .resizable()
-//                        .renderingMode(.template)
-//                        .frame(width: 14, height: 14)
-//                        .scaledToFit()
-//                        .foregroundColor(.white)
-//                    
-//                    
-//                    Text("Home")
-//                        .font(.abel(size: 24))
-//                        .foregroundColor(.white)
-//                }
-//            }}
-//        }
-        
+        .navigationBarHidden(!isShowingAsChild)
+        .navigationBarItems(leading:
+
+            Button(action: {
+                dismiss()
+            }) {
+                HStack(spacing: 14) {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 14, height: 14)
+                        .scaledToFit()
+                        .foregroundColor(.white)
+
+                    Text("Weekly prognosis")
+                        .font(.abel(size: 24))
+                        .foregroundColor(.white)
+                }
+        })
+        .onChange(of: viewModel.addressToFetchLocation) { newValue in
+            viewModel.updateUI()
+        }
     }
 }
 

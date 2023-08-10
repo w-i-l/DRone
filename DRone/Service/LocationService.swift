@@ -57,6 +57,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         
     }
     
+    func getAdressIDForCurrentLocation(location: CLLocationCoordinate2D) -> AnyPublisher<String, Error> {
+        LocationAPI.shared.getAdressIDForCurrentLocation(location: location)
+            .eraseToAnyPublisher()
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedAlways:

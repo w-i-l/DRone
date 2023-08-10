@@ -171,6 +171,7 @@ struct HomeViewLoading: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
+            .ignoresSafeArea()
         )
     }
 }

@@ -15,7 +15,7 @@ class WeatherPrognosisViewModel: BaseViewModel {
     
     let daysOfWeek: [String]
     
-    override init() {
+    init(location: CLLocationCoordinate2D) {
         
         let secondsInHour = 3600
         let secondsInDay = 24 * secondsInHour
@@ -30,7 +30,7 @@ class WeatherPrognosisViewModel: BaseViewModel {
         
         super.init()
         
-        guard let location = LocationService.shared.locationManager.location?.coordinate else { print("Can't get location"); return }
+//        guard let location = LocationService.shared.locationManager.location?.coordinate else { print("Can't get location"); return }
         WeatherService.shared.getWeatherForLocationWeekPrognosis(location: location)
             .receive(on: DispatchQueue.main)
             .sink { _ in

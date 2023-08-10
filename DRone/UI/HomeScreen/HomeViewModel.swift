@@ -31,12 +31,19 @@ class HomeViewModel : BaseViewModel {
     override init() {
         super.init()
         updateUI()
-  
+        
+       
+        guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
+        self.addressToFetchLocation = location
     }
     
     init(locationWeatherModel: LocationWeatherModel) {
         self.locationWeatherModel = locationWeatherModel
         self.fetchingState = .loaded
+        
+  
+        guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
+        self.addressToFetchLocation = location
     }
     
     func updateUI() {

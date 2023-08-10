@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct WeatherPrognosisView: View {
     
@@ -120,35 +121,32 @@ struct WeatherPrognosisView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
+            .ignoresSafeArea()
         )
-//        .toolbar(.visible)
-//        .toolbar {
-//            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-//                
-//                Button {
-//                    dismiss()
-//                }
-//            label: {
-//                HStack(spacing: 14) {
-//                    Image(systemName: "chevron.left")
-//                        .resizable()
-//                        .renderingMode(.template)
-//                        .frame(width: 14, height: 14)
-//                        .scaledToFit()
-//                        .foregroundColor(.white)
-//                    
-//                    
-//                    Text("Home")
-//                        .font(.abel(size: 24))
-//                        .foregroundColor(.white)
-//                }
-//            }}
-//        }
+        .navigationBarItems(leading:
+            Button {
+                dismiss()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 14, height: 14)
+                    .scaledToFit()
+                    .foregroundColor(.white)
+                
+                
+                Text("Home")
+                    .font(.abel(size: 24))
+                    .foregroundColor(.white)
+            }
+        })
+       
     }
 }
 
 struct WeatherPrognosisView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherPrognosisView(viewModel: WeatherPrognosisViewModel())
+        WeatherPrognosisView(viewModel: WeatherPrognosisViewModel(location: CLLocationCoordinate2D()))
     }
 }
