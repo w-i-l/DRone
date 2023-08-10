@@ -31,7 +31,7 @@ struct LoaderView: View {
                             progress = 1
                         }
                 }
-                    .scaleEffect(CGFloat(no) * CGFloat(0.1))
+                    .scaleEffect(CGFloat(Double(no) + 0.1) * CGFloat(0.1))
             }
         }
             

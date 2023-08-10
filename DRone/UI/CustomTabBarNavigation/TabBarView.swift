@@ -32,7 +32,7 @@ struct TabBar: View {
                     Spacer()
                     
                     Button(action: {
-                        viewModel.selectedTab = item.0
+                        AppService.shared.selectedTab.value = item.0
                     }, label: {
                         Image(systemName: item.1)
                             .resizable()

@@ -19,6 +19,7 @@ struct MainView: View {
                     viewModel: HomeViewModel(),
                     isShowingAsChild: false
                 )
+                .opacity(viewModel.selectedTab == .home ? 1 : 0)
                 
                 
                     

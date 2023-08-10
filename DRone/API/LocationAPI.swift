@@ -53,7 +53,7 @@ class LocationAPI {
                     
                     // fetching for the format City, COUNTRY
                     // we guard if can't find the city
-                    guard let cityName = adressComponents.first { $0["types"].arrayValue.contains("administrative_area_level_1")}?["long_name"].stringValue else {
+                    guard let cityName = adressComponents.first(where: { $0["types"].arrayValue.contains("administrative_area_level_1")})?["long_name"].stringValue else {
                         promise(.success((
                             mainAdress: adressComponents.first { $0["types"].arrayValue.contains("country")}!["short_name"].stringValue,
                             secondaryAdress: "No street"
