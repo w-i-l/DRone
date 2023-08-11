@@ -63,6 +63,9 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        
+        AppService.shared.locationStatus.value = manager.authorizationStatus
+        
         switch manager.authorizationStatus {
         case .authorizedAlways:
             break

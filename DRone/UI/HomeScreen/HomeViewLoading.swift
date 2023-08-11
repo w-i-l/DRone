@@ -169,10 +169,12 @@ struct HomeViewLoading: View {
             }
             .padding(.horizontal, 20)
         }
+        .padding(.top, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
+        .navigationBarHidden(true)
     }
 }
 

@@ -19,3 +19,21 @@ extension View {
         }
     }
 }
+
+struct CustomTextFieldStyle: TextFieldStyle {
+    
+    @State private var isFocused = false
+    
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(isFocused ? Color.blue : Color.gray, lineWidth: 1)
+            )
+            .onTapGesture {
+                isFocused = true
+            }
+    }
+}
+

@@ -21,6 +21,8 @@ struct MainView: View {
                 )
                 .opacity(viewModel.selectedTab == .home ? 1 : 0)
                 
+                InfoRequestInfo(viewModel: RequestViewModel())
+                    .opacity(viewModel.selectedTab == .request ? 1 : 0)
                 
                     
                 
@@ -30,9 +32,8 @@ struct MainView: View {
                 }
                 .ignoresSafeArea()
             }
-//            .toolbar(.hidden)
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
         
         
     }

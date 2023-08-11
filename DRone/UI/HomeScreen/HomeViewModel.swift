@@ -32,18 +32,39 @@ class HomeViewModel : BaseViewModel {
         super.init()
         updateUI()
         
+        AppService.shared.locationStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                if value == .authorizedAlways || value == .authorizedWhenInUse {
+                    self?.updateUI()
+                }
+            }
+            .store(in: &bag)
        
         guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
         self.addressToFetchLocation = location
+        
     }
     
     init(locationWeatherModel: LocationWeatherModel) {
         self.locationWeatherModel = locationWeatherModel
         self.fetchingState = .loaded
         
+        super.init()
   
+        AppService.shared.locationStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                if value == .authorizedAlways || value == .authorizedWhenInUse {
+                    self?.updateUI()
+                }
+            }
+            .store(in: &bag)
+
         guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
         self.addressToFetchLocation = location
+        
+        
     }
     
     func updateUI() {

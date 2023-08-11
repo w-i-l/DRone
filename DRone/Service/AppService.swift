@@ -10,6 +10,7 @@
 
 import SwiftUI
 import Combine
+import CoreLocation
 
 enum AppNavigationTabs: CaseIterable {
     case home
@@ -23,6 +24,10 @@ class AppService {
     
     var selectedTab: CurrentValueSubject<AppNavigationTabs, Never> = .init(.home)
     var isTabBarVisible: CurrentValueSubject<Bool, Never> = .init(true)
+    var locationStatus: CurrentValueSubject<CLAuthorizationStatus, Never> = .init(.notDetermined)
+    
+    var focusedTextFieldID: CurrentValueSubject<Int, Never> = .init(0)
+    var screenIndex: CurrentValueSubject<Int, Never> = .init(0)
     
     private init() {}
 }
