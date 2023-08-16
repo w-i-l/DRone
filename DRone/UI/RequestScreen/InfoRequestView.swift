@@ -11,6 +11,8 @@ import SwiftUI
 struct InfoRequestInfo: View {
     
     @StateObject var viewModel: RequestViewModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var isNavigationLinkShown: Bool = false
     
     var body: some View {
         
@@ -69,33 +71,44 @@ struct InfoRequestInfo: View {
                         HStack {
                             Spacer()
                             
-                            NavigationLink {
-                               RequestFormView(viewModel: viewModel)
+                            NavigationLink(
+                                destination:
+                                    RequestFormView(viewModel: viewModel)
                                     .navigationBarBackButtonHidden(true)
-                            } label: {
-                                ZStack {
-                                    Color("accent.blue")
-                                        .cornerRadius(20)
-                                        .frame(width: 150, height: 50)
-                                    
-                                    HStack {
-                                        Text("Start")
-                                            .foregroundColor(.white)
-                                            .font(.abel(size: 32))
+                                ,
+                                isActive: $isNavigationLinkShown,
+                                label: {
+                                    ZStack {
+                                        Color("accent.blue")
+                                            .cornerRadius(20)
+                                            .frame(width: 150, height: 50)
                                         
-                                        Spacer()
-                                        
-                                        Image(systemName: "chevron.right")
-                                            .resizable()
-                                            .renderingMode(.template)
-                                            .foregroundColor(.white)
-                                            .frame(width: 18, height: 18)
-                                            .scaledToFit()
+                                        HStack {
+                                            Text("Start")
+                                                .foregroundColor(.white)
+                                                .font(.abel(size: 32))
+                                            
+                                            Spacer()
+                                            
+                                            Image(systemName: "chevron.right")
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .foregroundColor(.white)
+                                                .frame(width: 18, height: 18)
+                                                .scaledToFit()
+                                        }
+                                        .padding(15)
                                     }
-                                    .padding(15)
+                                    .frame(width: 150, height: 50)
                                 }
-                                .frame(width: 150, height: 50)
-                            }
+                            )
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded({ _ in
+                                        AppService.shared.screenIndex.value = 0
+                                        viewModel.clearData()
+                                        isNavigationLinkShown = true
+                                    }))
                             
                         }
                         

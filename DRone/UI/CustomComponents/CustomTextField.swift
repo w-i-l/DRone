@@ -30,7 +30,6 @@ struct CustomTextField: View {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(viewModel.textFieldID == viewModel.focusedTextFieldID ? Color("accent.blue") : .white, lineWidth: 3)
                 )
-                .animation(.easeInOut, value: viewModel.focusedTextFieldID)
             
             TextField("", text: $text)
                 .placeholder(when: text.isEmpty) {

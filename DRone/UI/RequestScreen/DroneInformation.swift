@@ -1,13 +1,13 @@
 //
-//  AdditionalPersonalInformationView.swift
+//  DroneInformation.swift
 //  DRone
 //
-//  Created by Mihai Ocnaru on 11.08.2023.
+//  Created by Mihai Ocnaru on 16.08.2023.
 //
 
 import SwiftUI
 
-struct AdditionalPersonalInformationView: View {
+struct DroneInformation: View {
     @Environment(\.dismiss) private var dismiss
     
     @ObservedObject var viewModel: RequestViewModel
@@ -17,12 +17,12 @@ struct AdditionalPersonalInformationView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    Text("Additional information")
+                    Text("Drone information")
                         .font(.abel(size: 40))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.leading)
                     
-                    Text("Complete the form with your personal information")
+                    Text("Complete the form with your drone information")
                         .font(.abel(size: 18))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.leading)
@@ -30,63 +30,55 @@ struct AdditionalPersonalInformationView: View {
                     Spacer()
                     
                     VStack {
-                        // birthday
+                        // serial number
                         VStack(alignment: .leading, spacing: 7) {
-                            Text("Birthday")
+                            Text("Serial number")
                                 .foregroundColor(.white)
                                 .font(.abel(size: 20))
                             
-                            HStack {
-                                Text("Date")
-                                    .foregroundColor(.white)
-                                    .font(.abel(size: 20))
-                                
-                                Spacer()
-                                
-                                DatePicker(selection: $viewModel.birthdayDate,
-                                           in: Date()...,
-                                           displayedComponents: .date) {
-                                    Text("Date")
-                                        .foregroundColor(.white)
-                                        .font(.abel(size: 20))
+                            CustomTextField(
+                                text: $viewModel.serialNumber,
+                                placeholderText: "Serial number",
+                                isTextGood: {
+                                    return true
                                 }
-                                           .labelsHidden()
-                                           .colorInvert()
-                                           .colorMultiply(Color.white)
-                                           .foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
-                                           .colorScheme(.light)
-                            }
+                            )
                             
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.top, 40)
                         
-                        // current location
+                        // drone type
                         VStack(alignment: .leading, spacing: 7) {
-                            Text("Your current location")
+                            Text("Drone type")
                                 .foregroundColor(.white)
                                 .font(.abel(size: 20))
                             
-                            HStack(spacing: 14) {
-                                Image(systemName: "mappin.circle")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .foregroundColor(.white)
-                                    .frame(width: 24, height: 24)
-                                    .scaledToFit()
-                                
-                                VStack(spacing: 4) {
-                                    Text(viewModel.currentLocation.mainAdress.limitLettersFormattedString(limit: 30))
+                            Button(
+                                action: {
+                                    viewModel.isDroneModalShown = true
+                            }, label: {
+                                HStack(spacing: 14) {
+                                    Circle()
+                                        .fill(Color("accent.blue"))
+                                        .frame(width: 16, height: 16)
+                                    
+                                    Text("\(viewModel.droneType.associatedValues.type) drone")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 16))
+                                        .font(.abel(size: 18))
                                     
-                                    Text(viewModel.currentLocation.secondaryAdress.limitLettersFormattedString(limit: 30))
-                                        .foregroundColor(Color("subtitle.gray"))
-                                        .font(.abel(size: 12))
+                                    Spacer()
                                     
+                                    Image(systemName: "chevron.right")
+                                        .resizable()
+                                        .renderingMode(.template)
+                                        .foregroundColor(.white)
+                                        .frame(width: 12, height: 12)
+                                        .scaledToFit()
                                 }
-                                Spacer()
-                            }
+                                .padding(10)
+                            .background(Color("gray.background"))
+                            })
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.top, 32)
@@ -141,11 +133,16 @@ struct AdditionalPersonalInformationView: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
+        .sheet(
+            isPresented: $viewModel.isDroneModalShown
+        ){
+            DroneTypeModal(viewModel: viewModel)
+        }
     }
 }
 
-struct AdditionalPersonalInformationView_Previews: PreviewProvider {
+struct DroneInformation_Previews: PreviewProvider {
     static var previews: some View {
-        AdditionalPersonalInformationView(viewModel: RequestViewModel())
+        DroneInformation(viewModel: RequestViewModel())
     }
 }

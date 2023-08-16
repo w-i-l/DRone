@@ -9,20 +9,24 @@ import SwiftUI
 
 struct RequestFormView: View {
     
-    let view: [some View] = [
-        PersonalInfosRequest(viewModel: RequestViewModel()),
-        PersonalInfosRequest(viewModel: RequestViewModel()),
-        PersonalInfosRequest(viewModel: RequestViewModel()),
-        PersonalInfosRequest(viewModel: RequestViewModel())
-    ]
+    let view: [AnyView]
     @State var offset: CGFloat = 0
     @ObservedObject var viewModel: RequestViewModel
+    @Environment(\.dismiss) private var dismiss
     
     let noOfItemsOffset: Int
     let totalOffset:CGFloat
     
     init(viewModel: RequestViewModel) {
         self.viewModel = viewModel
+        
+        self.view = [
+            AnyView(PersonalInfosRequest(viewModel: viewModel)),
+            AnyView(AdditionalPersonalInformationView(viewModel: viewModel)),
+            AnyView(DroneInformation(viewModel: viewModel)),
+            AnyView(FlightInformation(viewModel: viewModel))
+        ]
+        
         noOfItemsOffset = ((view.count - 2) / 2)
         totalOffset = CGFloat(UIScreen.main.bounds.width * (CGFloat(noOfItemsOffset) + 0.5))
     }
@@ -32,9 +36,16 @@ struct RequestFormView: View {
         HStack(spacing: 0) {
             ForEach(0..<view.count) { no in
                 GeometryReader { proxy in
-                    view[no]
+                    VStack(spacing: 0){
+                        ProgressView(value: Float(viewModel.screenIndex) + 1, total: 4)
+                            .progressViewStyle(.linear)
+                            .accentColor(Color("accent.blue"))
+                        
+                        view[no]
+                    }
                 }
                 .frame(width: UIScreen.main.bounds.width)
+                
             }
             //                }
             .onChange(of: viewModel.screenIndex) { newValue in
@@ -44,13 +55,38 @@ struct RequestFormView: View {
             .offset(x: -offset)
         }
         .onAppear {
-            AppService.shared.screenIndex.value = 0
+            if viewModel.screenIndex != 3 {
+                AppService.shared.screenIndex.value = 0
+            }
         }
-        //            .disabled(true)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationBarItems(leading:
+                                
+                                Button(action: {
+            if viewModel.screenIndex >= 1 {
+                AppService.shared.screenIndex.value -= 1
+            } else if viewModel.screenIndex == 0 {
+                dismiss()
+            }
+        }) {
+            VStack(alignment: .leading) {
+                HStack(spacing: 14) {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 14, height: 14)
+                        .scaledToFit()
+                        .foregroundColor(.white)
+                    
+                    Text(viewModel.screenIndex == 0 ? "Personal infos" : "Back")
+                        .font(.abel(size: 24))
+                        .foregroundColor(.white)
+                }
+            }
+        })
     }
 }
 

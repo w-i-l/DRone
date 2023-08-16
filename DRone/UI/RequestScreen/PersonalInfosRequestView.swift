@@ -119,31 +119,12 @@ struct PersonalInfosRequest: View {
                     .padding(.horizontal, 20)
                     .frame(minHeight: proxy.size.height)
                 }
+                .frame(maxHeight: .infinity)
+                .navigationBarBackButtonHidden(true)
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .padding(.bottom, UIScreen.main.bounds.height / 11.3)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        
-        .navigationBarItems(leading:
-                                
-                                Button(action: {
-            dismiss()
-        }) {
-            HStack(spacing: 14) {
-                Image(systemName: "chevron.left")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 14, height: 14)
-                    .scaledToFit()
-                    .foregroundColor(.white)
-                
-                Text("Request Page")
-                    .font(.abel(size: 24))
-                    .foregroundColor(.white)
-            }
-        })
     }
 }
 
