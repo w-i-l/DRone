@@ -59,6 +59,7 @@
 		17B916B82A8CF5490024B82C /* RequestFormModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916B72A8CF5490024B82C /* RequestFormModel.swift */; };
 		17B916BA2A8CFA410024B82C /* ResponseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916B92A8CFA410024B82C /* ResponseService.swift */; };
 		17B916BC2A8CFE650024B82C /* ResponseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BB2A8CFE650024B82C /* ResponseScreen.swift */; };
+		17B916BF2A8D13F50024B82C /* RequestDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BE2A8D13F50024B82C /* RequestDetailsView.swift */; };
 		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
 		B81664878F5A4489154D1E4A /* libPods-DRone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30822F99450DF6E7667D8AD3 /* libPods-DRone.a */; };
@@ -117,6 +118,7 @@
 		17B916B72A8CF5490024B82C /* RequestFormModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFormModel.swift; sourceTree = "<group>"; };
 		17B916B92A8CFA410024B82C /* ResponseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseService.swift; sourceTree = "<group>"; };
 		17B916BB2A8CFE650024B82C /* ResponseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseScreen.swift; sourceTree = "<group>"; };
+		17B916BE2A8D13F50024B82C /* RequestDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDetailsView.swift; sourceTree = "<group>"; };
 		17F796442A82829F005E4135 /* HomeViewLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoading.swift; sourceTree = "<group>"; };
 		17F796462A8283AE005E4135 /* CardShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShimmer.swift; sourceTree = "<group>"; };
 		30822F99450DF6E7667D8AD3 /* libPods-DRone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DRone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,14 +313,11 @@
 		178689332A850D1A002B908E /* RequestScreen */ = {
 			isa = PBXGroup;
 			children = (
+				17B916BD2A8D13BC0024B82C /* FormView */,
 				17B916B22A8CD80C0024B82C /* ResponseScreen */,
 				178689342A850D3E002B908E /* InfoRequestView.swift */,
-				178689362A852102002B908E /* PersonalInfosRequestView.swift */,
-				1711B93B2A8680D600D4B2D8 /* AdditionalPersonalInformationView.swift */,
-				17B916AA2A8CB8E40024B82C /* DroneInformation.swift */,
-				17B916AC2A8CBB510024B82C /* DroneTypeModal.swift */,
-				17B916B02A8CC5680024B82C /* FlightInformation.swift */,
 				1711B9392A865C1900D4B2D8 /* RequestFormView.swift */,
+				17B916BE2A8D13F50024B82C /* RequestDetailsView.swift */,
 				178689382A852201002B908E /* RequestViewModel.swift */,
 			);
 			path = RequestScreen;
@@ -358,6 +357,18 @@
 				17B916BB2A8CFE650024B82C /* ResponseScreen.swift */,
 			);
 			path = ResponseScreen;
+			sourceTree = "<group>";
+		};
+		17B916BD2A8D13BC0024B82C /* FormView */ = {
+			isa = PBXGroup;
+			children = (
+				178689362A852102002B908E /* PersonalInfosRequestView.swift */,
+				1711B93B2A8680D600D4B2D8 /* AdditionalPersonalInformationView.swift */,
+				17B916AA2A8CB8E40024B82C /* DroneInformation.swift */,
+				17B916AC2A8CBB510024B82C /* DroneTypeModal.swift */,
+				17B916B02A8CC5680024B82C /* FlightInformation.swift */,
+			);
+			path = FormView;
 			sourceTree = "<group>";
 		};
 		7339BFCAA6BE72838CDE7180 /* Frameworks */ = {
@@ -513,6 +524,7 @@
 				1786892E2A84E82F002B908E /* ChangeLocationViewModel.swift in Sources */,
 				17B916B12A8CC5680024B82C /* FlightInformation.swift in Sources */,
 				1711B9362A863BC200D4B2D8 /* CustomTextField.swift in Sources */,
+				17B916BF2A8D13F50024B82C /* RequestDetailsView.swift in Sources */,
 				179D6AD32A839174005700B8 /* Strings.swift in Sources */,
 				17599F702A80FB7400501E0A /* MainView.swift in Sources */,
 				17599F612A80E1E400501E0A /* ViewModifiers.swift in Sources */,

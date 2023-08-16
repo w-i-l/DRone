@@ -7,6 +7,7 @@
 
 import SwiftUI
 import netfox
+import CoreLocation
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -23,7 +24,18 @@ struct DRoneApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            RequestDetailsView(formModel: RequestFormModel(
+                firstName: "Mihai",
+                lastName: "Ocnaru",
+                CNP: "5031008450036",
+                birthday: Date(),
+                currentLocation: CLLocationCoordinate2D(),
+                serialNumber: "F7D2K01",
+                droneType: .agrar,
+                takeoffTime: Date(),
+                landingTime: Date(),
+                flightLocation: CLLocationCoordinate2D()
+            ))
                 .preferredColorScheme(.dark)
         }
     }
