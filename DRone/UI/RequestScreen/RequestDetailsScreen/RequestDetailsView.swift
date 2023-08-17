@@ -10,9 +10,15 @@ import CoreLocation
 
 struct RequestDetailsView: View {
     
-    let formModel: RequestFormModel
+    @StateObject var viewModel: RequestDetailsViewModel
     
-    var hourFormatter = DateFormatter()
+    private var hourFormatter: DateFormatter {
+        get {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter
+        }
+    }
     
     var body: some View {
         VStack() {
@@ -40,41 +46,41 @@ struct RequestDetailsView: View {
                 
                 
                 ForEach([
-                    ("Personal information", ("Full name", "\(formModel.firstName) \(formModel.lastName)"),
-                     ("Personal number identification", formModel.CNP)),
-                    ("Drone information", ("Serial number", formModel.serialNumber), ("Drone type", formModel.droneType.associatedValues.type)),
-                    ("Flight information", ("Takeoff time", hourFormatter.string(from:formModel.takeoffTime)), ("Landing time", hourFormatter.string(from:formModel.landingTime)))
+                    ("Personal information", [
+                        ("Full name", "\(viewModel.formModel.firstName) \(viewModel.formModel.lastName)"),
+                        ("Personal number identification", viewModel.formModel.CNP)
+                    ]),
+                    ("Drone information", [
+                        ("Serial number", viewModel.formModel.serialNumber),
+                        ("Drone type", viewModel.formModel.droneType.associatedValues.type)
+                    ]),
+                    ("Flight information", [
+                        ("Takeoff time", hourFormatter.string(from: viewModel.formModel.takeoffTime)),
+                        ("Landing time", hourFormatter.string(from: viewModel.formModel.landingTime)),
+                        ("Location", viewModel.flightLocationToDisplay.secondaryAdress)
+                    ])
                 ], id: \.0) { item in
                     VStack(alignment: .leading, spacing: 0) {
                         Text(item.0)
                             .foregroundColor(Color("accent.blue"))
                             .font(.abel(size: 16))
                         
-                        HStack {
-                            Text(item.1.0)
-                                .foregroundColor(.white)
-                            .font(.abel(size: 16))
+                        ForEach(item.1, id: \.0) { tuple in
                             
-                            Spacer()
                             
-                            Text(item.1.1)
-                                .foregroundColor(.white)
-                            .font(.abel(size: 16))
+                            HStack {
+                                Text(tuple.0)
+                                    .foregroundColor(.white)
+                                    .font(.abel(size: 16))
+                                
+                                Spacer()
+                                
+                                Text(tuple.1)
+                                    .foregroundColor(.white)
+                                    .font(.abel(size: 16))
+                            }
+                            .padding(.top, 7)
                         }
-                        .padding(.top, 7)
-                        
-                        HStack {
-                            Text(item.2.0)
-                                .foregroundColor(.white)
-                            .font(.abel(size: 16))
-                            
-                            Spacer()
-                            
-                            Text(item.2.1)
-                                .foregroundColor(.white)
-                            .font(.abel(size: 16))
-                        }
-                        .padding(.top, 5)
                         
                         RoundedRectangle(cornerRadius: 20)
                             .fill(.white)
@@ -91,16 +97,11 @@ struct RequestDetailsView: View {
             .ignoresSafeArea()
         )
     }
-    
-    init(formModel: RequestFormModel) {
-        hourFormatter.dateFormat = "HH:mm"
-        self.formModel = formModel
-    }
 }
 
 struct RequestDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        RequestDetailsView(formModel: RequestFormModel(
+        RequestDetailsView(viewModel: RequestDetailsViewModel(formModel: RequestFormModel(
             firstName: "Mihai",
             lastName: "Ocnaru",
             CNP: "5031008450036",
@@ -111,6 +112,6 @@ struct RequestDetailsView_Previews: PreviewProvider {
             takeoffTime: Date(),
             landingTime: Date(),
             flightLocation: CLLocationCoordinate2D()
-        ))
+        )))
     }
 }

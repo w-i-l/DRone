@@ -10,9 +10,9 @@ import SwiftUI
 
 struct InfoRequestInfo: View {
     
-    @StateObject var viewModel: RequestViewModel
+    @ObservedObject var viewModel: RequestViewModel
+    
     @Environment(\.dismiss) private var dismiss
-    @State private var isNavigationLinkShown: Bool = false
     
     var body: some View {
         
@@ -74,10 +74,8 @@ struct InfoRequestInfo: View {
                             NavigationLink(
                                 destination:
                                     RequestFormView(viewModel: viewModel)
-                                    .navigationBarBackButtonHidden(true)
-                                ,
-                                isActive: $isNavigationLinkShown,
-                                label: {
+                                        .navigationBarBackButtonHidden(true)
+                                , label: {
                                     ZStack {
                                         Color("accent.blue")
                                             .cornerRadius(20)
@@ -102,13 +100,6 @@ struct InfoRequestInfo: View {
                                     .frame(width: 150, height: 50)
                                 }
                             )
-                            .simultaneousGesture(
-                                TapGesture()
-                                    .onEnded({ _ in
-                                        AppService.shared.screenIndex.value = 0
-                                        viewModel.clearData()
-                                        isNavigationLinkShown = true
-                                    }))
                             
                         }
                         
@@ -142,7 +133,27 @@ struct InfoRequestInfo: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
-        )
+            )
+            .navigationBarItems(leading:
+                                    
+                Button(action: {
+                    dismiss()
+            }) {
+                VStack(alignment: .leading) {
+                    HStack(spacing: 14) {
+                        Image(systemName: "chevron.left")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 14, height: 14)
+                            .scaledToFit()
+                            .foregroundColor(.white)
+                        
+                        Text("All requests")
+                            .font(.abel(size: 24))
+                            .foregroundColor(.white)
+                    }
+                }
+            })
         }
     }
 }

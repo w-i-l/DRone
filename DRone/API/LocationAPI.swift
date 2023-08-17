@@ -39,6 +39,15 @@ class LocationAPI {
                 do{
                     let json = try JSON(data: data!)
                     
+                    // no locations
+                    guard !json["results"].arrayValue.isEmpty else {
+                        promise(.success((
+                            mainAdress: "No location found",
+                            secondaryAdress: ""
+                        )))
+                        return
+                    }
+                    
                     // for the plus_code regions
                     guard !json["results"][0]["types"].arrayValue.contains("plus_code") else {
                         promise(.success((
@@ -50,6 +59,7 @@ class LocationAPI {
                     
                     // get the first array
                     let adressComponents = json["results"][0]["address_components"].arrayValue
+                    
                     
                     // fetching for the format City, COUNTRY
                     // we guard if can't find the city

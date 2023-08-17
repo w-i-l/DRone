@@ -98,10 +98,7 @@ struct AdditionalPersonalInformationView: View {
                     HStack {
                         Spacer()
                         Button {
-                            // hardcoded the number of screens
-                            if AppService.shared.screenIndex.value < 3 {
-                                AppService.shared.screenIndex.value += 1
-                            }
+                            AppService.shared.screenIndex.value = 2
                         } label: {
                             ZStack {
                                 Color("accent.blue")

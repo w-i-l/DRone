@@ -20,6 +20,8 @@ struct RequestFormModel {
     let takeoffTime: Date
     let landingTime: Date
     let flightLocation: CLLocationCoordinate2D
+    let dateRegistered = Date()
+    var requestState: ResponseResult = .pending
 }
 
 extension RequestFormModel: Encodable {
@@ -42,10 +44,10 @@ extension RequestFormModel: Encodable {
     
     public func encode(to encoder: Encoder) throws {
         
-        var birthdayFormatter = DateFormatter()
+        let birthdayFormatter = DateFormatter()
         birthdayFormatter.dateFormat = "dd-MM-yyyy"
         
-        var hourFormatter = DateFormatter()
+        let hourFormatter = DateFormatter()
         hourFormatter.dateFormat = "HH:mm"
         
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -63,4 +65,38 @@ extension RequestFormModel: Encodable {
         try container.encode(self.flightLocation.longitude, forKey: .flightLocationLongitude)
     }
     
+}
+
+extension RequestFormModel: Identifiable {
+    var id: String {
+        return CNP + firstName + lastName + requestState.rawValue + serialNumber + String.init(describing: takeoffTime)
+    }
+}
+
+extension RequestFormModel: Hashable {
+    static func == (lhs: RequestFormModel, rhs: RequestFormModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        return hasher.combine(id)
+    }
+}
+
+extension RequestFormModel {
+    func updatedRequestStatus(state: ResponseResult) -> RequestFormModel {
+        RequestFormModel(
+            firstName: self.firstName ,
+            lastName: self.lastName ,
+            CNP: self.CNP ,
+            birthday: self.birthday ,
+            currentLocation: self.currentLocation ,
+            serialNumber: self.serialNumber ,
+            droneType: self.droneType ,
+            takeoffTime: self.takeoffTime ,
+            landingTime: self.landingTime ,
+            flightLocation: self.flightLocation,
+            requestState: state
+        )
+    }
 }

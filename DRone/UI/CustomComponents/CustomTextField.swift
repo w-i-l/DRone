@@ -20,6 +20,8 @@ struct CustomTextField: View {
     private static var textFieldIndex: Int = 0
     private let textFieldID: Int
     
+    @State private var isFocused = false
+    
     var body: some View {
         ZStack {
             
@@ -30,6 +32,9 @@ struct CustomTextField: View {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(viewModel.textFieldID == viewModel.focusedTextFieldID ? Color("accent.blue") : .white, lineWidth: 3)
                 )
+                .onTapGesture {
+                    isFocused = true
+                }
             
             TextField("", text: $text)
                 .placeholder(when: text.isEmpty) {
@@ -39,6 +44,7 @@ struct CustomTextField: View {
             }
                 .padding(12)
                 .foregroundColor(Color("background.first"))
+                .frame(height: 40)
                 
         }
         .onTapGesture {

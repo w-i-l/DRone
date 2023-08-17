@@ -132,6 +132,7 @@ struct FlightInformation: View {
                                 action: {
                                     viewModel.getResponse()
                                     showNavigationLink = true
+                                    
                                 }, label: {
                                     ZStack {
                                         Color("accent.blue")
@@ -181,11 +182,6 @@ struct FlightInformation: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        .sheet(
-            isPresented: $viewModel.isDroneModalShown
-        ){
-            DroneTypeModal(viewModel: viewModel)
-        }
     }
 }
 

@@ -72,6 +72,9 @@ class RequestViewModel: BaseViewModel {
         )
     }
     
+    // all flights
+    @Published var allFlightsRequest = [RequestFormModel]()
+    
     @Published var screenIndex = 0
 
     var changeLocationViewModel: ChangeLocationViewModel = .init(adressToFetchLocation: .constant(nil))
@@ -101,7 +104,8 @@ class RequestViewModel: BaseViewModel {
     }
     
     func getResponse() {
-        ResponseService.shared.getResponse(formModel: RequestFormModel(
+        
+        let formModel = RequestFormModel(
             firstName: firstName,
             lastName: lastName,
             CNP: CNP,
@@ -111,13 +115,17 @@ class RequestViewModel: BaseViewModel {
             droneType: droneType,
             takeoffTime: takeoffTime,
             landingTime: landingTime,
-            flightLocation: CLLocationCoordinate2D()
-        ))
+            flightLocation: CLLocationCoordinate2D(),
+            requestState: .accepted
+        )
+        
+        ResponseService.shared.getResponse(formModel: formModel)
         .receive(on: DispatchQueue.main)
         .sink { _ in
             
         } receiveValue: { value in
             self.response = value
+            self.allFlightsRequest.append(formModel.updatedRequestStatus(state: value))
         }
         .store(in: &bag)
 

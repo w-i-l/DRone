@@ -9,10 +9,10 @@ import Combine
 import Foundation
 import SwiftyJSON
 
-enum ResponseResult {
-    case rejected
-    case accepted
-    case pending
+enum ResponseResult: String {
+    case rejected = "Rejected"
+    case accepted = "Accepted"
+    case pending = "Pending"
 }
 
 class ResponseAPI {
@@ -24,7 +24,7 @@ class ResponseAPI {
     func getResponse(formModel: RequestFormModel) -> Future<ResponseResult, Error> {
         Future<ResponseResult, Error> { promise in
             
-            var urlComponents = URLComponents(string: "https://drone-ob9o.api.mocked.io/flight-request")
+            let urlComponents = URLComponents(string: "https://drone-ob9o.api.mocked.io/flight-request")
             
             var urlRequest = URLRequest(url: (urlComponents?.url)!)
             urlRequest.httpMethod = "POST"

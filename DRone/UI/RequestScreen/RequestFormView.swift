@@ -10,8 +10,10 @@ import SwiftUI
 struct RequestFormView: View {
     
     let view: [AnyView]
+    
     @State var offset: CGFloat = 0
     @ObservedObject var viewModel: RequestViewModel
+    
     @Environment(\.dismiss) private var dismiss
     
     let noOfItemsOffset: Int
@@ -49,15 +51,11 @@ struct RequestFormView: View {
             }
             //                }
             .onChange(of: viewModel.screenIndex) { newValue in
+                print(newValue)
                 offset = UIScreen.main.bounds.width * CGFloat(newValue)
             }
             .offset(x: view.count % 2 == 0 ? CGFloat(totalOffset) : 0)
             .offset(x: -offset)
-        }
-        .onAppear {
-            if viewModel.screenIndex != 3 {
-                AppService.shared.screenIndex.value = 0
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)

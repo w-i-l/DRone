@@ -6,5 +6,21 @@
 	<array>
 		<string>Abel-Regular.ttf</string>
 	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<dict>
+				<key>New item</key>
+				<dict>
+					<key>New item</key>
+					<string></string>
+				</dict>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>
