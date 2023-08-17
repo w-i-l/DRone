@@ -91,7 +91,13 @@ final class Navigation: NSObject {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setNavigationBar(isHidden: Bool) {
+        self.navigationController.navigationBar.isHidden = isHidden
+    }
+    
 }
+
 
 class BaseNavigationController: UIViewController {
     weak var navigation: Navigation!

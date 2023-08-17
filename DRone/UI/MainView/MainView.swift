@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct MainView: View {
-    
+    @EnvironmentObject private var navigation: Navigation
     @StateObject private var viewModel = MainViewModel()
     
     var body: some View {
-        NavigationView {
             ZStack{
                 
                 HomeView(
@@ -20,6 +19,8 @@ struct MainView: View {
                     isShowingAsChild: false
                 )
                 .opacity(viewModel.selectedTab == .home ? 1 : 0)
+                .environmentObject(navigation)
+                
                 
                 AllFlightRequestView(viewModel: RequestViewModel())
                     .opacity(viewModel.selectedTab == .request ? 1 : 0)
@@ -32,10 +33,6 @@ struct MainView: View {
                 }
                 .ignoresSafeArea()
             }
-        }
-        .navigationBarHidden(true)
-        
-        
     }
 }
 

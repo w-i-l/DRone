@@ -10,6 +10,7 @@ import SwiftUI
 struct ResponseView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var navigation: Navigation
     
     let image: String
     let title: String
@@ -47,7 +48,7 @@ struct ResponseView: View {
                 
                 if showButton {
                     Button {
-                        dismiss()
+                        navigation.popToRoot(animated: false)
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 20)

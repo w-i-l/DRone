@@ -22,6 +22,7 @@ struct RequestFormModel {
     let flightLocation: CLLocationCoordinate2D
     let dateRegistered = Date()
     var requestState: ResponseResult = .pending
+    var flightAdress: (mainAdress: String, secondaryAdress: String) = ("", "")
 }
 
 extension RequestFormModel: Encodable {
@@ -96,7 +97,24 @@ extension RequestFormModel {
             takeoffTime: self.takeoffTime ,
             landingTime: self.landingTime ,
             flightLocation: self.flightLocation,
-            requestState: state
+            requestState: state,
+            flightAdress: flightAdress
+        )
+    }
+    
+    func updateLocation(flightAdress: (mainAdress: String, secondaryAdress: String)) -> RequestFormModel {
+        RequestFormModel(
+            firstName: self.firstName ,
+            lastName: self.lastName ,
+            CNP: self.CNP ,
+            birthday: self.birthday ,
+            currentLocation: self.currentLocation ,
+            serialNumber: self.serialNumber ,
+            droneType: self.droneType ,
+            takeoffTime: self.takeoffTime ,
+            landingTime: self.landingTime ,
+            flightLocation: self.flightLocation,
+            flightAdress: flightAdress
         )
     }
 }

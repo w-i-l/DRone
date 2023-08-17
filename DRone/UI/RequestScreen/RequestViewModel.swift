@@ -53,6 +53,7 @@ class RequestViewModel: BaseViewModel {
     
     // response sttaus
     @Published var response: ResponseResult = .pending
+    @Published var showNavigationLink: Bool = false
     
     var flightCoordinates: CurrentValueSubject<CLLocationCoordinate2D?, Never> = .init(nil)
     private var flightCoordinatesBinding: Binding<CLLocationCoordinate2D?> {
@@ -105,7 +106,7 @@ class RequestViewModel: BaseViewModel {
     
     func getResponse() {
         
-        let formModel = RequestFormModel(
+        var formModel = RequestFormModel(
             firstName: firstName,
             lastName: lastName,
             CNP: CNP,
@@ -116,16 +117,18 @@ class RequestViewModel: BaseViewModel {
             takeoffTime: takeoffTime,
             landingTime: landingTime,
             flightLocation: CLLocationCoordinate2D(),
-            requestState: .accepted
+            requestState: .accepted,
+            flightAdress: self.flightLocation
         )
         
         ResponseService.shared.getResponse(formModel: formModel)
         .receive(on: DispatchQueue.main)
         .sink { _ in
             
-        } receiveValue: { value in
-            self.response = value
-            self.allFlightsRequest.append(formModel.updatedRequestStatus(state: value))
+        } receiveValue: { [weak self] value in
+            self?.response = value
+            self?.allFlightsRequest.append(formModel.updatedRequestStatus(state: value))
+            
         }
         .store(in: &bag)
 
@@ -142,6 +145,8 @@ class RequestViewModel: BaseViewModel {
         takeoffTime = Date()
         landingTime = Date()
         response = .pending
+        
+        showNavigationLink = false
         
         LocationService.shared.getAdressForCurrentLocation()
             .receive(on: DispatchQueue.main)

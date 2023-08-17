@@ -22,6 +22,9 @@ struct RequestDetailsView: View {
     
     var body: some View {
         VStack() {
+            
+            BackButton(text: "All requests")
+            
             ScrollView(showsIndicators: false) {
                 Text("Flight request with ID: A83D4BB1")
                     .foregroundColor(.white)

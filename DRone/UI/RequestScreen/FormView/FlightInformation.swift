@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FlightInformation: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var showNavigationLink: Bool = false
+   
     @ObservedObject var viewModel: RequestViewModel
     
     var body: some View {
@@ -131,7 +131,7 @@ struct FlightInformation: View {
                             Button(
                                 action: {
                                     viewModel.getResponse()
-                                    showNavigationLink = true
+                                    viewModel.showNavigationLink = true
                                     
                                 }, label: {
                                     ZStack {
@@ -168,7 +168,7 @@ struct FlightInformation: View {
                     .frame(minHeight: proxy.size.height)
                 }
             }
-            if showNavigationLink {
+            if viewModel.showNavigationLink {
                 ResponseScreen(viewModel: viewModel)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .navigationBarHidden(true)

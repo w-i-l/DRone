@@ -16,5 +16,7 @@ struct RootView: View {
     
     var body: some View {
         NavigationHostView(navigation: navigation)
+            .environmentObject(navigation)
+            .ignoresSafeArea()
     }
 }

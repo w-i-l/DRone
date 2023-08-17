@@ -72,7 +72,10 @@ struct SearchingView: View {
                 
                 Button {
                     
-                    guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
+                    guard let location = LocationService.shared.locationManager.location?.coordinate else {
+                        print("No location could be found!")
+                        return
+                    }
                     
                     viewModel.matchLocationWithCurrentLocation(location: location)
                     

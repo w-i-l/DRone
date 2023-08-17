@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @EnvironmentObject private var navigation: Navigation
     @StateObject var viewModel: HomeViewModel
     let isShowingAsChild: Bool
     
@@ -25,6 +26,7 @@ struct HomeView: View {
                     viewModel: viewModel,
                     isShowingAsChild: isShowingAsChild
                 )
+                .environmentObject(navigation)
                 
             case .failure :
                 HomeViewFailed(viewModel: viewModel)
@@ -34,12 +36,7 @@ struct HomeView: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-//        .refreshable {
-//            if viewModel.fetchingState != .loading {
-//                viewModel.updateUI()
-//            }
-//        }
-        
+       
         
     }
 }

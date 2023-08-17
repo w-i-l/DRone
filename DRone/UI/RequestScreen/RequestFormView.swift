@@ -35,56 +35,42 @@ struct RequestFormView: View {
     
     var body: some View {
         
-        HStack(spacing: 0) {
-            ForEach(0..<view.count) { no in
-                GeometryReader { proxy in
-                    VStack(spacing: 0){
-                        ProgressView(value: Float(viewModel.screenIndex) + 1, total: 4)
-                            .progressViewStyle(.linear)
-                            .accentColor(Color("accent.blue"))
-                        
-                        view[no]
+        VStack {
+            HStack(spacing: 0) {
+                ForEach(0..<view.count) { no in
+                    GeometryReader { proxy in
+                        VStack(spacing: 0){
+                            if !viewModel.showNavigationLink {
+                                BackButton(text: viewModel.screenIndex == 0 ? "Personal infos" : "Back", action:
+                                            viewModel.screenIndex == 0 ? {dismiss()} : {AppService.shared.screenIndex.value -= 1}
+                                )
+                                
+                                ProgressView(value: Float(viewModel.screenIndex) + 1, total: 4)
+                                    .progressViewStyle(.linear)
+                                    .accentColor(Color("accent.blue"))
+                            }
+                            
+                            view[no]
+                        }
+                    }
+                    .frame(width: UIScreen.main.bounds.width)
+                    
+                }
+                //                }
+                .onChange(of: viewModel.screenIndex) { newValue in
+                    print(newValue)
+                    withAnimation(.none){
+                        offset = UIScreen.main.bounds.width * CGFloat(newValue)
                     }
                 }
-                .frame(width: UIScreen.main.bounds.width)
-                
+                .offset(x: view.count % 2 == 0 ? CGFloat(totalOffset) : 0)
+                .offset(x: -offset)
             }
-            //                }
-            .onChange(of: viewModel.screenIndex) { newValue in
-                print(newValue)
-                offset = UIScreen.main.bounds.width * CGFloat(newValue)
-            }
-            .offset(x: view.count % 2 == 0 ? CGFloat(totalOffset) : 0)
-            .offset(x: -offset)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        .navigationBarItems(leading:
-                                
-                                Button(action: {
-            if viewModel.screenIndex >= 1 {
-                AppService.shared.screenIndex.value -= 1
-            } else if viewModel.screenIndex == 0 {
-                dismiss()
-            }
-        }) {
-            VStack(alignment: .leading) {
-                HStack(spacing: 14) {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 14, height: 14)
-                        .scaledToFit()
-                        .foregroundColor(.white)
-                    
-                    Text(viewModel.screenIndex == 0 ? "Personal infos" : "Back")
-                        .font(.abel(size: 24))
-                        .foregroundColor(.white)
-                }
-            }
-        })
     }
 }
 

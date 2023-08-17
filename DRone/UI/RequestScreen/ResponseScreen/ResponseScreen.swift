@@ -22,7 +22,7 @@ struct ResponseScreen: View {
                     subtitle: "Your submission is under review \n Submission ID: 312345",
                     captation: "You will receive a confirmation in a short time.",
                     showButton: true,
-                    buttonText: "Request another flight",
+                    buttonText: "See all requests",
                     buttonAction: {}
                 )
             case .accepted:
@@ -32,7 +32,7 @@ struct ResponseScreen: View {
                     subtitle: "Your submission was approved \n Confirmation ID: 312345",
                     captation: "Keep in mind to follow the local reglementations..",
                     showButton: true,
-                    buttonText: "Request another flight",
+                    buttonText: "See all requests",
                     buttonAction: {}
                 )
             case .rejected:
@@ -42,7 +42,7 @@ struct ResponseScreen: View {
                     subtitle: "Your submission didn’t fulfill the requirements.",
                     captation: "Reason: The hour that you requested are too early for a flight.",
                     showButton: true,
-                    buttonText: "Request another flight",
+                    buttonText: "See all requests",
                     buttonAction: {}
                 )
             }

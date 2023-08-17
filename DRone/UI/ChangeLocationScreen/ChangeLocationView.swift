@@ -15,27 +15,11 @@ struct ChangeLocationView: View {
     
     var body: some View {
         VStack {
+            
+            BackButton(text: "Back")
+            
             SearchingView(viewModel: viewModel.searchLocationViewModel)
         }
-        .navigationBarItems(leading:
-            Button {
-                dismiss()
-            } label: {
-                HStack(spacing: 14) {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 14, height: 14)
-                        .scaledToFit()
-                        .foregroundColor(.white)
-                    
-                    
-                    Text("Back")
-                        .font(.abel(size: 24))
-                        .foregroundColor(.white)
-                }
-            }
-        )
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
