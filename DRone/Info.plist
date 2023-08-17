@@ -13,13 +13,14 @@
 		<key>UISceneConfigurations</key>
 		<dict>
 			<key>UIWindowSceneSessionRoleApplication</key>
-			<dict>
-				<key>New item</key>
+			<array>
 				<dict>
-					<key>New item</key>
-					<string></string>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 				</dict>
-			</dict>
+			</array>
 		</dict>
 	</dict>
 </dict>
