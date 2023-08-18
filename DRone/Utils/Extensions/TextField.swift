@@ -37,3 +37,10 @@ struct CustomTextFieldStyle: TextFieldStyle {
     }
 }
 
+
+// dismiss keyboard
+extension View {
+    func dismissKeyboard() {
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+      }
+}

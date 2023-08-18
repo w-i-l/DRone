@@ -14,6 +14,7 @@ class WeatherForecastViewModel: BaseViewModel {
     @Published var fetchingState: FetchingState = .loading
     
     let daysOfWeek: [String]
+    let daysOfWeekDate: [String]
     
     init(location: CLLocationCoordinate2D) {
         
@@ -24,6 +25,15 @@ class WeatherForecastViewModel: BaseViewModel {
                 
                 let dateFormmater = DateFormatter()
                 dateFormmater.dateFormat = "EEEE"
+                
+                return dateFormmater.string(from: Date() + TimeInterval(secondsInDay * $0))
+            }
+        
+        daysOfWeekDate = (0..<7)
+            .map {
+                
+                let dateFormmater = DateFormatter()
+                dateFormmater.dateFormat = "dd MMMM"
                 
                 return dateFormmater.string(from: Date() + TimeInterval(secondsInDay * $0))
             }

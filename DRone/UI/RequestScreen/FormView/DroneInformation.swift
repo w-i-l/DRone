@@ -77,7 +77,7 @@ struct DroneInformation: View {
                                         .scaledToFit()
                                 }
                                 .padding(10)
-                            .background(Color("gray.background"))
+                                .background(Color("gray.background").cornerRadius(12))
                             })
                         }
                         .frame(maxWidth: .infinity)
@@ -91,6 +91,7 @@ struct DroneInformation: View {
                         Spacer()
                         Button {
                             AppService.shared.screenIndex.value = 3
+                            self.dismissKeyboard()
                         } label: {
                             ZStack {
                                 Color("accent.blue")

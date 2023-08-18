@@ -50,14 +50,25 @@ class RequestViewModel: BaseViewModel {
     @Published var takeoffTime: Date = Date()
     @Published var landingTime: Date = Date()
     @Published var flightLocation: (mainAdress: String, secondaryAdress: String) = ("", "")
+    @Published var flightDate: Date = Date()
     
     // response sttaus
     @Published var response: ResponseResult = .pending
     @Published var showNavigationLink: Bool = false
     
-    var sunsetHourToday: Date = Date()
+    var sunsetHourToday: Date {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        
+        let sunsetFormatter = DateFormatter()
+        sunsetFormatter.dateFormat = "dd/MM/yyyy, HH:mm"
+        return sunsetFormatter.date(from: "\(dateFormatter.string(from: self.flightDate) ), 20:00")!
+    }
     // 10 min
     let minimumFlightTime: TimeInterval = 10 * 60
+    // 30 days
+    let maximumDayToRequest: TimeInterval = 3600 * 24 * 30
     
     var flightCoordinates: CurrentValueSubject<CLLocationCoordinate2D?, Never> = .init(nil)
     private var flightCoordinatesBinding: Binding<CLLocationCoordinate2D?> {
@@ -80,19 +91,20 @@ class RequestViewModel: BaseViewModel {
     // all flights
     @Published var allFlightsRequest = [RequestFormModel]()
     
+    var upcomingFlights: [RequestFormModel] {
+        allFlightsRequest.sorted(by: { $0.flightDate > $1.flightDate }).filter { $0.flightDate >= Date() }
+    }
+        
+    var completedFlights: [RequestFormModel] {
+        allFlightsRequest.sorted(by: { $0.flightDate > $1.flightDate }).filter { $0.flightDate < Date() }
+    }
+    
     @Published var screenIndex = 0
 
     var changeLocationViewModel: ChangeLocationViewModel = .init(adressToFetchLocation: .constant(nil))
     
     override init() {
         super.init()
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        
-        let sunsetFormatter = DateFormatter()
-        sunsetFormatter.dateFormat = "dd/MM/yyyy, HH:mm"
-        self.sunsetHourToday = sunsetFormatter.date(from: "\(dateFormatter.string(from: Date()) ), 20:00")!
         
         changeLocationViewModel = ChangeLocationViewModel(adressToFetchLocation: self.flightCoordinatesBinding)
 
@@ -128,6 +140,7 @@ class RequestViewModel: BaseViewModel {
             takeoffTime: takeoffTime,
             landingTime: landingTime,
             flightLocation: CLLocationCoordinate2D(),
+            flightDate: flightDate,
             requestState: .accepted,
             flightAdress: self.flightLocation
         )
@@ -156,6 +169,7 @@ class RequestViewModel: BaseViewModel {
         takeoffTime = Date()
         landingTime = Date()
         response = .pending
+        flightDate = Date()
         
         showNavigationLink = false
         

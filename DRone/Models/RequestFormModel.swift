@@ -20,7 +20,7 @@ struct RequestFormModel {
     let takeoffTime: Date
     let landingTime: Date
     let flightLocation: CLLocationCoordinate2D
-    let dateRegistered = Date()
+    var flightDate = Date()
     var requestState: ResponseResult = .pending
     var flightAdress: (mainAdress: String, secondaryAdress: String) = ("", "")
 }
@@ -97,6 +97,7 @@ extension RequestFormModel {
             takeoffTime: self.takeoffTime ,
             landingTime: self.landingTime ,
             flightLocation: self.flightLocation,
+            flightDate: self.flightDate,
             requestState: state,
             flightAdress: flightAdress
         )
@@ -114,6 +115,7 @@ extension RequestFormModel {
             takeoffTime: self.takeoffTime ,
             landingTime: self.landingTime ,
             flightLocation: self.flightLocation,
+            flightDate: self.flightDate,
             flightAdress: flightAdress
         )
     }

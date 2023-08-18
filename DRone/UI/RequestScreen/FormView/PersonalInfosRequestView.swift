@@ -84,6 +84,7 @@ struct PersonalInfosRequest: View {
                                 Spacer()
                                 Button {
                                     AppService.shared.screenIndex.value = 1
+                                    self.dismissKeyboard()
                                         
                                     } label: {
                                         ZStack {

@@ -45,7 +45,7 @@ struct WeatherForecastView: View {
                                     } label: {
                                         // day of the week
                                         HStack {
-                                            Text(viewModel.daysOfWeek[dayOfWeek])
+                                            Text("\(viewModel.daysOfWeek[dayOfWeek]) - \(viewModel.daysOfWeekDate[dayOfWeek])")
                                                 .font(.abel(size: 24))
                                                 .foregroundColor(.white)
                                             

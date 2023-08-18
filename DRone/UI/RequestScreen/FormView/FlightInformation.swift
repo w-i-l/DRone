@@ -32,6 +32,30 @@ struct FlightInformation: View {
                         Spacer()
                         
                         VStack {
+                            
+                            // flight date
+                            HStack(spacing: 8) {
+                                Text("Flight date")
+                                    .foregroundColor(.white)
+                                    .font(.abel(size: 20))
+                                
+                                Spacer()
+                                
+                                DatePicker(selection: $viewModel.flightDate,
+                                           in: Date()...(Date() + viewModel.maximumDayToRequest),
+                                           displayedComponents: .date) {
+                                    Text("Date")
+                                        .foregroundColor(.white)
+                                        .font(.abel(size: 20))
+                                }
+                                           .labelsHidden()
+                                           .colorInvert()
+                                           .colorMultiply(Color.white)
+                                           .foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
+                                           .colorScheme(.light)
+                                
+                            }
+                            
                             // Takeoff number
                             HStack {
                                 VStack(spacing: 8) {
@@ -40,7 +64,7 @@ struct FlightInformation: View {
                                         .font(.abel(size: 20))
                                     
                                     DatePicker(selection: $viewModel.takeoffTime,
-                                               in: Date()...viewModel.sunsetHourToday,
+                                               in: ...viewModel.sunsetHourToday,
                                                displayedComponents: .hourAndMinute) {
                                         Text("Date")
                                             .foregroundColor(.white)
@@ -99,6 +123,7 @@ struct FlightInformation: View {
                                                 navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
                                             }
                                             .asDestination(), animated: true)
+                                        self.dismissKeyboard()
                                     }, label: {
                                         HStack(spacing: 14) {
                                             Image(systemName: "mappin.circle")
@@ -122,7 +147,7 @@ struct FlightInformation: View {
                                         }
                                         .padding(.vertical, 4)
                                         .padding(.horizontal, 10)
-                                        .background(Color("gray.background"))
+                                        .background(Color("gray.background").cornerRadius(12))
                                     })
                             }
                             .frame(maxWidth: .infinity)
