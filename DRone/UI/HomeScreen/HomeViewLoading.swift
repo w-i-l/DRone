@@ -12,6 +12,8 @@ struct HomeViewLoading: View {
     private let width = UIScreen.main.bounds.width
     private let height = UIScreen.main.bounds.height
     
+    let isShowingAsChild: Bool
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
@@ -136,36 +138,38 @@ struct HomeViewLoading: View {
                 .frame(height: UIScreen.main.bounds.height / 8)
                 .padding(.top, 20)
                 
-                // see more button
-                NavigationLink {
-                    
-                } label: {
-                    ZStack(alignment: .trailing) {
-                        Color("gray.background")
-                            .cornerRadius(12)
-                        HStack {
-                            
-                            Text("See more infos ")
-                                .font(.abel(size: 20))
-                                .foregroundColor(.white)
-                                .padding(.vertical, 12)
-                            
-                            
-                            
-                            Image(systemName: "arrow.forward")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(.white)
-                                .frame(width: 14, height: 14)
-                                .padding(.trailing, 20)
-                        }
+                if !isShowingAsChild {
+                    // see more button
+                    Button {
                         
+                    } label: {
+                        ZStack(alignment: .trailing) {
+                            Color("gray.background")
+                                .cornerRadius(12)
+                            HStack {
+                                
+                                Text("See more infos ")
+                                    .font(.abel(size: 20))
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 12)
+                                
+                                
+                                
+                                Image(systemName: "arrow.forward")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(.white)
+                                    .frame(width: 14, height: 14)
+                                    .padding(.trailing, 20)
+                            }
+                            
+                        }
                     }
+                    .frame(width: 180)
+                    .frame(height: 55)
+                    .padding(.top, 30)
+                    .disabled(true)
                 }
-                .frame(width: 180)
-                .frame(height: 55)
-                .padding(.top, 30)
-                .disabled(true)
             }
             .padding(.horizontal, 20)
         }
@@ -180,6 +184,6 @@ struct HomeViewLoading: View {
 
 struct HomeViewShimmer_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewLoading()
+        HomeViewLoading(isShowingAsChild: false)
     }
 }

@@ -20,6 +20,16 @@ struct ResponseView: View {
     let buttonText: String
     let buttonAction: () -> Void
     
+    init(image: String, title: String, subtitle: String, captation: String, showButton: Bool = false, buttonText: String = "Request another flight", buttonAction: @escaping () -> Void = {}) {
+        self.image = image
+        self.title = title
+        self.subtitle = subtitle
+        self.captation = captation
+        self.showButton = showButton
+        self.buttonText = buttonText
+        self.buttonAction = buttonAction
+        
+    }
     
     var body: some View {
         GeometryReader { proxy in
@@ -48,6 +58,7 @@ struct ResponseView: View {
                 
                 if showButton {
                     Button {
+                        self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
                         navigation.popToRoot(animated: false)
                     } label: {
                         ZStack {
@@ -72,15 +83,7 @@ struct ResponseView: View {
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    init(image: String, title: String, subtitle: String, captation: String, showButton: Bool = false, buttonText: String = "Request another flight", buttonAction: @escaping () -> Void = {}) {
-        self.image = image
-        self.title = title
-        self.subtitle = subtitle
-        self.captation = captation
-        self.showButton = showButton
-        self.buttonText = buttonText
-        self.buttonAction = buttonAction
-    }
+
 }
 
 extension ResponseView: Identifiable {

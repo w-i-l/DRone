@@ -18,7 +18,7 @@ struct HomeView: View {
             switch viewModel.fetchingState {
             case .loading :
                 
-                HomeViewLoading()
+                HomeViewLoading(isShowingAsChild: isShowingAsChild)
                 Spacer()
                 
             case .loaded:

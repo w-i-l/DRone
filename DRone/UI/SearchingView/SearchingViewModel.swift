@@ -42,7 +42,7 @@ class SearchingViewModel: BaseViewModel {
                 self?.updateLocation()
             }
             .store(in: &bag)
-
+        adressToFetchLocation = location
     }
     
     func updateLocation() {

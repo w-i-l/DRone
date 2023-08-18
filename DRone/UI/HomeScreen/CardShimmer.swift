@@ -13,7 +13,7 @@ struct CardShimmer: View {
     let secondGrayColor = Color(red: 0.8, green: 0.8, blue: 0.8)
     let thirdGrayColot = Color(red: 0.75, green: 0.75, blue: 0.75)
     let fourthGrayColor = Color(red: 0.7, green: 0.7, blue: 0.7)
-    let finalGrayColor = Color(red: 0.65, green: 0.65, blue: 0.65)
+    let finalGrayColor = Color(red: 0.55, green: 0.55, blue: 0.55)
 
 
     let gradients: [Gradient]
@@ -63,18 +63,18 @@ struct CardShimmer: View {
         gradients = [
             Gradient(stops: [
                 .init(color: finalGrayColor, location: 0),
-                .init(color: finalGrayColor, location: 1)
+                .init(color: fourthGrayColor, location: 1)
             ]),
 //            Gradient(stops: [
 //                .init(color: firstGrayColor, location: 0),
 //                .init(color: finalGrayColor, location: 1)
 //            ]),
             Gradient(stops: [
-                .init(color: firstGrayColor, location: 0),
-                .init(color: firstGrayColor, location: 0.25),
-                .init(color: thirdGrayColot, location: 0.5),
+                .init(color: finalGrayColor, location: 0),
+                .init(color: finalGrayColor, location: 0.25),
+                .init(color: finalGrayColor, location: 0.5),
                 .init(color: fourthGrayColor, location: 0.75),
-                .init(color: finalGrayColor, location: 1)
+                .init(color: fourthGrayColor, location: 1)
             ])
 //            Gradient(stops: [
 //                .init(color: firstGrayColor, location: 0),

@@ -29,7 +29,8 @@ struct HomeViewLoaded: View {
                     HStack {
                         // current location
                         Button {
-                            navigation.push( ChangeLocationView(viewModel: ChangeLocationViewModel(adressToFetchLocation: $viewModel.addressToFetchLocation)).asDestination(), animated: true)
+                            navigation.push( ChangeLocationView(viewModel: ChangeLocationViewModel(adressToFetchLocation: $viewModel.addressToFetchLocation))
+                                .onDisappear{ viewModel.updateUI() }.asDestination(), animated: true)
                         } label: {
                             HStack(spacing: 0) {
                                 VStack(alignment: .leading, spacing: 5) {
