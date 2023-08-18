@@ -13,6 +13,7 @@ struct RequestFormView: View {
     
     @State var offset: CGFloat = 0
     @ObservedObject var viewModel: RequestViewModel
+    @ObservedObject private var navigation: Navigation
     
     @Environment(\.dismiss) private var dismiss
     
@@ -31,6 +32,8 @@ struct RequestFormView: View {
         
         noOfItemsOffset = ((view.count - 2) / 2)
         totalOffset = CGFloat(UIScreen.main.bounds.width * (CGFloat(noOfItemsOffset) + 0.5))
+        
+        self.navigation = SceneDelegate.navigation
     }
     
     var body: some View {
@@ -48,6 +51,8 @@ struct RequestFormView: View {
                                 ProgressView(value: Float(viewModel.screenIndex) + 1, total: 4)
                                     .progressViewStyle(.linear)
                                     .accentColor(Color("accent.blue"))
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 0)
                             }
                             
                             view[no]
@@ -58,9 +63,15 @@ struct RequestFormView: View {
                 }
                 //                }
                 .onChange(of: viewModel.screenIndex) { newValue in
-                    print(newValue)
+                    
                     withAnimation(.none){
                         offset = UIScreen.main.bounds.width * CGFloat(newValue)
+                    }
+                    
+                    if newValue == 0 {
+                        navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
+                    } else {
+                        navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
                     }
                 }
                 .offset(x: view.count % 2 == 0 ? CGFloat(totalOffset) : 0)
@@ -70,6 +81,21 @@ struct RequestFormView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
+        )
+        .gesture(
+            
+                DragGesture()
+                    .onEnded({ drag in
+                        guard drag.startLocation.x <= 650 else { return }
+                        guard viewModel.showNavigationLink == false else { return }
+                        if viewModel.screenIndex > 0  {
+                            withAnimation(.default) {
+                                AppService.shared.screenIndex.value -= 1
+                            }
+                        } else {
+                            navigation.pop(animated: true)
+                        }
+                    })
         )
     }
 }

@@ -21,21 +21,11 @@ class RequestDetailsViewModel: BaseViewModel {
         landingTime: Date(),
         flightLocation: CLLocationCoordinate2D()
     )
-    @Published var flightLocationToDisplay: (mainAdress: String, secondaryAdress: String) = ("", "")
     
     init(formModel: RequestFormModel) {
         super.init()
         
         self.formModel = formModel
-        
-        LocationService.shared.getAdressForLocation(location: formModel.flightLocation)
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { value in
-                self.flightLocationToDisplay = value
-            }
-            .store(in: &bag)
 
     }
 }

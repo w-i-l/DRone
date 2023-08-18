@@ -30,11 +30,11 @@ struct RequestDetailsView: View {
                     .foregroundColor(.white)
                     .font(.abel(size: 32))
                 
-                Image("accepted.image")
+                Image(viewModel.formModel.requestState == .accepted ? "accepted.image" : (viewModel.formModel.requestState == .pending ? "waiting.image" : "rejected.image"))
                     .resizable()
                     .frame(width: 125, height: 125)
                 
-                Text("Accepted")
+                Text(viewModel.formModel.requestState.rawValue)
                     .foregroundColor(.white)
                     .font(.abel(size: 24))
                 
@@ -60,7 +60,7 @@ struct RequestDetailsView: View {
                     ("Flight information", [
                         ("Takeoff time", hourFormatter.string(from: viewModel.formModel.takeoffTime)),
                         ("Landing time", hourFormatter.string(from: viewModel.formModel.landingTime)),
-                        ("Location", viewModel.flightLocationToDisplay.secondaryAdress)
+                        ("Location", "\(viewModel.formModel.flightAdress.secondaryAdress), \(viewModel.formModel.flightAdress.mainAdress)")
                     ])
                 ], id: \.0) { item in
                     VStack(alignment: .leading, spacing: 0) {

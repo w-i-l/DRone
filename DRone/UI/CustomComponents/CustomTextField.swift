@@ -14,7 +14,7 @@ struct CustomTextField: View {
     let isTextGood: () -> Bool
     
     @StateObject var viewModel = CustomTextFieldViewModel()
-    
+    @State private var textFieldDidReturn: Bool = false
     
     private static var focusedTextFieldID: Int = 0
     private static var textFieldIndex: Int = 0
@@ -30,13 +30,17 @@ struct CustomTextField: View {
                 .frame(height: 40)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(viewModel.textFieldID == viewModel.focusedTextFieldID ? Color("accent.blue") : .white, lineWidth: 3)
+                        .stroke((viewModel.textFieldID == viewModel.focusedTextFieldID && !textFieldDidReturn) ? Color("accent.blue") : .white, lineWidth: 3)
                 )
                 .onTapGesture {
                     isFocused = true
                 }
             
-            TextField("", text: $text)
+            TextField("", text: $text, onEditingChanged: { _ in
+                
+            }, onCommit: {
+                textFieldDidReturn = true
+            })
                 .placeholder(when: text.isEmpty) {
                     Text(placeholderText)
                         .foregroundColor(Color("subtitle.gray"))
@@ -49,6 +53,7 @@ struct CustomTextField: View {
         }
         .onTapGesture {
             AppService.shared.focusedTextFieldID.value = viewModel.textFieldID
+            self.textFieldDidReturn = false
         }
     }
     

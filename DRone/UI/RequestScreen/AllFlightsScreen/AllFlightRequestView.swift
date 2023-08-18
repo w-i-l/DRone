@@ -76,7 +76,7 @@ struct AllFlightRequestView: View {
                 
             } else {
                 ScrollView(showsIndicators: false) {
-                    ForEach(viewModel.allFlightsRequest, id: \.self) { flightRequest in
+                    ForEach(viewModel.allFlightsRequest.sorted(by: { $0.dateRegistered > $1.dateRegistered }), id: \.self) { flightRequest in
                         VStack(spacing: 12) {
                             
                             Button {

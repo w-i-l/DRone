@@ -11,6 +11,7 @@ struct FlightInformation: View {
     @Environment(\.dismiss) private var dismiss
    
     @ObservedObject var viewModel: RequestViewModel
+    @EnvironmentObject private var navigation: Navigation
     
     var body: some View {
         ZStack {
@@ -84,13 +85,19 @@ struct FlightInformation: View {
                                     .foregroundColor(.white)
                                     .font(.abel(size: 20))
                                 
-                                NavigationLink(
-                                    destination: {
+                                Button(
+                                    action: {
+                                        navigation.push(
                                         ChangeLocationView(viewModel: viewModel.changeLocationViewModel)
                                             .navigationBarBackButtonHidden(true)
                                             .onAppear {
                                                 viewModel.changeLocationViewModel.searchLocationViewModel.textSearched = ""
+                                                navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
                                             }
+                                            .onDisappear {
+                                                navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
+                                            }
+                                            .asDestination(), animated: true)
                                     }, label: {
                                         HStack(spacing: 14) {
                                             Image(systemName: "mappin.circle")
