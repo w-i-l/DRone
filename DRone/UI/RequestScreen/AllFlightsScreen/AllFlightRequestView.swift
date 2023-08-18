@@ -264,7 +264,7 @@ struct AllFlightRequestView: View {
                     }, label: {
                         ZStack {
                             Color("accent.blue")
-                                .cornerRadius(20)
+                                .cornerRadius(12)
                                 .frame(height: 40)
                             
                             HStack {

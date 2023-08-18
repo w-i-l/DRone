@@ -9,6 +9,19 @@ import SwiftUI
 import CoreLocation
 import AlertToast
 
+struct ShareSheet: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ShareSheet>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareSheet>) {
+        // Update if needed
+    }
+}
+
 struct RequestDetailsView: View {
     
     @StateObject var viewModel: RequestDetailsViewModel
@@ -27,9 +40,27 @@ struct RequestDetailsView: View {
     var body: some View {
         VStack() {
             
-            BackButton(text: "All requests")
+            BackButton(text: "All requests", trailingItems: {
+                Button {
+                    navigation.presentModal(ShareSheet(activityItems: [viewModel.formModel.requestID]).asDestination(), animated: true) {
+                        
+                    } controllerConfig: { _ in
+                        
+                    }
+
+                    
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .resizable()
+                        .foregroundColor(.white)
+                        .frame(width: 20, height: 20)
+                        .scaledToFit()
+                }
+                
+            })
             
             ScrollView(showsIndicators: false) {
+
                 VStack {
                     Text("Flight request with ID:")
                         .foregroundColor(.white)
