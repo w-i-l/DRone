@@ -61,8 +61,8 @@ class WeatherService: BaseViewModel {
         //        cachedCurrentLocationWeather.getPublisher()
     }
     
-    func getWeatherForLocationWeekPrognosis(location: CLLocationCoordinate2D) -> AnyPublisher<[LocationWeatherModel], Error> {
-        WeatherAPI.shared.getWeatherForLocationWeekPrognosis(location: location)
+    func getWeatherForLocationWeekForecast(location: CLLocationCoordinate2D) -> AnyPublisher<[LocationWeatherModel], Error> {
+        WeatherAPI.shared.getWeatherForLocationWeekForecast(location: location)
             .eraseToAnyPublisher()
     }
     

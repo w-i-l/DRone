@@ -40,7 +40,7 @@ struct FlightInformation: View {
                                         .font(.abel(size: 20))
                                     
                                     DatePicker(selection: $viewModel.takeoffTime,
-                                               in: Date()...,
+                                               in: Date()...viewModel.sunsetHourToday,
                                                displayedComponents: .hourAndMinute) {
                                         Text("Date")
                                             .foregroundColor(.white)
@@ -61,8 +61,9 @@ struct FlightInformation: View {
                                         .foregroundColor(.white)
                                         .font(.abel(size: 20))
                                     
+                                    // AT LEAST 10 MINUTES DIFFERENCE
                                     DatePicker(selection: $viewModel.landingTime,
-                                               in: viewModel.takeoffTime...,
+                                               in: (viewModel.takeoffTime + viewModel.minimumFlightTime)...(viewModel.sunsetHourToday + viewModel.minimumFlightTime),
                                                displayedComponents: .hourAndMinute) {
                                         Text("Date")
                                             .foregroundColor(.white)

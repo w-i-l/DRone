@@ -20,7 +20,7 @@ struct HomeViewLoaded: View {
             
             if isShowingAsChild {
                 // back button
-                BackButton(text: "Weekly prognosis")
+                BackButton(text: "Weekly forecast")
             }
             
             ScrollView(showsIndicators: false) {
@@ -29,8 +29,8 @@ struct HomeViewLoaded: View {
                     HStack {
                         // current location
                         Button {
-                            navigation.push( ChangeLocationView(viewModel: ChangeLocationViewModel(adressToFetchLocation: $viewModel.addressToFetchLocation))
-                                .onDisappear{ viewModel.updateUI() }.asDestination(), animated: true)
+                            navigation.push( ChangeLocationView(viewModel: viewModel.changeLocationViewModel)
+                                .onAppear{ viewModel.changeLocationViewModel.searchLocationViewModel.textSearched = "" }.asDestination(), animated: true)
                         } label: {
                             HStack(spacing: 0) {
                                 VStack(alignment: .leading, spacing: 5) {
@@ -87,6 +87,7 @@ struct HomeViewLoaded: View {
                             .renderingMode(.template)
                             .foregroundColor(.white)
                             .frame(width: 100, height: 100)
+                            .scaledToFit()
                     }
                     .padding(.top, 32)
                     
@@ -125,6 +126,7 @@ struct HomeViewLoaded: View {
                                         .renderingMode(.template)
                                         .foregroundColor(.white)
                                         .frame(width: 40, height: 40)
+                                        .scaledToFit()
                                     
                                     Text(item.1)
                                         .font(.abel(size: 16))
@@ -146,7 +148,7 @@ struct HomeViewLoaded: View {
                     HStack(spacing: 15) {
                         ForEach( [
                             ("Wind \ndirection", viewModel.locationWeatherModel.windDirection),
-                            ("Satellites \navailible", "\(viewModel.locationWeatherModel.satellites)"),
+                            ("Satellites \navailable", "\(viewModel.locationWeatherModel.satellites)"),
                             ("Visibility", "\(viewModel.locationWeatherModel.visibility) km")
                         ], id: \.0) { item in
                             
@@ -184,7 +186,7 @@ struct HomeViewLoaded: View {
                     if !isShowingAsChild {
                         // see more button
                         Button {
-                            navigation.push(WeatherPrognosisView(viewModel: WeatherPrognosisViewModel(location: viewModel.addressToFetchLocation!)).asDestination(), animated: true)
+                            navigation.push(WeatherForecastView(viewModel: WeatherForecastViewModel(location: viewModel.addressToFetchLocation!)).asDestination(), animated: true)
                         } label: {
                             ZStack(alignment: .trailing) {
                                 Color("accent.blue")
@@ -204,6 +206,7 @@ struct HomeViewLoaded: View {
                                         .foregroundColor(Color("background.first"))
                                         .frame(width: 14, height: 14)
                                         .padding(.trailing, 20)
+                                        .scaledToFit()
                                 }
                                 
                             }

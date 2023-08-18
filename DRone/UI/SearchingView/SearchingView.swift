@@ -110,6 +110,7 @@ struct SearchingView: View {
                                     .renderingMode(.template)
                                     .foregroundColor(Color("subtitle.gray"))
                                     .frame(width: 14, height: 14)
+                                    .scaledToFit()
                                 
                                 
                                 Text(item.addressName)

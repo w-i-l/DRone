@@ -1,5 +1,5 @@
 //
-//  WeatherPrognosisView.swift
+//  WeatherForecastView.swift
 //  DRone
 //
 //  Created by Mihai Ocnaru on 09.08.2023.
@@ -8,11 +8,11 @@
 import SwiftUI
 import CoreLocation
 
-struct WeatherPrognosisView: View {
+struct WeatherForecastView: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var navigation: Navigation
-    @StateObject var viewModel: WeatherPrognosisViewModel
+    @StateObject var viewModel: WeatherForecastViewModel
     
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct WeatherPrognosisView: View {
                     
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 35) {
-                            Text("Weather - 7 days prognosis")
+                            Text("Weather - 7 days forecast")
                                 .foregroundColor(.white)
                                 .font(.abel(size: 32))
                             
@@ -39,7 +39,7 @@ struct WeatherPrognosisView: View {
                                     Button {
                                         
                                         navigation.push(HomeView(viewModel: HomeViewModel(
-                                            locationWeatherModel: viewModel.weaTherWeekPrognosis[dayOfWeek]), isShowingAsChild: true
+                                            locationWeatherModel: viewModel.weaTherWeekForecast[dayOfWeek]), isShowingAsChild: true
                                         ).asDestination(), animated: true)
                                         
                                     } label: {
@@ -70,7 +70,7 @@ struct WeatherPrognosisView: View {
                                                 .frame(width: UIScreen.main.bounds.width / 4,  height: UIScreen.main.bounds.width / 4)
                                                 .cornerRadius(12)
                                             
-                                            Text("\(viewModel.weaTherWeekPrognosis[dayOfWeek].temperature) ºC")
+                                            Text("\(viewModel.weaTherWeekForecast[dayOfWeek].temperature) ºC")
                                                 .font(.abel(size: 36))
                                                 .foregroundColor(.white)
                                         }
@@ -84,7 +84,7 @@ struct WeatherPrognosisView: View {
                                                 .frame(width: UIScreen.main.bounds.width / 4,  height: UIScreen.main.bounds.width / 4)
                                                 .cornerRadius(12)
                                             
-                                            Image(systemName: viewModel.weaTherWeekPrognosis[dayOfWeek].weatherIcon)
+                                            Image(systemName: viewModel.weaTherWeekForecast[dayOfWeek].weatherIcon)
                                                 .resizable()
                                                 .frame(width: UIScreen.main.bounds.width / 7, height: UIScreen.main.bounds.width / 7)
                                                 .scaledToFit()
@@ -105,7 +105,7 @@ struct WeatherPrognosisView: View {
                                                     .frame(width: UIScreen.main.bounds.width / 12, height: UIScreen.main.bounds.width / 12)
                                                     .scaledToFit()
                                                 
-                                                Text("\(viewModel.weaTherWeekPrognosis[dayOfWeek].windSpeed) km/h")
+                                                Text("\(viewModel.weaTherWeekForecast[dayOfWeek].windSpeed) km/h")
                                             }
                                         }
                                     }
@@ -132,8 +132,8 @@ struct WeatherPrognosisView: View {
     }
 }
 
-struct WeatherPrognosisView_Previews: PreviewProvider {
+struct WeatherForecastView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherPrognosisView(viewModel: WeatherPrognosisViewModel(location: CLLocationCoordinate2D()))
+        WeatherForecastView(viewModel: WeatherForecastViewModel(location: CLLocationCoordinate2D()))
     }
 }

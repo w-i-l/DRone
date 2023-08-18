@@ -40,6 +40,7 @@ struct TabBar: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 24)
                             .foregroundColor(viewModel.selectedTab == item.0 ? Color("accent.blue") : .white)
+                            .scaledToFit()
                     })
                     
                     Spacer()

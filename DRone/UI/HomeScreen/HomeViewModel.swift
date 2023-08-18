@@ -27,6 +27,15 @@ class HomeViewModel : BaseViewModel {
     )
     @Published var weatherVerdict: (String, [Color]) = ("", [])
     @Published var addressToFetchLocation: CLLocationCoordinate2D?
+    @Published var changeLocationViewModel: ChangeLocationViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
+    
+    var addressToFetchLocationBinding: Binding<CLLocationCoordinate2D?> = .init {
+        CLLocationCoordinate2D()
+    } set: { _ in
+        
+    }
+
+
     
     override init() {
         super.init()
@@ -43,6 +52,14 @@ class HomeViewModel : BaseViewModel {
        
         guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
         self.addressToFetchLocation = location
+        
+        addressToFetchLocationBinding = .init(get: {
+            self.addressToFetchLocation
+        }, set: { newValue in
+            self.addressToFetchLocation = newValue
+        })
+        
+        self.changeLocationViewModel = .init(adressToFetchLocation: addressToFetchLocationBinding)
         
     }
     
@@ -64,7 +81,13 @@ class HomeViewModel : BaseViewModel {
         guard let location = LocationService.shared.locationManager.location?.coordinate else { return }
         self.addressToFetchLocation = location
         
+        addressToFetchLocationBinding = .init(get: {
+            self.addressToFetchLocation
+        }, set: { newValue in
+            self.addressToFetchLocation = newValue
+        })
         
+        self.changeLocationViewModel = .init(adressToFetchLocation: addressToFetchLocationBinding)
     }
     
     func updateUI() {

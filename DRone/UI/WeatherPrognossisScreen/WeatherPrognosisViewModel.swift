@@ -1,5 +1,5 @@
 //
-//  WeatherPrognosisViewModel.swift
+//  WeatherForecastViewModel.swift
 //  DRone
 //
 //  Created by Mihai Ocnaru on 09.08.2023.
@@ -8,9 +8,9 @@
 import Foundation
 import CoreLocation
 
-class WeatherPrognosisViewModel: BaseViewModel {
+class WeatherForecastViewModel: BaseViewModel {
     
-    @Published var weaTherWeekPrognosis = [LocationWeatherModel]()
+    @Published var weaTherWeekForecast = [LocationWeatherModel]()
     @Published var fetchingState: FetchingState = .loading
     
     let daysOfWeek: [String]
@@ -31,12 +31,12 @@ class WeatherPrognosisViewModel: BaseViewModel {
         super.init()
         
 //        guard let location = LocationService.shared.locationManager.location?.coordinate else { print("Can't get location"); return }
-        WeatherService.shared.getWeatherForLocationWeekPrognosis(location: location)
+        WeatherService.shared.getWeatherForLocationWeekForecast(location: location)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { [weak self] value in
-                self?.weaTherWeekPrognosis = (0..<7)
+                self?.weaTherWeekForecast = (0..<7)
                     .map {
                         let item = value[$0]
                         return LocationWeatherModel(

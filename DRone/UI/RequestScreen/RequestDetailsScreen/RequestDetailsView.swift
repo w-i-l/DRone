@@ -33,6 +33,7 @@ struct RequestDetailsView: View {
                 Image(viewModel.formModel.requestState == .accepted ? "accepted.image" : (viewModel.formModel.requestState == .pending ? "waiting.image" : "rejected.image"))
                     .resizable()
                     .frame(width: 125, height: 125)
+                    .scaledToFit()
                 
                 Text(viewModel.formModel.requestState.rawValue)
                     .foregroundColor(.white)
@@ -111,7 +112,7 @@ struct RequestDetailsView_Previews: PreviewProvider {
             birthday: Date(),
             currentLocation: CLLocationCoordinate2D(),
             serialNumber: "F7D2K01",
-            droneType: .agrar,
+            droneType: .agricultural,
             takeoffTime: Date(),
             landingTime: Date(),
             flightLocation: CLLocationCoordinate2D()

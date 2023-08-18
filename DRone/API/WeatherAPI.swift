@@ -148,7 +148,7 @@ class WeatherAPI {
         }
     }
     
-    func getWeatherForLocationWeekPrognosis(location: CLLocationCoordinate2D) -> Future<[LocationWeatherModel], Error> {
+    func getWeatherForLocationWeekForecast(location: CLLocationCoordinate2D) -> Future<[LocationWeatherModel], Error> {
         Future<[LocationWeatherModel], Error> { promise in
             
             var urlComponents = URLComponents(string: "https://api.open-meteo.com/v1/forecast")

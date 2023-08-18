@@ -15,6 +15,7 @@ struct CustomTextField: View {
     
     @StateObject var viewModel = CustomTextFieldViewModel()
     @State private var textFieldDidReturn: Bool = false
+    @State private var strokeColor: Color = .white
     
     private static var focusedTextFieldID: Int = 0
     private static var textFieldIndex: Int = 0
@@ -30,7 +31,7 @@ struct CustomTextField: View {
                 .frame(height: 40)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke((viewModel.textFieldID == viewModel.focusedTextFieldID && !textFieldDidReturn) ? Color("accent.blue") : .white, lineWidth: 3)
+                        .stroke(strokeColor, lineWidth: 3)
                 )
                 .onTapGesture {
                     isFocused = true
@@ -51,6 +52,20 @@ struct CustomTextField: View {
                 .frame(height: 40)
                 
         }
+        .onChange(of: textFieldDidReturn, perform: { newValue in
+            if !newValue && viewModel.textFieldID == viewModel.focusedTextFieldID {
+                strokeColor = Color("accent.blue")
+            } else {
+                strokeColor = .white
+            }
+        })
+        .onChange(of: viewModel.focusedTextFieldID, perform: { newValue in
+            if newValue == viewModel.textFieldID && !textFieldDidReturn{
+                strokeColor = Color("accent.blue")
+            } else {
+                strokeColor = .white
+            }
+        })
         .onTapGesture {
             AppService.shared.focusedTextFieldID.value = viewModel.textFieldID
             self.textFieldDidReturn = false

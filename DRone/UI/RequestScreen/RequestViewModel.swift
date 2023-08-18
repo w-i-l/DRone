@@ -10,14 +10,14 @@ import CoreLocation
 import Combine
 
 enum DroneType: CaseIterable {
-    case agrar
+    case agricultural
     case toy
     case photography
     case military
     
     var associatedValues: (type: String, weight: ClosedRange<Double>) {
         switch self {
-        case .agrar:
+        case .agricultural:
             return ("Agrar", 1.5...2.5)
         case .toy:
             return ("Toy", 0.1...0.3)
@@ -55,6 +55,10 @@ class RequestViewModel: BaseViewModel {
     @Published var response: ResponseResult = .pending
     @Published var showNavigationLink: Bool = false
     
+    var sunsetHourToday: Date = Date()
+    // 10 min
+    let minimumFlightTime: TimeInterval = 10 * 60
+    
     var flightCoordinates: CurrentValueSubject<CLLocationCoordinate2D?, Never> = .init(nil)
     private var flightCoordinatesBinding: Binding<CLLocationCoordinate2D?> {
         Binding<CLLocationCoordinate2D?>(
@@ -83,6 +87,13 @@ class RequestViewModel: BaseViewModel {
     override init() {
         super.init()
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        
+        let sunsetFormatter = DateFormatter()
+        sunsetFormatter.dateFormat = "dd/MM/yyyy, HH:mm"
+        self.sunsetHourToday = sunsetFormatter.date(from: "\(dateFormatter.string(from: Date()) ), 20:00")!
+        
         changeLocationViewModel = ChangeLocationViewModel(adressToFetchLocation: self.flightCoordinatesBinding)
 
         AppService.shared.screenIndex
@@ -106,7 +117,7 @@ class RequestViewModel: BaseViewModel {
     
     func getResponse() {
         
-        var formModel = RequestFormModel(
+        let formModel = RequestFormModel(
             firstName: firstName,
             lastName: lastName,
             CNP: CNP,

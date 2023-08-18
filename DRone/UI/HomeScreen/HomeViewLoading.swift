@@ -83,6 +83,7 @@ struct HomeViewLoading: View {
                                         .renderingMode(.template)
                                         .foregroundColor(.white)
                                         .frame(width: 40, height: 40)
+                                        .scaledToFit()
                                     
                                     Text(item.1)
                                         .font(.abel(size: 16))
@@ -161,6 +162,7 @@ struct HomeViewLoading: View {
                                     .foregroundColor(.white)
                                     .frame(width: 14, height: 14)
                                     .padding(.trailing, 20)
+                                    .scaledToFit()
                             }
                             
                         }

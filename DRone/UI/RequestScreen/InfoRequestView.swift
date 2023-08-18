@@ -47,7 +47,7 @@ struct InfoRequestView: View {
                             // steps
                             VStack(alignment: .leading, spacing: 24) {
                                 ForEach([
-                                    (1, "Fill the form below"),
+                                    (1, "Fill the form"),
                                     (2, "Wait for confirmation"),
                                     (3, "You are ready to go!")
                                 ], id: \.1) { item in
@@ -121,6 +121,7 @@ struct InfoRequestView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: UIScreen.main.bounds.width / 1)
                                         .offset(y: -60)
+                                        .scaledToFit()
                                 }
                                 
                                 Spacer()

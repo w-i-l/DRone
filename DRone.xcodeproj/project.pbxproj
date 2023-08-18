@@ -153,8 +153,7 @@
 		1711B9342A863B4200D4B2D8 /* CustomComponents */ = {
 			isa = PBXGroup;
 			children = (
-				1711B9352A863BC100D4B2D8 /* CustomTextField.swift */,
-				1711B9372A86414100D4B2D8 /* CustomTextFieldViewModel.swift */,
+				17C296BB2A8F66CE00BCB9F9 /* CustomTextField */,
 				1729B1AE2A8E51660083785C /* BackButton.swift */,
 			);
 			path = CustomComponents;
@@ -400,6 +399,15 @@
 				17B916B02A8CC5680024B82C /* FlightInformation.swift */,
 			);
 			path = FormView;
+			sourceTree = "<group>";
+		};
+		17C296BB2A8F66CE00BCB9F9 /* CustomTextField */ = {
+			isa = PBXGroup;
+			children = (
+				1711B9352A863BC100D4B2D8 /* CustomTextField.swift */,
+				1711B9372A86414100D4B2D8 /* CustomTextFieldViewModel.swift */,
+			);
+			path = CustomTextField;
 			sourceTree = "<group>";
 		};
 		7339BFCAA6BE72838CDE7180 /* Frameworks */ = {

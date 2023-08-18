@@ -38,125 +38,139 @@ struct AllFlightRequestView: View {
                 Spacer()
                 
                 
-                Button (action: {
-                    AppService.shared.screenIndex.value = 0
-                    viewModel.clearData()
-                    navigation.push(InfoRequestView(viewModel: viewModel).asDestination(), animated: true)
-                }, label: {
-                    ZStack {
-                        Color("accent.blue")
-                            .cornerRadius(20)
-                            .frame(width: 100, height: 40)
-                        
-                        HStack {
-                            Text("New request")
-                                .foregroundColor(.white)
-                                .font(.abel(size: 12))
-                            
-                            Image(systemName: "chevron.right")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(.white)
-                                .frame(width: 10, height: 10)
-                                .scaledToFit()
-                        }
-                    }
-                })
+                
             }
             
+            Spacer()
             
-            
-            if viewModel.allFlightsRequest.isEmpty {
-                
-                Spacer()
-                Text("No flight request")
-                    .font(.abel(size: 40))
-                    .foregroundColor(.white)
-                Spacer()
-                
-            } else {
-                ScrollView(showsIndicators: false) {
-                    ForEach(viewModel.allFlightsRequest.sorted(by: { $0.dateRegistered > $1.dateRegistered }), id: \.self) { flightRequest in
-                        VStack(spacing: 12) {
-                            
-                            Button {
-                                navigation.push(RequestDetailsView(viewModel: RequestDetailsViewModel(formModel: flightRequest)).asDestination(), animated: true)
-                            } label: {
+            ZStack {
+                if viewModel.allFlightsRequest.isEmpty {
+                    
+                    Spacer()
+                    Text("No flight request")
+                        .font(.abel(size: 40))
+                        .foregroundColor(.white)
+                    Spacer()
+                    
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        ForEach(viewModel.allFlightsRequest.sorted(by: { $0.dateRegistered > $1.dateRegistered }), id: \.self) { flightRequest in
+                            VStack(spacing: 12) {
                                 
-                                HStack(spacing: 23) {
+                                Button {
+                                    navigation.push(RequestDetailsView(viewModel: RequestDetailsViewModel(formModel: flightRequest)).asDestination(), animated: true)
+                                } label: {
                                     
-                                    // request state
-                                    VStack(spacing: 2) {
+                                    HStack(spacing: 24) {
                                         
-                                        Group {
-                                            switch flightRequest.requestState {
-                                            case .accepted:
-                                                Circle()
-                                                    .fill(Color("green"))
-                                            case .rejected:
-                                                Circle()
-                                                    .fill(Color("red"))
-                                            case .pending:
-                                                Circle()
-                                                    .fill(Color("accent.blue"))
+                                        // request state
+                                        VStack(spacing: 2) {
+                                            
+                                            Group {
+                                                switch flightRequest.requestState {
+                                                case .accepted:
+                                                    Circle()
+                                                        .fill(Color("green"))
+                                                case .rejected:
+                                                    Circle()
+                                                        .fill(Color("red"))
+                                                case .pending:
+                                                    Circle()
+                                                        .fill(Color("accent.blue"))
+                                                }
                                             }
+                                            .frame(width: 14, height: 14)
+                                            
+                                            Text(flightRequest.requestState.rawValue)
+                                                .foregroundColor(.white)
+                                                .font(.abel(size: 12))
                                         }
-                                        .frame(width: 14, height: 14)
                                         
-                                        Text(flightRequest.requestState.rawValue)
-                                            .foregroundColor(.white)
-                                            .font(.abel(size: 12))
-                                    }
-                                    
-                                    VStack(alignment: .leading) {
-                                        Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)")
-                                            .foregroundColor(.white)
-                                            .font(.abel(size: 18))
-                                        
-                                        // time interval
-                                        HStack {
-                                            Text(dateFormatter.string(from: flightRequest.dateRegistered))
+                                        VStack(alignment: .leading) {
+                                            Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)")
                                                 .foregroundColor(.white)
                                                 .font(.abel(size: 18))
                                             
-                                            Spacer()
-                                            
-                                            HStack(spacing: 12) {
-                                                
-                                                Text(hourFormatter.string(from: flightRequest.takeoffTime))
+                                            // time interval
+                                            HStack {
+                                                Text(dateFormatter.string(from: flightRequest.dateRegistered))
                                                     .foregroundColor(.white)
                                                     .font(.abel(size: 18))
                                                 
-                                                Image(systemName: "arrow.right")
-                                                    .resizable()
-                                                    .foregroundColor(.white)
-                                                    .frame(width: 11, height: 11)
-                                                    .scaledToFit()
+                                                Spacer()
                                                 
-                                                Text(hourFormatter.string(from: flightRequest.landingTime))
-                                                    .foregroundColor(.white)
-                                                    .font(.abel(size: 18))
+                                                HStack(spacing: 12) {
+                                                    
+                                                    Text(hourFormatter.string(from: flightRequest.takeoffTime))
+                                                        .foregroundColor(.white)
+                                                        .font(.abel(size: 18))
+                                                    
+                                                    Image(systemName: "arrow.right")
+                                                        .resizable()
+                                                        .foregroundColor(.white)
+                                                        .frame(width: 11, height: 11)
+                                                        .scaledToFit()
+                                                    
+                                                    Text(hourFormatter.string(from: flightRequest.landingTime))
+                                                        .foregroundColor(.white)
+                                                        .font(.abel(size: 18))
+                                                }
+                                                
                                             }
                                             
                                         }
-                                        
+                                        Image(systemName: "chevron.right")
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .foregroundColor(.white)
+                                            .frame(width: 16, height: 16)
+                                            .scaledToFit()
                                     }
-                                    Image(systemName: "chevron.right")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .foregroundColor(.white)
-                                        .frame(width: 16, height: 16)
-                                        .scaledToFit()
                                 }
+                                
+                                Color("accent.blue")
+                                    .frame(height: 1)
                             }
-                            
-                            Color("accent.blue")
-                                .frame(height: 1)
                         }
+                        
                     }
-                    
                 }
+                
+                VStack {
+                    
+                    Spacer()
+                    
+                    Button (action: {
+                        AppService.shared.screenIndex.value = 0
+                        viewModel.clearData()
+                        navigation.push(InfoRequestView(viewModel: viewModel).asDestination(), animated: true)
+                    }, label: {
+                        ZStack {
+                            Color("accent.blue")
+                                .cornerRadius(20)
+                                .frame(height: 40)
+                            
+                            HStack {
+                                Text("New request")
+                                    .foregroundColor(.white)
+                                    .font(.abel(size: 24))
+                                
+                                Image(systemName: "chevron.right")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(.white)
+                                    .frame(width: 10, height: 10)
+                                    .scaledToFit()
+                            }
+                            .padding(.vertical, 5)
+                        }
+                    })
+                }
+                
             }
+            
+            .padding(.bottom, UIScreen.main.bounds.height / 11.3)
+            Spacer()
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -179,7 +193,7 @@ struct AllFlightRequestView_Previews: PreviewProvider {
                 birthday: Date(),
                 currentLocation: CLLocationCoordinate2D(),
                 serialNumber: "123d12adsd12",
-                droneType: .agrar,
+                droneType: .agricultural,
                 takeoffTime: Date(),
                 landingTime: Date() + 3600,
                 flightLocation: CLLocationCoordinate2D(),
