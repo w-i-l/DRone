@@ -21,8 +21,8 @@ class ResponseAPI {
     
     private init() {}
     
-    func getResponse(formModel: RequestFormModel) -> Future<ResponseResult, Error> {
-        Future<ResponseResult, Error> { promise in
+    func getResponse(formModel: RequestFormModel) -> Future<(response: ResponseResult, ID: String), Error> {
+        Future<(response: ResponseResult, ID: String), Error> { promise in
             
             let urlComponents = URLComponents(string: "https://drone-ob9o.api.mocked.io/flight-request")
             
@@ -47,7 +47,8 @@ class ResponseAPI {
                     let json = try JSON(data: data)
                     
                     let isAccepted = json["response"].stringValue == "accepted"
-                    promise(.success(isAccepted ? .accepted : .rejected))
+                    let ID = json["id"].stringValue
+                    promise(.success(((isAccepted ? .accepted : .rejected), ID)))
                     
                 } catch(_) {
                     promise(.failure(NSError(domain: "Error data", code: 1)))

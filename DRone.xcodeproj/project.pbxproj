@@ -65,6 +65,7 @@
 		17B916BA2A8CFA410024B82C /* ResponseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916B92A8CFA410024B82C /* ResponseService.swift */; };
 		17B916BC2A8CFE650024B82C /* ResponseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BB2A8CFE650024B82C /* ResponseScreen.swift */; };
 		17B916BF2A8D13F50024B82C /* RequestDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BE2A8D13F50024B82C /* RequestDetailsView.swift */; };
+		17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 17C296BD2A8F9DC800BCB9F9 /* AlertToast */; };
 		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
 		B81664878F5A4489154D1E4A /* libPods-DRone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30822F99450DF6E7667D8AD3 /* libPods-DRone.a */; };
@@ -142,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				172D63E92A811BC0006621F4 /* netfox in Frameworks */,
+				17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */,
 				172D63E42A811667006621F4 /* SwiftyJSON in Frameworks */,
 				B81664878F5A4489154D1E4A /* libPods-DRone.a in Frameworks */,
 			);
@@ -448,6 +450,7 @@
 			packageProductDependencies = (
 				172D63E32A811667006621F4 /* SwiftyJSON */,
 				172D63E82A811BC0006621F4 /* netfox */,
+				17C296BD2A8F9DC800BCB9F9 /* AlertToast */,
 			);
 			productName = DRone;
 			productReference = 17599F432A80DE3B00501E0A /* DRone.app */;
@@ -480,6 +483,7 @@
 			packageReferences = (
 				172D63E22A811667006621F4 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				172D63E72A811BC0006621F4 /* XCRemoteSwiftPackageReference "netfox" */,
+				17C296BC2A8F9DC800BCB9F9 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = 17599F442A80DE3B00501E0A /* Products */;
 			projectDirPath = "";
@@ -833,6 +837,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		17C296BC2A8F9DC800BCB9F9 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -845,6 +857,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 172D63E72A811BC0006621F4 /* XCRemoteSwiftPackageReference "netfox" */;
 			productName = netfox;
+		};
+		17C296BD2A8F9DC800BCB9F9 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17C296BC2A8F9DC800BCB9F9 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

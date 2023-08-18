@@ -23,6 +23,7 @@ struct RequestFormModel {
     var flightDate = Date()
     var requestState: ResponseResult = .pending
     var flightAdress: (mainAdress: String, secondaryAdress: String) = ("", "")
+    var requestID: String = String(UUID().uuidString.prefix(8))
 }
 
 extension RequestFormModel: Encodable {
@@ -70,7 +71,7 @@ extension RequestFormModel: Encodable {
 
 extension RequestFormModel: Identifiable {
     var id: String {
-        return CNP + firstName + lastName + requestState.rawValue + serialNumber + String.init(describing: takeoffTime)
+        return CNP + firstName + lastName + requestState.rawValue + serialNumber + String.init(describing: takeoffTime) + requestID
     }
 }
 
@@ -99,7 +100,8 @@ extension RequestFormModel {
             flightLocation: self.flightLocation,
             flightDate: self.flightDate,
             requestState: state,
-            flightAdress: flightAdress
+            flightAdress: flightAdress,
+            requestID: self.requestID
         )
     }
     
@@ -116,7 +118,8 @@ extension RequestFormModel {
             landingTime: self.landingTime ,
             flightLocation: self.flightLocation,
             flightDate: self.flightDate,
-            flightAdress: flightAdress
+            flightAdress: flightAdress,
+            requestID: self.requestID
         )
     }
 }

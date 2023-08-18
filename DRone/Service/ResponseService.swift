@@ -13,7 +13,7 @@ class ResponseService {
     
     private init() {}
     
-    func getResponse(formModel: RequestFormModel) -> AnyPublisher<ResponseResult, Error> {
+    func getResponse(formModel: RequestFormModel) -> AnyPublisher<(response: ResponseResult, ID: String), Error> {
         return ResponseAPI.shared.getResponse(formModel: formModel)
             .eraseToAnyPublisher()
     }

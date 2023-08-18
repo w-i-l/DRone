@@ -19,7 +19,7 @@ struct ResponseScreen: View {
                 ResponseView(
                     image: "waiting.image",
                     title: "Done!",
-                    subtitle: "Your submission is under review \n Submission ID: 312345",
+                    subtitle: "Your submission is under review \n Submission ID: \(viewModel.ID)",
                     captation: "You will receive a confirmation in a short time.",
                     showButton: true,
                     buttonText: "See all requests",
@@ -29,7 +29,7 @@ struct ResponseScreen: View {
                 ResponseView(
                     image: "accepted.image",
                     title: "Ready to fly!",
-                    subtitle: "Your submission was approved \n Confirmation ID: 312345",
+                    subtitle: "Your submission was approved \n Confirmation ID: \(viewModel.ID)",
                     captation: "Keep in mind to follow the local reglementations..",
                     showButton: true,
                     buttonText: "See all requests",

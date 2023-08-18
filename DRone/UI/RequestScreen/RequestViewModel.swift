@@ -32,6 +32,8 @@ enum DroneType: CaseIterable {
 
 class RequestViewModel: BaseViewModel {
     
+    @Published var ID: String = String(UUID().uuidString.prefix(8))
+    
     // personal
     @Published var firstName: String = ""
     @Published var lastName: String = ""
@@ -129,7 +131,7 @@ class RequestViewModel: BaseViewModel {
     
     func getResponse() {
         
-        let formModel = RequestFormModel(
+        var formModel = RequestFormModel(
             firstName: firstName,
             lastName: lastName,
             CNP: CNP,
@@ -150,8 +152,10 @@ class RequestViewModel: BaseViewModel {
         .sink { _ in
             
         } receiveValue: { [weak self] value in
-            self?.response = value
-            self?.allFlightsRequest.append(formModel.updatedRequestStatus(state: value))
+            self?.response = value.response
+            formModel.requestID = String(value.ID.prefix(8))
+            self?.ID = String(value.ID.prefix(8))
+            self?.allFlightsRequest.append(formModel.updatedRequestStatus(state: value.response))
             
         }
         .store(in: &bag)
@@ -170,6 +174,7 @@ class RequestViewModel: BaseViewModel {
         landingTime = Date()
         response = .pending
         flightDate = Date()
+        ID = String(UUID().uuidString.prefix(8))
         
         showNavigationLink = false
         

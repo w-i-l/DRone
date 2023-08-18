@@ -7,10 +7,14 @@
 
 import SwiftUI
 import CoreLocation
+import AlertToast
 
 struct RequestDetailsView: View {
     
     @StateObject var viewModel: RequestDetailsViewModel
+    @EnvironmentObject private var navigation: Navigation
+    
+    @State private var presentAlert: Bool = false
     
     private var hourFormatter: DateFormatter {
         get {
@@ -26,9 +30,21 @@ struct RequestDetailsView: View {
             BackButton(text: "All requests")
             
             ScrollView(showsIndicators: false) {
-                Text("Flight request with ID: A83D4BB1")
-                    .foregroundColor(.white)
-                    .font(.abel(size: 32))
+                VStack {
+                    Text("Flight request with ID:")
+                        .foregroundColor(.white)
+                        .font(.abel(size: 32))
+                    
+                    Button {
+                        UIPasteboard.general.string = viewModel.formModel.requestID
+                        presentAlert = true
+                    } label: {
+                        Text(viewModel.formModel.requestID)
+                            .foregroundColor(.blue)
+                            .font(.abel(size: 32))
+                    }
+
+                }
                 
                 Image(viewModel.formModel.requestState == .accepted ? "accepted.image" : (viewModel.formModel.requestState == .pending ? "waiting.image" : "rejected.image"))
                     .resizable()
@@ -94,6 +110,9 @@ struct RequestDetailsView: View {
                 }
                 .padding(.top, 10)
             }
+        }
+        .toast(isPresenting: $presentAlert) {
+            AlertToast(displayMode: .hud, type: .image("copy.icon", .green), title: "Copied")
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
