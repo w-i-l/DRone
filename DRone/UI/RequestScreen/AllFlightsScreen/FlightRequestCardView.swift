@@ -72,7 +72,7 @@ struct FlightRequestCardView: View {
                         HStack {
                             Text(dateFormatter.string(from: flightRequest.flightDate))
                                 .foregroundColor(.white)
-                                .font(.abel(size: 18))
+                                .font(.abel(size: 16))
                             
                             Spacer()
                             
@@ -80,7 +80,7 @@ struct FlightRequestCardView: View {
                                 
                                 Text(hourFormatter.string(from: flightRequest.takeoffTime))
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 18))
+                                    .font(.abel(size: 16))
                                 
                                 Image(systemName: "arrow.right")
                                     .resizable()
@@ -90,7 +90,7 @@ struct FlightRequestCardView: View {
                                 
                                 Text(hourFormatter.string(from: flightRequest.landingTime))
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 18))
+                                    .font(.abel(size: 16))
                             }
                             
                         }

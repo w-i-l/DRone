@@ -37,12 +37,44 @@ struct RequestDetailsView: View {
         }
     }
     
+    private var dateFormatter: DateFormatter {
+        get {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd\\MM\\yyyy"
+            return formatter
+        }
+    }
+    
     var body: some View {
         VStack() {
             
             BackButton(text: "All requests", trailingItems: {
                 Button {
-                    navigation.presentModal(ShareSheet(activityItems: [viewModel.formModel.responseModel.ID]).asDestination(), animated: true) {
+                    
+                    let content = """
+                    First Name: \(viewModel.formModel.firstName)
+                    Last Name: \(viewModel.formModel.lastName)
+                    CNP: \(viewModel.formModel.CNP)
+                    Birthday: \(dateFormatter.string(from: viewModel.formModel.birthday))
+                    Current Location Latitude: \(viewModel.formModel.currentLocation.latitude)
+                    Current Location Longitude: \(viewModel.formModel.currentLocation.longitude)
+                    Serial Number: \(viewModel.formModel.serialNumber)
+                    Drone Type: \(viewModel.formModel.droneType.associatedValues.type)
+                    Takeoff Time: \(hourFormatter.string(from: viewModel.formModel.takeoffTime))
+                    Landing Time: \(hourFormatter.string(from: viewModel.formModel.landingTime))
+                    Flight Location Latitude: \(viewModel.formModel.flightLocation.latitude)
+                    Flight Location Longitude: \(viewModel.formModel.flightLocation.longitude)
+                    Flight Date: \(dateFormatter.string(from: viewModel.formModel.flightDate))
+                    Flight Address: \(viewModel.formModel.flightAdress.mainAdress)
+                    Response ID: \(viewModel.formModel.responseModel.ID)
+                    Response: \(viewModel.formModel.responseModel.response.rawValue)
+                    Reason: \(viewModel.formModel.responseModel.reason)
+                    """
+
+                    navigation.presentModal(ShareSheet(activityItems:  [
+                        "Flight request details\n",
+                        content
+                    ]).edgesIgnoringSafeArea(.bottom).asDestination(), animated: true) {
                         
                     } controllerConfig: { _ in
                         
