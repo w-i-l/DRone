@@ -44,7 +44,7 @@ struct AdditionalPersonalInformationView: View {
                                 Spacer()
                                 
                                 DatePicker(selection: $viewModel.birthdayDate,
-                                           in: Date()...,
+                                           in: ...(Date() - viewModel.maximumBirthdayDate),
                                            displayedComponents: .date) {
                                     Text("Date")
                                         .foregroundColor(.white)
@@ -75,7 +75,7 @@ struct AdditionalPersonalInformationView: View {
                                     .frame(width: 24, height: 24)
                                     .scaledToFit()
                                 
-                                VStack(spacing: 4) {
+                                VStack(alignment: .leading, spacing: 4) {
                                     Text(viewModel.currentLocation.mainAdress.limitLettersFormattedString(limit: 30))
                                         .foregroundColor(.white)
                                         .font(.abel(size: 16))

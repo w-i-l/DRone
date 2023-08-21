@@ -37,9 +37,6 @@ struct AllFlightRequestView: View {
                     .font(.abel(size: 40))
                 
                 Spacer()
-                
-                
-                
             }
             
             Spacer()
@@ -61,7 +58,7 @@ struct AllFlightRequestView: View {
                             HStack {
                                 Text("Upcoming flights")
                                     .foregroundColor(.white)
-                                .font(.abel(size: 24))
+                                    .font(.abel(size: 24))
                                 
                                 Spacer()
                             }
@@ -69,77 +66,7 @@ struct AllFlightRequestView: View {
                             ForEach(viewModel.upcomingFlights, id: \.self) { flightRequest in
                                 VStack(spacing: 12) {
                                     
-                                    Button {
-                                        navigation.push(RequestDetailsView(viewModel: RequestDetailsViewModel(formModel: flightRequest)).asDestination(), animated: true)
-                                    } label: {
-                                        
-                                        HStack(spacing: 24) {
-                                            
-                                            // request state
-                                            VStack(spacing: 2) {
-                                                
-                                                Group {
-                                                    switch flightRequest.requestState {
-                                                    case .accepted:
-                                                        Circle()
-                                                            .fill(Color("green"))
-                                                    case .rejected:
-                                                        Circle()
-                                                            .fill(Color("red"))
-                                                    case .pending:
-                                                        Circle()
-                                                            .fill(Color("accent.blue"))
-                                                    }
-                                                }
-                                                .frame(width: 14, height: 14)
-                                                
-                                                Text(flightRequest.requestState.rawValue)
-                                                    .foregroundColor(.white)
-                                                    .font(.abel(size: 12))
-                                            }
-                                            
-                                            VStack(alignment: .leading) {
-                                                Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)")
-                                                    .foregroundColor(.white)
-                                                    .font(.abel(size: 18))
-                                                
-                                                // time interval
-                                                HStack {
-                                                    Text(dateFormatter.string(from: flightRequest.flightDate))
-                                                        .foregroundColor(.white)
-                                                        .font(.abel(size: 16))
-                                                    
-                                                    Spacer()
-                                                    
-                                                    HStack() {
-                                                        
-                                                        Text(hourFormatter.string(from: flightRequest.takeoffTime))
-                                                            .foregroundColor(.white)
-                                                            .font(.abel(size: 16))
-                                                        Spacer()
-                                                        Image(systemName: "arrow.right")
-                                                            .resizable()
-                                                            .foregroundColor(.white)
-                                                            .frame(width: 11, height: 11)
-                                                            .scaledToFit()
-                                                        Spacer()
-                                                        Text(hourFormatter.string(from: flightRequest.landingTime))
-                                                            .foregroundColor(.white)
-                                                            .font(.abel(size: 16))
-                                                    }
-                                                    
-                                                }
-                                                
-                                            }
-                                            
-                                            Image(systemName: "chevron.right")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(.white)
-                                                .frame(width: 16, height: 16)
-                                                .scaledToFit()
-                                        }
-                                    }
+                                    FlightRequestCardView(flightRequest: flightRequest)
                                     
                                     Color("accent.blue")
                                         .frame(height: 1)
@@ -159,91 +86,7 @@ struct AllFlightRequestView: View {
                         ForEach(viewModel.completedFlights, id: \.self) { flightRequest in
                             VStack(spacing: 12) {
                                 
-                                Button {
-                                    navigation.push(RequestDetailsView(viewModel: RequestDetailsViewModel(formModel: flightRequest)).asDestination(), animated: true)
-                                } label: {
-                                    
-                                    ZStack {
-                                        HStack(spacing: 24) {
-                                            
-                                            // request state
-                                            VStack(spacing: 2) {
-                                                
-                                                Group {
-                                                    switch flightRequest.requestState {
-                                                    case .accepted:
-                                                        Circle()
-                                                            .fill(Color("green"))
-                                                    case .rejected:
-                                                        Circle()
-                                                            .fill(Color("red"))
-                                                    case .pending:
-                                                        Circle()
-                                                            .fill(Color("accent.blue"))
-                                                    }
-                                                }
-                                                .frame(width: 14, height: 14)
-                                                
-                                                Text(flightRequest.requestState.rawValue)
-                                                    .foregroundColor(.white)
-                                                    .font(.abel(size: 12))
-                                            }
-                                            
-                                            VStack(alignment: .leading) {
-                                                Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)")
-                                                    .foregroundColor(.white)
-                                                    .font(.abel(size: 18))
-                                                
-                                                // time interval
-                                                HStack {
-                                                    Text(dateFormatter.string(from: flightRequest.flightDate))
-                                                        .foregroundColor(.white)
-                                                        .font(.abel(size: 18))
-                                                    
-                                                    Spacer()
-                                                    
-                                                    HStack(spacing: 12) {
-                                                        
-                                                        Text(hourFormatter.string(from: flightRequest.takeoffTime))
-                                                            .foregroundColor(.white)
-                                                            .font(.abel(size: 18))
-                                                        
-                                                        Image(systemName: "arrow.right")
-                                                            .resizable()
-                                                            .foregroundColor(.white)
-                                                            .frame(width: 11, height: 11)
-                                                            .scaledToFit()
-                                                        
-                                                        Text(hourFormatter.string(from: flightRequest.landingTime))
-                                                            .foregroundColor(.white)
-                                                            .font(.abel(size: 18))
-                                                    }
-                                                    
-                                                }
-                                                
-                                            }
-                                            Image(systemName: "chevron.right")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("gray.background").opacity(0.4))
-                                                .frame(width: 16, height: 16)
-                                                .scaledToFit()
-                                        }
-                                        .padding(.leading, 5)
-                                        .overlay(Color("gray.background").opacity(0.4))
-                                        
-                                        HStack {
-                                            Spacer()
-                                            Image(systemName: "chevron.right")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(.white)
-                                                .frame(width: 16, height: 16)
-                                                .scaledToFit()
-                                        }
-                                        .padding(.trailing, 10)
-                                    }
-                                }
+                                FlightRequestCardView(flightRequest: flightRequest)
                                 
                                 Color("accent.blue")
                                     .frame(height: 1)
@@ -265,7 +108,7 @@ struct AllFlightRequestView: View {
                         ZStack {
                             Color("accent.blue")
                                 .cornerRadius(12)
-                                .frame(height: 40)
+                                .frame(height: 60)
                             
                             HStack {
                                 Text("New request")
@@ -279,7 +122,7 @@ struct AllFlightRequestView: View {
                                     .frame(width: 10, height: 10)
                                     .scaledToFit()
                             }
-                            .padding(.vertical, 5)
+                            .padding(.vertical, 10)
                         }
                     })
                 }
@@ -314,7 +157,11 @@ struct AllFlightRequestView_Previews: PreviewProvider {
                 takeoffTime: Date(),
                 landingTime: Date() + 3600,
                 flightLocation: CLLocationCoordinate2D(),
-                requestState: .rejected
+                responseModel: ResponseModel(
+                    response: .accepted,
+                    ID: "12312",
+                    reason: "31EAS"
+                )
             ),
             count: 20
         ) + Array(
@@ -329,7 +176,12 @@ struct AllFlightRequestView_Previews: PreviewProvider {
                 takeoffTime: Date(),
                 landingTime: Date(),
                 flightLocation: CLLocationCoordinate2D(),
-                flightDate: Date() + TimeInterval(Int.random(in: 1000000...2000000000)), requestState: .rejected
+                flightDate: Date() + TimeInterval(Int.random(in: 1000000...2000000000)),
+                responseModel: ResponseModel(
+                    response: .accepted,
+                    ID: "12312",
+                    reason: "31EAS"
+                )
             ),
             count: 20
         )

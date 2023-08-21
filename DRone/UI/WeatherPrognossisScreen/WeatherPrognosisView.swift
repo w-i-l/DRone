@@ -29,9 +29,14 @@ struct WeatherForecastView: View {
                     
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 35) {
-                            Text("Weather - 7 days forecast")
-                                .foregroundColor(.white)
-                                .font(.abel(size: 32))
+                            
+                            HStack {
+                                Text("Weekly forecast")
+                                    .foregroundColor(.white)
+                                    .font(.abel(size: 40))
+                                
+                                Spacer()
+                            }
                             
                             ForEach(0..<viewModel.daysOfWeek.count) { dayOfWeek in
                                 VStack(spacing: 24) {

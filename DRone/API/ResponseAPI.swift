@@ -9,20 +9,14 @@ import Combine
 import Foundation
 import SwiftyJSON
 
-enum ResponseResult: String {
-    case rejected = "Rejected"
-    case accepted = "Accepted"
-    case pending = "Pending"
-}
-
 class ResponseAPI {
     
     static let shared = ResponseAPI()
     
     private init() {}
     
-    func getResponse(formModel: RequestFormModel) -> Future<(response: ResponseResult, ID: String), Error> {
-        Future<(response: ResponseResult, ID: String), Error> { promise in
+    func getResponse(formModel: RequestFormModel) -> Future<ResponseModel, Error> {
+        Future<ResponseModel, Error> { promise in
             
             let urlComponents = URLComponents(string: "https://drone-ob9o.api.mocked.io/flight-request")
             
@@ -48,7 +42,11 @@ class ResponseAPI {
                     
                     let isAccepted = json["response"].stringValue == "accepted"
                     let ID = json["id"].stringValue
-                    promise(.success(((isAccepted ? .accepted : .rejected), ID)))
+                    promise(.success(ResponseModel(
+                        response: isAccepted ? .accepted : .rejected,
+                        ID: ID,
+                        reason: json["reason"].stringValue
+                    )))
                     
                 } catch(_) {
                     promise(.failure(NSError(domain: "Error data", code: 1)))

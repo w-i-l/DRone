@@ -71,6 +71,8 @@ class RequestViewModel: BaseViewModel {
     let minimumFlightTime: TimeInterval = 10 * 60
     // 30 days
     let maximumDayToRequest: TimeInterval = 3600 * 24 * 30
+    // back 18 years in past
+    let maximumBirthdayDate: TimeInterval = 3600 * 24 * 30 * 12 * 18
     
     var flightCoordinates: CurrentValueSubject<CLLocationCoordinate2D?, Never> = .init(nil)
     private var flightCoordinatesBinding: Binding<CLLocationCoordinate2D?> {
@@ -143,8 +145,12 @@ class RequestViewModel: BaseViewModel {
             landingTime: landingTime,
             flightLocation: CLLocationCoordinate2D(),
             flightDate: flightDate,
-            requestState: .accepted,
-            flightAdress: self.flightLocation
+            flightAdress: self.flightLocation,
+            responseModel: ResponseModel(
+                response: .accepted,
+                ID: "12312",
+                reason: "31EAS"
+            )
         )
         
         ResponseService.shared.getResponse(formModel: formModel)
@@ -153,8 +159,9 @@ class RequestViewModel: BaseViewModel {
             
         } receiveValue: { [weak self] value in
             self?.response = value.response
-            formModel.requestID = String(value.ID.prefix(8))
+            formModel.responseModel.ID = String(value.ID.prefix(8))
             self?.ID = String(value.ID.prefix(8))
+            formModel.responseModel.reason = value.reason
             self?.allFlightsRequest.append(formModel.updatedRequestStatus(state: value.response))
             
         }

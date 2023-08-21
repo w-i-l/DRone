@@ -21,9 +21,8 @@ struct RequestFormModel {
     let landingTime: Date
     let flightLocation: CLLocationCoordinate2D
     var flightDate = Date()
-    var requestState: ResponseResult = .pending
     var flightAdress: (mainAdress: String, secondaryAdress: String) = ("", "")
-    var requestID: String = String(UUID().uuidString.prefix(8))
+    var responseModel: ResponseModel
 }
 
 extension RequestFormModel: Encodable {
@@ -71,7 +70,7 @@ extension RequestFormModel: Encodable {
 
 extension RequestFormModel: Identifiable {
     var id: String {
-        return CNP + firstName + lastName + requestState.rawValue + serialNumber + String.init(describing: takeoffTime) + requestID
+        return CNP + firstName + lastName + responseModel.response.rawValue + serialNumber + String.init(describing: takeoffTime) + responseModel.ID
     }
 }
 
@@ -99,27 +98,12 @@ extension RequestFormModel {
             landingTime: self.landingTime ,
             flightLocation: self.flightLocation,
             flightDate: self.flightDate,
-            requestState: state,
             flightAdress: flightAdress,
-            requestID: self.requestID
-        )
-    }
-    
-    func updateLocation(flightAdress: (mainAdress: String, secondaryAdress: String)) -> RequestFormModel {
-        RequestFormModel(
-            firstName: self.firstName ,
-            lastName: self.lastName ,
-            CNP: self.CNP ,
-            birthday: self.birthday ,
-            currentLocation: self.currentLocation ,
-            serialNumber: self.serialNumber ,
-            droneType: self.droneType ,
-            takeoffTime: self.takeoffTime ,
-            landingTime: self.landingTime ,
-            flightLocation: self.flightLocation,
-            flightDate: self.flightDate,
-            flightAdress: flightAdress,
-            requestID: self.requestID
+            responseModel: ResponseModel(
+                response: state,
+                ID: self.responseModel.ID,
+                reason: self.responseModel.reason
+            )
         )
     }
 }

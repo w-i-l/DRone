@@ -19,7 +19,12 @@ class RequestDetailsViewModel: BaseViewModel {
         droneType: .toy,
         takeoffTime: Date(),
         landingTime: Date(),
-        flightLocation: CLLocationCoordinate2D()
+        flightLocation: CLLocationCoordinate2D(),
+        responseModel: ResponseModel(
+            response: .accepted,
+            ID: "321",
+            reason: "dsa"
+        )
     )
     
     init(formModel: RequestFormModel) {

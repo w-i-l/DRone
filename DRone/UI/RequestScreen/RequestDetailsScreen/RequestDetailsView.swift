@@ -42,7 +42,7 @@ struct RequestDetailsView: View {
             
             BackButton(text: "All requests", trailingItems: {
                 Button {
-                    navigation.presentModal(ShareSheet(activityItems: [viewModel.formModel.requestID]).asDestination(), animated: true) {
+                    navigation.presentModal(ShareSheet(activityItems: [viewModel.formModel.responseModel.ID]).asDestination(), animated: true) {
                         
                     } controllerConfig: { _ in
                         
@@ -67,24 +67,33 @@ struct RequestDetailsView: View {
                         .font(.abel(size: 32))
                     
                     Button {
-                        UIPasteboard.general.string = viewModel.formModel.requestID
+                        UIPasteboard.general.string = viewModel.formModel.responseModel.ID
                         presentAlert = true
                     } label: {
-                        Text(viewModel.formModel.requestID)
+                        Text(viewModel.formModel.responseModel.ID)
                             .foregroundColor(.blue)
                             .font(.abel(size: 32))
                     }
 
                 }
                 
-                Image(viewModel.formModel.requestState == .accepted ? "accepted.image" : (viewModel.formModel.requestState == .pending ? "waiting.image" : "rejected.image"))
+                // request image
+                Image(viewModel.formModel.responseModel.response == .accepted ? "accepted.image" : (viewModel.formModel.responseModel.response == .pending ? "waiting.image" : "rejected.image"))
                     .resizable()
                     .frame(width: 125, height: 125)
                     .scaledToFit()
                 
-                Text(viewModel.formModel.requestState.rawValue)
+                // request state
+                Text(viewModel.formModel.responseModel.response.rawValue)
                     .foregroundColor(.white)
                     .font(.abel(size: 24))
+                
+                // reason
+                if viewModel.formModel.responseModel.response == .rejected {
+                    Text(viewModel.formModel.responseModel.reason)
+                        .foregroundColor(.white)
+                        .font(.abel(size: 16))
+                }
                 
                 HStack() {
                     Text("Your request information:")
@@ -165,7 +174,12 @@ struct RequestDetailsView_Previews: PreviewProvider {
             droneType: .agricultural,
             takeoffTime: Date(),
             landingTime: Date(),
-            flightLocation: CLLocationCoordinate2D()
+            flightLocation: CLLocationCoordinate2D(),
+            responseModel: ResponseModel(
+                response: .accepted,
+                ID: "3212",
+                reason: "dsadsa"
+            )
         )))
     }
 }

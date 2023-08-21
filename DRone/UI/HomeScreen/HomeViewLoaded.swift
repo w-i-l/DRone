@@ -195,7 +195,7 @@ struct HomeViewLoaded: View {
                                     
                                     Text("See more infos ")
                                         .font(.abel(size: 20))
-                                        .foregroundColor(Color("background.first"))
+                                        .foregroundColor(.white)
                                         .padding(.vertical, 12)
                                     
                                     
@@ -203,7 +203,7 @@ struct HomeViewLoaded: View {
                                     Image(systemName: "arrow.forward")
                                         .resizable()
                                         .renderingMode(.template)
-                                        .foregroundColor(Color("background.first"))
+                                        .foregroundColor(.white)
                                         .frame(width: 14, height: 14)
                                         .padding(.trailing, 20)
                                         .scaledToFit()
@@ -239,7 +239,7 @@ struct HomeViewLoaded_Previews: PreviewProvider {
     static var previews: some View {
         HomeViewLoaded(
             viewModel: HomeViewModel(),
-            isShowingAsChild: true
+            isShowingAsChild: false
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
