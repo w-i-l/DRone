@@ -39,13 +39,16 @@ struct PersonalInfosRequest: View {
                                         .foregroundColor(.white)
                                         .font(.abel(size: 20))
                                     
+                                    
                                     // first name
                                     CustomTextField(
                                         text: $viewModel.firstName,
                                         placeholderText: "First name...",
                                         isTextGood: {
-                                            return true
-                                        }
+                                            viewModel.onlyStringValidation(string: viewModel.firstName)
+                                        },
+                                        errorText: "Enter a valid last name",
+                                        viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
                                     )
                                     
                                     // last name
@@ -53,8 +56,10 @@ struct PersonalInfosRequest: View {
                                         text: $viewModel.lastName,
                                         placeholderText: "Last name...",
                                         isTextGood: {
-                                            return true
-                                        }
+                                            viewModel.onlyStringValidation(string: viewModel.lastName)
+                                        },
+                                        errorText: "Enter a valid first name",
+                                        viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
                                     )
                                 }
                                 .padding(.top, 40)
@@ -65,13 +70,16 @@ struct PersonalInfosRequest: View {
                                         .foregroundColor(.white)
                                         .font(.abel(size: 20))
                                     
+                                
                                     // first name
                                     CustomTextField(
                                         text: $viewModel.CNP,
                                         placeholderText: "CNP",
                                         isTextGood: {
-                                            return true
-                                        }
+                                            viewModel.personalNumberValidation(personalNumber: viewModel.CNP)
+                                        },
+                                        errorText: "The personal number shoudl have 13 digits",
+                                        viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
                                     )
                                 }
                                 .padding(.top, 32)
@@ -83,7 +91,15 @@ struct PersonalInfosRequest: View {
                             HStack {
                                 Spacer()
                                 Button {
-                                    AppService.shared.screenIndex.value = 1
+                                    
+                                    viewModel.personalNextButtonPressed.value = true
+                                    
+                                    if viewModel.onlyStringValidation(string: viewModel.firstName) &&
+                                        viewModel.onlyStringValidation(string: viewModel.lastName) &&
+                                        viewModel.personalNumberValidation(personalNumber: viewModel.CNP) {
+                                        viewModel.personalNextButtonPressed.value = false
+                                        AppService.shared.screenIndex.value = 1
+                                    }
                                     self.dismissKeyboard()
                                         
                                     } label: {

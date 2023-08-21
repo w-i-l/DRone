@@ -40,8 +40,10 @@ struct DroneInformation: View {
                                 text: $viewModel.serialNumber,
                                 placeholderText: "Serial number",
                                 isTextGood: {
-                                    return true
-                                }
+                                    viewModel.serialNumberValidation(serial: viewModel.serialNumber)
+                                },
+                                errorText: "Serial number should be valid",
+                                viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.droneNextButtonPressed)
                             )
                             
                         }
@@ -90,7 +92,12 @@ struct DroneInformation: View {
                     HStack {
                         Spacer()
                         Button {
-                            AppService.shared.screenIndex.value = 3
+                            viewModel.droneNextButtonPressed.value = true
+                            
+                            if viewModel.serialNumberValidation(serial: viewModel.serialNumber){
+                                AppService.shared.screenIndex.value = 3
+                                viewModel.droneNextButtonPressed.value = false
+                            }
                             self.dismissKeyboard()
                         } label: {
                             ZStack {

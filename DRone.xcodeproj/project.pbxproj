@@ -57,6 +57,9 @@
 		179D6AE42A83CBD6005700B8 /* SearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179D6AE32A83CBD6005700B8 /* SearchingView.swift */; };
 		17A7F2D92A934D85008721B7 /* FlightRequestCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A7F2D82A934D85008721B7 /* FlightRequestCardView.swift */; };
 		17A7F2DB2A935114008721B7 /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A7F2DA2A935114008721B7 /* ResponseModel.swift */; };
+		17A7F2E22A939AED008721B7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 17A7F2E12A939AED008721B7 /* FirebaseFirestore */; };
+		17A7F2E42A939C86008721B7 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A7F2E32A939C86008721B7 /* FirestoreService.swift */; };
+		17A7F2E62A939DEC008721B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17A7F2E52A939DEC008721B7 /* GoogleService-Info.plist */; };
 		17B916AB2A8CB8E40024B82C /* DroneInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916AA2A8CB8E40024B82C /* DroneInformation.swift */; };
 		17B916AD2A8CBB510024B82C /* DroneTypeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916AC2A8CBB510024B82C /* DroneTypeModal.swift */; };
 		17B916AF2A8CC0730024B82C /* Floats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916AE2A8CC0730024B82C /* Floats.swift */; };
@@ -124,6 +127,8 @@
 		179D6AE32A83CBD6005700B8 /* SearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingView.swift; sourceTree = "<group>"; };
 		17A7F2D82A934D85008721B7 /* FlightRequestCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlightRequestCardView.swift; sourceTree = "<group>"; };
 		17A7F2DA2A935114008721B7 /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		17A7F2E32A939C86008721B7 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		17A7F2E52A939DEC008721B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		17B916AA2A8CB8E40024B82C /* DroneInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneInformation.swift; sourceTree = "<group>"; };
 		17B916AC2A8CBB510024B82C /* DroneTypeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneTypeModal.swift; sourceTree = "<group>"; };
 		17B916AE2A8CC0730024B82C /* Floats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floats.swift; sourceTree = "<group>"; };
@@ -149,6 +154,7 @@
 				172D63E92A811BC0006621F4 /* netfox in Frameworks */,
 				17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */,
 				172D63E42A811667006621F4 /* SwiftyJSON in Frameworks */,
+				17A7F2E22A939AED008721B7 /* FirebaseFirestore in Frameworks */,
 				B81664878F5A4489154D1E4A /* libPods-DRone.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +218,7 @@
 				1729B1AA2A8E29C40083785C /* AppDelegate.swift */,
 				1729B1AC2A8E29F10083785C /* Navigation.swift */,
 				17599F4A2A80DE3D00501E0A /* Assets.xcassets */,
+				17A7F2E52A939DEC008721B7 /* GoogleService-Info.plist */,
 				17599F542A80DF3300501E0A /* API */,
 				17599F552A80DF3800501E0A /* Service */,
 				17599F562A80DF4300501E0A /* Models */,
@@ -246,6 +253,7 @@
 				172D63E52A8118D5006621F4 /* WeatherService.swift */,
 				172D63EA2A811EB0006621F4 /* LocationService.swift */,
 				17B916B92A8CFA410024B82C /* ResponseService.swift */,
+				17A7F2E32A939C86008721B7 /* FirestoreService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -457,6 +465,7 @@
 				172D63E32A811667006621F4 /* SwiftyJSON */,
 				172D63E82A811BC0006621F4 /* netfox */,
 				17C296BD2A8F9DC800BCB9F9 /* AlertToast */,
+				17A7F2E12A939AED008721B7 /* FirebaseFirestore */,
 			);
 			productName = DRone;
 			productReference = 17599F432A80DE3B00501E0A /* DRone.app */;
@@ -490,6 +499,7 @@
 				172D63E22A811667006621F4 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				172D63E72A811BC0006621F4 /* XCRemoteSwiftPackageReference "netfox" */,
 				17C296BC2A8F9DC800BCB9F9 /* XCRemoteSwiftPackageReference "AlertToast" */,
+				17A7F2E02A939AED008721B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 17599F442A80DE3B00501E0A /* Products */;
 			projectDirPath = "";
@@ -508,6 +518,7 @@
 				17599F6B2A80EF9200501E0A /* Abel-Regular.ttf in Resources */,
 				17599F4E2A80DE3D00501E0A /* Preview Assets.xcassets in Resources */,
 				17599F4B2A80DE3D00501E0A /* Assets.xcassets in Resources */,
+				17A7F2E62A939DEC008721B7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +576,7 @@
 				17A7F2DB2A935114008721B7 /* ResponseModel.swift in Sources */,
 				17A7F2D92A934D85008721B7 /* FlightRequestCardView.swift in Sources */,
 				1711B93C2A8680D600D4B2D8 /* AdditionalPersonalInformationView.swift in Sources */,
+				17A7F2E42A939C86008721B7 /* FirestoreService.swift in Sources */,
 				17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */,
 				17599F6E2A80EFD800501E0A /* Fonts.swift in Sources */,
 				179D6ADC2A83991C005700B8 /* WeatherPrognosisViewModel.swift in Sources */,
@@ -847,6 +859,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		17A7F2E02A939AED008721B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		17C296BC2A8F9DC800BCB9F9 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -867,6 +887,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 172D63E72A811BC0006621F4 /* XCRemoteSwiftPackageReference "netfox" */;
 			productName = netfox;
+		};
+		17A7F2E12A939AED008721B7 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17A7F2E02A939AED008721B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		17C296BD2A8F9DC800BCB9F9 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -3,4 +3,54 @@
    uuid = "E57A9AD5-67E8-4468-8FAF-70991F636E20"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D1D369A-A726-4382-8A3E-4EEB5F9C0B33"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DRone/UI/RequestScreen/RequestViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "onlyStringValidation(string:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3D1D369A-A726-4382-8A3E-4EEB5F9C0B33 - f28842d85e3ffc6f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DRone.RequestViewModel.onlyStringValidation(string: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "DRone"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mihaiocnaru/Desktop/DRone/DRone/UI/RequestScreen/RequestViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "200"
+                  endingLineNumber = "200"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "3D1D369A-A726-4382-8A3E-4EEB5F9C0B33 - f28842d85e3ffc6f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DRone.RequestViewModel.onlyStringValidation(string: Swift.String) -&gt; Swift.Bool"
+                  moduleName = "DRone"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mihaiocnaru/Desktop/DRone/DRone/UI/RequestScreen/RequestViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "200"
+                  endingLineNumber = "200"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

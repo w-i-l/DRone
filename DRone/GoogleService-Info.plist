@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>870788058229-6muapbhp594b26baprtv14q8qq46cn76.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.870788058229-6muapbhp594b26baprtv14q8qq46cn76</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCzjWcLMgFs1qZbA6ySdHxOodpS1-BzagI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>870788058229</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>drone-app.DRone</string>
+	<key>PROJECT_ID</key>
+	<string>drone-9bce3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>drone-9bce3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:870788058229:ios:797348d661ac1be1e8bc3c</string>
+</dict>
+</plist>

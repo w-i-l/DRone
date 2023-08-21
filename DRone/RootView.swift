@@ -18,5 +18,15 @@ struct RootView: View {
         NavigationHostView(navigation: navigation)
             .environmentObject(navigation)
             .ignoresSafeArea()
+            .onAppear {
+                FirebaseService.shared.fetchFlightRequestsFor(user: "Ocnaru Mihai")
+                    .sink { _ in
+                        
+                    } receiveValue: { value in
+                        print(value)
+                    }
+                    .store(in: &BaseViewModel().bag)
+
+            }
     }
 }

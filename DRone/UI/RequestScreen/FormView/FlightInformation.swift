@@ -165,6 +165,7 @@ struct FlightInformation: View {
                                 action: {
                                     viewModel.getResponse()
                                     viewModel.showNavigationLink = true
+                                    viewModel.postFlightRequestFor()
                                     
                                 }, label: {
                                     ZStack {

@@ -92,6 +92,12 @@ class RequestViewModel: BaseViewModel {
         )
     }
     
+    // buttonPressed for all form screens
+    var personalNextButtonPressed: CurrentValueSubject<Bool, Never> = .init(false)
+    var additionalNextButtonPressed: CurrentValueSubject<Bool, Never> = .init(false)
+    var droneNextButtonPressed: CurrentValueSubject<Bool, Never> = .init(false)
+    var flightNextButtonPressed: CurrentValueSubject<Bool, Never> = .init(false)
+    
     // all flights
     @Published var allFlightsRequest = [RequestFormModel]()
     
@@ -128,28 +134,43 @@ class RequestViewModel: BaseViewModel {
                 self?.flightLocation = value
             }
             .store(in: &bag)
+        
+        FirebaseService.shared.fetchFlightRequestsFor(user: "Ocnaru Mihai")
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] value in
+                self?.allFlightsRequest = value
+            }
+            .store(in: &bag)
+
 
     }
     
     func getResponse() {
+        
+        guard let location = LocationService.shared.locationManager.location?.coordinate else {
+            print("No location")
+            return
+        }
         
         var formModel = RequestFormModel(
             firstName: firstName,
             lastName: lastName,
             CNP: CNP,
             birthday: birthdayDate,
-            currentLocation: CLLocationCoordinate2D(),
+            currentLocation: location,
             serialNumber: serialNumber,
             droneType: droneType,
             takeoffTime: takeoffTime,
             landingTime: landingTime,
-            flightLocation: CLLocationCoordinate2D(),
+            flightLocation: flightCoordinates.value!,
             flightDate: flightDate,
             flightAdress: self.flightLocation,
             responseModel: ResponseModel(
                 response: .accepted,
-                ID: "12312",
-                reason: "31EAS"
+                ID: ID,
+                reason: ""
             )
         )
         
@@ -183,6 +204,10 @@ class RequestViewModel: BaseViewModel {
         flightDate = Date()
         ID = String(UUID().uuidString.prefix(8))
         
+        personalNextButtonPressed.value = false
+        additionalNextButtonPressed.value = false
+        droneNextButtonPressed.value = false
+        
         showNavigationLink = false
         
         LocationService.shared.getAdressForCurrentLocation()
@@ -194,5 +219,65 @@ class RequestViewModel: BaseViewModel {
                 self?.flightLocation = value
             }
             .store(in: &bag)
+    }
+    
+    func onlyStringValidation(string: String) -> Bool {
+        return !string.isEmpty && containsOnlyLetters(string)
+    }
+    
+    func containsOnlyNumbers(_ input: String) -> Bool {
+        let regexPattern = "^[0-9]*$"
+        let regex = try! NSRegularExpression(pattern: regexPattern)
+        let range = NSRange(location: 0, length: input.utf16.count)
+        return regex.firstMatch(in: input, options: [], range: range) != nil
+    }
+    
+    func containsOnlyLetters(_ input: String) -> Bool {
+        let regexPattern = "^[a-zA-Z]*$"
+        let regex = try! NSRegularExpression(pattern: regexPattern)
+        let range = NSRange(location: 0, length: input.utf16.count)
+        return regex.firstMatch(in: input, options: [], range: range) != nil
+    }
+    
+    func serialNumberValidation(serial: String) -> Bool {
+        return serial.count == 8
+    }
+        
+    func personalNumberValidation(personalNumber: String) -> Bool {
+        return personalNumber.count == 13 && containsOnlyNumbers(personalNumber)
+    }
+    
+    func postFlightRequestFor() {
+        guard let location = LocationService.shared.locationManager.location?.coordinate else {
+            print("No location")
+            return
+        }
+        
+        var formModel = RequestFormModel(
+            firstName: firstName,
+            lastName: lastName,
+            CNP: CNP,
+            birthday: birthdayDate,
+            currentLocation: location,
+            serialNumber: serialNumber,
+            droneType: droneType,
+            takeoffTime: takeoffTime,
+            landingTime: landingTime,
+            flightLocation: flightCoordinates.value!,
+            flightDate: flightDate,
+            flightAdress: self.flightLocation,
+            responseModel: ResponseModel(
+                response: .accepted,
+                ID: ID,
+                reason: ""
+            )
+        )
+        
+        FirebaseService.shared.postFlightRequestFor(
+            user: "\(firstName) \(lastName)",
+            formModel: formModel
+        )
+        
+        UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "user")
     }
 }

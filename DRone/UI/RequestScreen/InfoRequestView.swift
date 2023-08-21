@@ -77,6 +77,7 @@ struct InfoRequestView: View {
                                 
                                 Button(
                                     action: {
+                                        viewModel.clearData()
                                         navigation.push(RequestFormView(viewModel: viewModel).asDestination(), animated: true)
                                     }, label: {
                                         ZStack {
