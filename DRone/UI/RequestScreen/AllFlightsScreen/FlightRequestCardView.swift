@@ -64,7 +64,7 @@ struct FlightRequestCardView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)")
+                        Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)".limitLettersFormattedString(limit: 30))
                             .foregroundColor(.white)
                             .font(.abel(size: 18))
                         
@@ -99,9 +99,10 @@ struct FlightRequestCardView: View {
                     Image(systemName: "chevron.right")
                         .resizable()
                         .renderingMode(.template)
-                        .foregroundColor(Color("gray.background").opacity(0.4))
+                        .foregroundColor(completedFlight ? Color("gray.background").opacity(0.4) : .white)
                         .frame(width: 16, height: 16)
                         .scaledToFit()
+                        .padding(.trailing, 10)
                 }
                 .padding(.leading, 5)
                 .overlay(completedFlight ?  Color("gray.background").opacity(0.4) : Color.clear)

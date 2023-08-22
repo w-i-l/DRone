@@ -18,7 +18,7 @@ enum DroneType: CaseIterable {
     var associatedValues: (type: String, weight: ClosedRange<Double>) {
         switch self {
         case .agricultural:
-            return ("Agrar", 1.5...2.5)
+            return ("Agricultural", 1.5...2.5)
         case .toy:
             return ("Toy", 0.1...0.3)
         case .photography:
@@ -78,8 +78,9 @@ class RequestViewModel: BaseViewModel {
     private var flightCoordinatesBinding: Binding<CLLocationCoordinate2D?> {
         Binding<CLLocationCoordinate2D?>(
             get: { self.flightCoordinates.value },
-            set: {
-                newValue in self.flightCoordinates.value = newValue
+            set: { newValue in
+                
+                self.flightCoordinates.value = newValue
                 LocationService.shared.getAdressForLocation(location: newValue!)
                     .receive(on: DispatchQueue.main)
                     .sink { _ in
@@ -100,6 +101,7 @@ class RequestViewModel: BaseViewModel {
     
     // all flights
     @Published var allFlightsRequest = [RequestFormModel]()
+    @Published var fetchingState: FetchingState = .loading
     
     var upcomingFlights: [RequestFormModel] {
         allFlightsRequest.sorted(by: { $0.flightDate > $1.flightDate }).filter { $0.flightDate >= Date() }
@@ -114,6 +116,11 @@ class RequestViewModel: BaseViewModel {
     var changeLocationViewModel: ChangeLocationViewModel = .init(adressToFetchLocation: .constant(nil))
     
     override init() {
+        
+        self.fetchingState = .loading
+        
+        self.flightCoordinates.value = LocationService.shared.locationManager.location?.coordinate
+        
         super.init()
         
         changeLocationViewModel = ChangeLocationViewModel(adressToFetchLocation: self.flightCoordinatesBinding)
@@ -141,10 +148,26 @@ class RequestViewModel: BaseViewModel {
                 
             } receiveValue: { [weak self] value in
                 self?.allFlightsRequest = value
+                self?.fetchingState = .loaded
             }
             .store(in: &bag)
 
 
+    }
+    
+    func fetchAllFlightsFor(user: String) {
+        
+        self.fetchingState = .loading
+        
+        FirebaseService.shared.fetchFlightRequestsFor(user: "Ocnaru Mihai")
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] value in
+                self?.allFlightsRequest = value
+                self?.fetchingState = .loaded
+            }
+            .store(in: &bag)
     }
     
     func getResponse() {

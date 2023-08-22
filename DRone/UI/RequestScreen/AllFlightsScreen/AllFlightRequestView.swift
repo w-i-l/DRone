@@ -12,6 +12,8 @@ struct AllFlightRequestView: View {
     
     @StateObject var viewModel: RequestViewModel
     @State private var isNavigationLinkShown: Bool = false
+    @State private var showUpcomingFlights: Bool = true
+    @State private var showCompletedFlights: Bool = true
     @EnvironmentObject private var navigation: Navigation
     
     var hourFormatter: DateFormatter {
@@ -28,109 +30,185 @@ struct AllFlightRequestView: View {
 
     
     var body: some View {
-        VStack() {
-            
-            // title
-            HStack {
-                Text("All requests")
-                    .foregroundColor(.white)
-                    .font(.abel(size: 40))
-                
-                Spacer()
-            }
-            
-            Spacer()
-            
-            ZStack {
-                if viewModel.allFlightsRequest.isEmpty {
+        VStack {
+            switch viewModel.fetchingState {
+            case .loading:
+                VStack {
+                    LoaderView()
+                        .frame(width: 32, height: 32)
+                }
+            case .loaded:
+                VStack() {
                     
-                    Spacer()
-                    Text("No flight request")
-                        .font(.abel(size: 40))
-                        .foregroundColor(.white)
-                    Spacer()
-                    
-                } else {
-                    ScrollView(showsIndicators: false) {
+                    // title
+                    HStack {
+                        Text("All requests")
+                            .foregroundColor(.white)
+                            .font(.abel(size: 40))
                         
+                        Spacer()
                         
-                        if !viewModel.upcomingFlights.isEmpty {
-                            HStack {
-                                Text("Upcoming flights")
-                                    .foregroundColor(.white)
-                                    .font(.abel(size: 24))
-                                
-                                Spacer()
-                            }
-                            
-                            ForEach(viewModel.upcomingFlights, id: \.self) { flightRequest in
-                                VStack(spacing: 12) {
-                                    
-                                    FlightRequestCardView(flightRequest: flightRequest)
-                                    
-                                    Color("accent.blue")
-                                        .frame(height: 1)
-                                }
-                                
-                            }
-                        }
-                        
-                    
-                        HStack {
-                            Text("Completed flights")
+                        Button {
+                            viewModel.fetchAllFlightsFor(user: "Ocnaru Mihai")
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                                .resizable()
                                 .foregroundColor(.white)
-                            .font(.abel(size: 24))
+                                .frame(width: 20, height: 20)
+                                .scaledToFit()
+                        }
+
+                    }
+                    
+                    Spacer()
+                    
+                    ZStack {
+                        if viewModel.allFlightsRequest.isEmpty {
                             
                             Spacer()
-                        }
-                        ForEach(viewModel.completedFlights, id: \.self) { flightRequest in
-                            VStack(spacing: 12) {
+                            Text("No flight request")
+                                .font(.abel(size: 40))
+                                .foregroundColor(.white)
+                            Spacer()
+                            
+                        } else {
+                            ScrollView(showsIndicators: false) {
                                 
-                                FlightRequestCardView(flightRequest: flightRequest)
-                                
-                                Color("accent.blue")
-                                    .frame(height: 1)
+                                VStack {
+                                    if !viewModel.upcomingFlights.isEmpty {
+                                        HStack {
+                                            
+                                            Button(action: {
+                                                withAnimation(.default){
+                                                    showUpcomingFlights.toggle()
+                                                }
+                                            }, label: {
+                                                HStack(spacing: 12) {
+                                                    
+                                                    Text("Upcoming flights")
+                                                        .foregroundColor(.white)
+                                                        .font(.abel(size: 24))
+                                                    
+                                                    
+                                                    Image(systemName: showUpcomingFlights ? "chevron.down" : "chevron.up")
+                                                        .resizable()
+                                                        .foregroundColor(.white)
+                                                        .frame(width: 10, height: 10)
+                                                        .scaledToFit()
+                                                }
+                                                .animation(.none, value: showUpcomingFlights)
+                                            })
+                                            
+                                            Spacer()
+                                        }
+                                        
+                                        if showUpcomingFlights {
+                                            ForEach(viewModel.upcomingFlights, id: \.self) { flightRequest in
+                                                VStack(spacing: 12) {
+                                                    
+                                                    FlightRequestCardView(flightRequest: flightRequest)
+                                                    
+                                                    if flightRequest != viewModel.upcomingFlights.last! {
+                                                        Color("accent.blue")
+                                                            .frame(height: 1)
+                                                    }
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                    
+                                    HStack {
+                                        Button(action: {
+                                            withAnimation(.default){
+                                                showCompletedFlights.toggle()
+                                            }
+                                        }, label: {
+                                            HStack(spacing: 12) {
+                                                
+                                                Text("Completed flights")
+                                                    .foregroundColor(.white)
+                                                    .font(.abel(size: 24))
+                                                
+                                                
+                                                Image(systemName: showCompletedFlights ? "chevron.down" : "chevron.up")
+                                                    .resizable()
+                                                    .foregroundColor(.white)
+                                                    .frame(width: 10, height: 10)
+                                                    .scaledToFit()
+                                            }
+                                            .animation(.none, value: showCompletedFlights)
+                                        })
+                                        
+                                        Spacer()
+                                    }
+                                    
+                                    if !viewModel.completedFlights.isEmpty && showCompletedFlights {
+                                        ForEach(viewModel.completedFlights, id: \.self) { flightRequest in
+                                            VStack(spacing: 12) {
+                                                
+                                                FlightRequestCardView(flightRequest: flightRequest)
+                                                
+                                                if flightRequest != viewModel.completedFlights.last! {
+                                                    Color("accent.blue")
+                                                        .frame(height: 1)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                .padding(.bottom, 70)
                             }
+                        }
+                        
+                        VStack {
+                            
+                            Spacer()
+                            
+                            Button (action: {
+                                AppService.shared.screenIndex.value = 0
+                                viewModel.clearData()
+                                navigation.push(InfoRequestView(viewModel: viewModel).asDestination(), animated: true)
+                            }, label: {
+                                ZStack {
+                                    Color("accent.blue")
+                                        .cornerRadius(12)
+                                        .frame(height: 60)
+                                    
+                                    HStack {
+                                        Text("New request")
+                                            .foregroundColor(.white)
+                                            .font(.abel(size: 24))
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .foregroundColor(.white)
+                                            .frame(width: 10, height: 10)
+                                            .scaledToFit()
+                                    }
+                                    .padding(.vertical, 10)
+                                }
+                            })
                         }
                         
                     }
-                }
-                
-                VStack {
                     
+                    .padding(.bottom, UIScreen.main.bounds.height / 11.3)
                     Spacer()
-                    
-                    Button (action: {
-                        AppService.shared.screenIndex.value = 0
-                        viewModel.clearData()
-                        navigation.push(InfoRequestView(viewModel: viewModel).asDestination(), animated: true)
-                    }, label: {
-                        ZStack {
-                            Color("accent.blue")
-                                .cornerRadius(12)
-                                .frame(height: 60)
-                            
-                            HStack {
-                                Text("New request")
-                                    .foregroundColor(.white)
-                                    .font(.abel(size: 24))
-                                
-                                Image(systemName: "chevron.right")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .foregroundColor(.white)
-                                    .frame(width: 10, height: 10)
-                                    .scaledToFit()
-                            }
-                            .padding(.vertical, 10)
-                        }
-                    })
+                }
+            case .failure:
+                Button {
+                    viewModel.fetchAllFlightsFor(user: "Ocnaru Mihai")
+                } label: {
+                    Text("Retry")
+                        .foregroundColor(.white)
+                        .font(.abel(size: 32))
                 }
                 
             }
             
-            .padding(.bottom, UIScreen.main.bounds.height / 11.3)
-            Spacer()
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

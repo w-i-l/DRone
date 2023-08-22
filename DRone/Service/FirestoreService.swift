@@ -62,7 +62,7 @@ class FirebaseService: BaseViewModel {
                         case "accepted" :
                             return .accepted
                         case "rejected":
-                            return .pending
+                            return .rejected
                         case "pending":
                             return .pending
                         default:
@@ -119,7 +119,7 @@ class FirebaseService: BaseViewModel {
                 longitude: formModel.currentLocation.longitude
             ),
             "ID": formModel.responseModel.ID,
-            "response": formModel.responseModel.response.rawValue,
+            "response": formModel.responseModel.response.rawValue.lowercased(),
             "reason": formModel.responseModel.reason,
             "drone-type": formModel.droneType.associatedValues.type,
             "flight-adress-main": formModel.flightAdress.mainAdress,

@@ -61,6 +61,7 @@ struct PersonalInfosRequest: View {
                                         errorText: "Enter a valid first name",
                                         viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
                                     )
+                                    .padding(.top, 9)
                                 }
                                 .padding(.top, 40)
                                 

@@ -68,13 +68,15 @@ struct RequestDetailsView: View {
                     Flight Address: \(viewModel.formModel.flightAdress.mainAdress)
                     Response ID: \(viewModel.formModel.responseModel.ID)
                     Response: \(viewModel.formModel.responseModel.response.rawValue)
-                    Reason: \(viewModel.formModel.responseModel.reason)
+                    \(viewModel.formModel.responseModel.response == .rejected ? "Reason: \(viewModel.formModel.responseModel.reason)" : "" )
                     """
 
                     navigation.presentModal(ShareSheet(activityItems:  [
-                        "Flight request details\n",
+                        "Flight request details\n" +
                         content
-                    ]).edgesIgnoringSafeArea(.bottom).asDestination(), animated: true) {
+                    ])
+                        .edgesIgnoringSafeArea(.bottom)
+                        .asDestination(), animated: true) {
                         
                     } controllerConfig: { _ in
                         
@@ -93,7 +95,7 @@ struct RequestDetailsView: View {
             
             ScrollView(showsIndicators: false) {
 
-                VStack {
+                VStack(spacing: 4) {
                     Text("Flight request with ID:")
                         .foregroundColor(.white)
                         .font(.abel(size: 32))
@@ -102,10 +104,19 @@ struct RequestDetailsView: View {
                         UIPasteboard.general.string = viewModel.formModel.responseModel.ID
                         presentAlert = true
                     } label: {
-                        Text(viewModel.formModel.responseModel.ID)
-                            .foregroundColor(.blue)
-                            .font(.abel(size: 32))
+                        HStack(spacing: 8) {
+                            Text(viewModel.formModel.responseModel.ID)
+                                .foregroundColor(.blue)
+                                .font(.abel(size: 32))
+                            
+                            Image(systemName: "doc.on.doc")
+                                .resizable()
+                                .foregroundColor(.blue)
+                                .frame(width: 24, height: 24)
+
+                        }
                     }
+                    .padding(.top, 0)
 
                 }
                 
