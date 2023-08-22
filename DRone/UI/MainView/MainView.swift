@@ -25,7 +25,8 @@ struct MainView: View {
                 AllFlightRequestView(viewModel: RequestViewModel())
                     .opacity(viewModel.selectedTab == .request ? 1 : 0)
                 
-                    
+                GoogleMapsView(viewModel: GoogleMapsViewModel())
+                    .opacity(viewModel.selectedTab == .map ? 1 : 0)
                 
                 VStack {
                     Spacer()

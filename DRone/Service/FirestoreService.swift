@@ -10,6 +10,17 @@ import FirebaseFirestore
 import Combine
 import CoreLocation
 
+enum NoFLyZoneGeometricType: String {
+    case poligon = "poligon"
+    case circle = "cicle"
+}
+
+enum NoFlyZoneType: String {
+    case restricted = "restricted-zone"
+    case firstZone = "first-zone"
+    case requestZone = "request-zone"
+}
+
 class FirebaseService: BaseViewModel {
     
     static let shared: FirebaseService = .init()
@@ -17,15 +28,6 @@ class FirebaseService: BaseViewModel {
     
     override private init() {
         super.init()
-        
-        fetchFlightRequestsFor(user: "Ocnaru Mihai")
-            .sink { _ in
-                
-            } receiveValue: { _ in
-                
-            }
-            .store(in: &bag)
-
     }
     
     func fetchFlightRequestsFor(user fullName: String) -> Future<[RequestFormModel], Error> {
@@ -136,5 +138,100 @@ class FirebaseService: BaseViewModel {
         
         docRef.setData(docData)
         
+    }
+    
+    func fetchAllNoFlyZones() -> Future<[[CLLocationCoordinate2D]], Error> {
+        var arrayToReturn: [[CLLocationCoordinate2D]] = []
+        return Future<[[CLLocationCoordinate2D]], Error> { [weak self] promise in
+            
+            self?.db.collection("no-fly-zones").getDocuments(completion: { querrySnapshot, error in
+                guard error == nil else {
+                    promise(.failure(error!))
+                    return
+                }
+                
+                for document in querrySnapshot!.documents {
+                    var arrayToAppend: [CLLocationCoordinate2D] = []
+                    
+                    for location in (document["coordinates"] as! Array<GeoPoint>){
+                        arrayToAppend.append(CLLocationCoordinate2D(
+                            latitude: location.latitude,
+                            longitude: location.longitude
+                        ))
+                    }
+                    
+                    arrayToReturn.append(arrayToAppend)
+                }
+                
+                promise(.success(arrayToReturn))
+            })
+        }
+    }
+    
+    func generateSimulatedNoFlyZone() -> [CLLocationCoordinate2D] {
+
+        // we draw an hexagon with points
+        /*
+            E   D
+         F         C
+            A   B
+         */
+        
+        let hexagonSideLengh: Double = Double.random(in: 0.1...0.4)
+        let pointA = CLLocationCoordinate2D(
+            latitude: Double.random(in: 43.4...48),
+            longitude: Double.random(in: 20...31)
+        )
+        
+        let pointB = CLLocationCoordinate2D(
+            latitude: pointA.latitude + hexagonSideLengh,
+            longitude: pointA.longitude
+        )
+        
+        let pointC = CLLocationCoordinate2D(
+            latitude: pointA.latitude + (3 * hexagonSideLengh / 2),
+            longitude: pointA.longitude + (hexagonSideLengh * sqrt(3) / 2)
+        )
+        
+        let pointD = CLLocationCoordinate2D(
+            latitude: pointA.latitude + hexagonSideLengh,
+            longitude: pointA.longitude + (hexagonSideLengh * sqrt(3))
+        )
+        
+        let pointE = CLLocationCoordinate2D(
+            latitude: pointA.latitude,
+            longitude: pointA.longitude + (hexagonSideLengh * sqrt(3))
+        )
+        
+        let pointF = CLLocationCoordinate2D(
+            latitude: pointA.latitude - (hexagonSideLengh / 2),
+            longitude: pointA.longitude + (hexagonSideLengh * sqrt(3) / 2)
+        )
+
+        
+
+        return [pointA, pointB, pointC, pointD, pointE, pointF]
+    }
+
+    
+    func addNoFlyZone(coordinates: [CLLocationCoordinate2D], type: NoFLyZoneGeometricType, zoneType: NoFlyZoneType) {
+        
+        let docRef = db.collection("no-fly-zones").document()
+        
+        let data: [String: Any] = [
+            "type": type.rawValue,
+            "zone-type": zoneType.rawValue,
+            "coordinates": 
+                coordinates
+                    .map {
+                        GeoPoint(
+                            latitude: $0.latitude,
+                            longitude: $0.longitude
+                        )
+                    }
+            
+        ]
+        
+        docRef.setData(data)
     }
 }
