@@ -360,8 +360,8 @@
 			isa = PBXGroup;
 			children = (
 				178263F62A94B0470008529B /* GoogleMapView.swift */,
-				178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */,
 				1720150E2A9613AB008A6D3C /* NoFlyZoneInfoModal.swift */,
+				178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */,
 			);
 			path = GoogleMapView;
 			sourceTree = "<group>";

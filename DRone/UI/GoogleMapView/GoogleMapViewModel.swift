@@ -12,6 +12,8 @@ import GoogleMaps
 
 struct GoogleMapsViewBridge: UIViewRepresentable {
     
+    let delegate = GoogleMapsDelegate()
+    
     private let zoom: Float = 15.0
     let mapView = GMSMapView.map(
         withFrame: CGRect.zero,
@@ -22,23 +24,53 @@ struct GoogleMapsViewBridge: UIViewRepresentable {
         ))
     private let currentLocationMarker = GMSMarker()
     
+    var rectangleToRenderCoordinates: (
+        north: CLLocationCoordinate2D,
+        est: CLLocationCoordinate2D,
+        south: CLLocationCoordinate2D,
+        west: CLLocationCoordinate2D
+    ) = (
+        CLLocationCoordinate2D(),
+        CLLocationCoordinate2D(),
+        CLLocationCoordinate2D(),
+        CLLocationCoordinate2D()
+    )
+    
+    var rectangleToRender = GMSPolygon()
+    
     func makeUIView(context: Self.Context) -> GMSMapView {
         if let location = LocationService.shared.locationManager.location?.coordinate {
             mapView.camera = GMSCameraPosition(
                 target: location,
-                zoom: 15
+                zoom: 10
             )
             
-            currentLocationMarker.position = location
-            currentLocationMarker.title = "Your location"
-            currentLocationMarker.map = mapView
+            mapView.isMyLocationEnabled = true
+            mapView.setMinZoom(5, maxZoom: 20)
             
             let imageView = UIImageView(image: UIImage(systemName: "mappin")?.withRenderingMode(.alwaysTemplate).withTintColor(.blue))
             imageView.tintColor = .blue
             currentLocationMarker.icon = imageView.image
 
         }
-            return mapView
+        
+        // drawing the frame to show
+        let path = GMSMutablePath()
+        path.add(rectangleToRenderCoordinates.north)
+        path.add(rectangleToRenderCoordinates.est)
+        path.add(rectangleToRenderCoordinates.south)
+        path.add(rectangleToRenderCoordinates.west)
+        path.add(rectangleToRenderCoordinates.north)
+        
+        rectangleToRender.path = path
+//        polygonToDraw.fillColor = UIColor.purple.withAlphaComponent(0.2) // Set the fill color and alpha
+        rectangleToRender.strokeColor = UIColor.purple
+        rectangleToRender.strokeWidth = 3.0
+        
+        rectangleToRender.map = self.mapView
+        
+        
+        return mapView
     }
     
     func updateUIView(_ mapView: GMSMapView, context: Context) {
@@ -47,7 +79,7 @@ struct GoogleMapsViewBridge: UIViewRepresentable {
     func centerMapTo(location: CLLocationCoordinate2D) {
         mapView.camera = GMSCameraPosition (
             target: location,
-            zoom: 15
+            zoom: 10
         )
         
         currentLocationMarker.position = location
@@ -55,7 +87,7 @@ struct GoogleMapsViewBridge: UIViewRepresentable {
 }
 
 class GoogleMapsViewModel: BaseViewModel {
-    let map = GoogleMapsViewBridge()
+    var map = GoogleMapsViewBridge()
     
     @Published var addressToFetchLocation: CLLocationCoordinate2D? = CLLocationCoordinate2D()
     @Published var searchingViewModel: SearchingViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
@@ -63,7 +95,10 @@ class GoogleMapsViewModel: BaseViewModel {
     override init() {
         super.init()
         
-        var addressToFetchLocationBinding: Binding<CLLocationCoordinate2D?> = .init(get: {
+        self.map.mapView.delegate = self.map.delegate
+        self.map.delegate.parent = self
+        
+        let addressToFetchLocationBinding: Binding<CLLocationCoordinate2D?> = .init(get: {
             self.addressToFetchLocation
         }, set: { newValue in
             self.addressToFetchLocation = newValue
@@ -74,8 +109,9 @@ class GoogleMapsViewModel: BaseViewModel {
             showCurrentLocation: false
         )
         
-//        for _ in 0...50 {
+//        for _ in 0...300 {
 //            FirebaseService.shared.addNoFlyZoneShape(shape: FirebaseService.shared.generateSimulatedNoFlyZoneCircle())
+//            FirebaseService.shared.addNoFlyZoneShape(shape: FirebaseService.shared.generateSimulatedNoFlyZonePolygon())
 //        }
         
         FirebaseService.shared.fetchAllNoFlyZones()
@@ -162,4 +198,52 @@ class GoogleMapsViewModel: BaseViewModel {
     }
 
 
+}
+
+
+class GoogleMapsDelegate: NSObject, GMSMapViewDelegate {
+
+    weak var parent: GoogleMapsViewModel?
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+
+        let visibleRegion = mapView.projection.visibleRegion()
+        let bounds = GMSCoordinateBounds(region: visibleRegion)
+
+        let center = mapView.camera.target
+        
+        let scale: Double = 3
+        
+        parent?.map.rectangleToRenderCoordinates.north = CLLocationCoordinate2D(
+            latitude: center.latitude + scale,
+            longitude: center.longitude + scale
+        )
+        
+        parent?.map.rectangleToRenderCoordinates.est = CLLocationCoordinate2D(
+            latitude: center.latitude + scale,
+            longitude: center.longitude - scale
+        )
+    
+        
+        parent?.map.rectangleToRenderCoordinates.south = CLLocationCoordinate2D(
+            latitude: center.latitude - scale,
+            longitude: center.longitude - scale
+        )
+        
+        
+        parent?.map.rectangleToRenderCoordinates.west = CLLocationCoordinate2D(
+            latitude: center.latitude - scale,
+            longitude: center.longitude + scale
+        )
+        
+        let path = GMSMutablePath()
+        path.add((parent?.map.rectangleToRenderCoordinates.north)!)
+        path.add((parent?.map.rectangleToRenderCoordinates.est)!)
+        path.add((parent?.map.rectangleToRenderCoordinates.south)!)
+        path.add((parent?.map.rectangleToRenderCoordinates.west)!)
+        path.add((parent?.map.rectangleToRenderCoordinates.north)!)
+        
+        parent?.map.rectangleToRender.path = path
+        parent?.map.rectangleToRender.map = mapView
+    }
 }
