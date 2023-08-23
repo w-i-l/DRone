@@ -10,17 +10,6 @@ import FirebaseFirestore
 import Combine
 import CoreLocation
 
-enum NoFLyZoneGeometricType: String {
-    case poligon = "poligon"
-    case circle = "cicle"
-}
-
-enum NoFlyZoneType: String {
-    case restricted = "restricted-zone"
-    case firstZone = "first-zone"
-    case requestZone = "request-zone"
-}
-
 class FirebaseService: BaseViewModel {
     
     static let shared: FirebaseService = .init()
@@ -140,9 +129,9 @@ class FirebaseService: BaseViewModel {
         
     }
     
-    func fetchAllNoFlyZones() -> Future<[[CLLocationCoordinate2D]], Error> {
-        var arrayToReturn: [[CLLocationCoordinate2D]] = []
-        return Future<[[CLLocationCoordinate2D]], Error> { [weak self] promise in
+    func fetchAllNoFlyZones() -> Future<[NoFlyZoneShape], Error> {
+        var arrayToReturn: [NoFlyZoneShape] = []
+        return Future<[NoFlyZoneShape], Error> { [weak self] promise in
             
             self?.db.collection("no-fly-zones").getDocuments(completion: { querrySnapshot, error in
                 guard error == nil else {
@@ -151,16 +140,40 @@ class FirebaseService: BaseViewModel {
                 }
                 
                 for document in querrySnapshot!.documents {
-                    var arrayToAppend: [CLLocationCoordinate2D] = []
                     
-                    for location in (document["coordinates"] as! Array<GeoPoint>){
-                        arrayToAppend.append(CLLocationCoordinate2D(
-                            latitude: location.latitude,
-                            longitude: location.longitude
+                    if (document["type"] as! String) == NoFLyZoneGeometricType.circle.rawValue.lowercased() {
+                        
+                        let center = CLLocationCoordinate2D(
+                            latitude: (document["center"] as! GeoPoint).latitude,
+                            longitude: (document["center"] as! GeoPoint).longitude
+                        )
+                        
+                        arrayToReturn.append(NoFlyZoneCircle(
+                            geometrycType: .circle,
+                            type: .match(zoneType: document["zone-type"] as! String),
+                            center: center,
+                            radius: document["radius"] as! Double
+                        ))
+                        
+                    } else if (document["type"] as! String) == NoFLyZoneGeometricType.polygon.rawValue.lowercased() {
+                        
+                        var coordinates: [CLLocationCoordinate2D] = []
+                        
+                        for location in (document["coordinates"] as! Array<GeoPoint>){
+                            coordinates.append(CLLocationCoordinate2D(
+                                latitude: location.latitude,
+                                longitude: location.longitude
+                            ))
+                        }
+                        
+                        arrayToReturn.append(NoFlyZonePolygon(
+                            geometrycType: .polygon,
+                            type: .match(zoneType: document["zone-type"] as! String),
+                            coordinates: coordinates
                         ))
                     }
                     
-                    arrayToReturn.append(arrayToAppend)
+                    
                 }
                 
                 promise(.success(arrayToReturn))
@@ -168,7 +181,7 @@ class FirebaseService: BaseViewModel {
         }
     }
     
-    func generateSimulatedNoFlyZone() -> [CLLocationCoordinate2D] {
+    func generateSimulatedNoFlyZonePolygon() -> NoFlyZonePolygon {
 
         // we draw an hexagon with points
         /*
@@ -209,28 +222,53 @@ class FirebaseService: BaseViewModel {
         )
 
         
-
-        return [pointA, pointB, pointC, pointD, pointE, pointF]
+        return NoFlyZonePolygon(
+            geometrycType: .polygon,
+            type: NoFlyZoneType.random(),
+            coordinates: [pointA, pointB, pointC, pointD, pointE, pointF]
+        )
     }
 
+    func generateSimulatedNoFlyZoneCircle() -> NoFlyZoneCircle {
+        let center = CLLocationCoordinate2D(
+            latitude: Double.random(in: 43.4...48),
+            longitude: Double.random(in: 20...31)
+        )
+        
+        let radius: CLLocationDistance = Double.random(in: 10000...100000)
+        
+        return NoFlyZoneCircle(
+            geometrycType: .circle,
+            type: .random(),
+            center: center,
+            radius: radius
+        )
+    }
     
-    func addNoFlyZone(coordinates: [CLLocationCoordinate2D], type: NoFLyZoneGeometricType, zoneType: NoFlyZoneType) {
+    func addNoFlyZoneShape(shape: NoFlyZoneShape) {
         
         let docRef = db.collection("no-fly-zones").document()
         
-        let data: [String: Any] = [
-            "type": type.rawValue,
-            "zone-type": zoneType.rawValue,
-            "coordinates": 
-                coordinates
-                    .map {
-                        GeoPoint(
-                            latitude: $0.latitude,
-                            longitude: $0.longitude
-                        )
-                    }
-            
+        var data: [String: Any] = [
+            "type": shape.geometrycType.rawValue,
+            "zone-type": shape.type.rawValue,
         ]
+        
+        if shape.geometrycType == .circle {
+            data["center"] = GeoPoint(
+                latitude: (shape as! NoFlyZoneCircle).center.latitude,
+                longitude: (shape as! NoFlyZoneCircle).center.longitude
+            )
+            data["radius"] = (shape as! NoFlyZoneCircle).radius
+        } else if shape.geometrycType == .polygon {
+            data["coordinates"] = (shape as! NoFlyZonePolygon).coordinates
+                .map {
+                    GeoPoint(
+                        latitude: $0.latitude,
+                        longitude: $0.longitude
+                    )
+                }
+        }
         
         docRef.setData(data)
     }

@@ -20,6 +20,13 @@ class SearchingViewModel: BaseViewModel {
     
     @Binding var adressToFetchLocation: CLLocationCoordinate2D?
     
+    let showCurrentLocation: Bool
+    
+    init(adressToFetchLocation: Binding<CLLocationCoordinate2D?>, showCurrentLocation: Bool = true) {
+        self._adressToFetchLocation = adressToFetchLocation
+        self.showCurrentLocation = showCurrentLocation
+    }
+    
     func searchForNearbyLocations() {
         LocationService.shared.getPredictionsFromInput(textSearched: textSearched)
             .receive(on: DispatchQueue.main)
@@ -55,9 +62,5 @@ class SearchingViewModel: BaseViewModel {
             }
             .store(in: &bag)
 
-    }
-
-    init(adressToFetchLocation: Binding<CLLocationCoordinate2D?>) {
-        self._adressToFetchLocation = adressToFetchLocation
     }
 }

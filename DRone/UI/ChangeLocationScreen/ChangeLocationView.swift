@@ -19,6 +19,8 @@ struct ChangeLocationView: View {
             BackButton(text: "Back")
             
             SearchingView(viewModel: viewModel.searchLocationViewModel)
+            
+            Spacer()
         }
         .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

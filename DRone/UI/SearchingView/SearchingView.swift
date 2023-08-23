@@ -13,6 +13,8 @@ struct SearchingView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: SearchingViewModel
     
+    @State private var textFieldDidReturned: Bool = false
+    
     var body: some View {
         
         
@@ -36,7 +38,10 @@ struct SearchingView: View {
                             .frame(width: 24, height: 24)
                             .scaledToFit()
                         
-                        TextField("", text: $viewModel.textSearched)
+                        
+                        TextField("", text: $viewModel.textSearched, onCommit: {
+                            viewModel.predictedLocations = []
+                        })
                             .foregroundColor(Color("background.first"))
                             .font(.abel(size: 20))
                             .autocorrectionDisabled(true)
@@ -46,6 +51,9 @@ struct SearchingView: View {
                                 Text("Search for a location")
                                     .font(.abel(size: 20))
                                     .foregroundColor(Color("subtitle.gray"))
+                            }
+                            .onTapGesture {
+                                textFieldDidReturned = false
                             }
                         
                         
@@ -70,69 +78,80 @@ struct SearchingView: View {
                     
                 }
                 
-                Button {
-                    
-                    guard let location = LocationService.shared.locationManager.location?.coordinate else {
-                        print("No location could be found!")
-                        return
+                if viewModel.showCurrentLocation {
+                    Button {
+                        
+                        guard let location = LocationService.shared.locationManager.location?.coordinate else {
+                            print("No location could be found!")
+                            return
+                        }
+                        
+                        viewModel.matchLocationWithCurrentLocation(location: location)
+                        
+                        viewModel.predictedLocations = []
+                        dismiss()
+                    } label: {
+                        Image(systemName: "paperplane")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(.white)
+                            .frame(width: 24, height: 24)
+                            .scaledToFit()
                     }
-                    
-                    viewModel.matchLocationWithCurrentLocation(location: location)
-                    
-                    viewModel.predictedLocations = []
-                    dismiss()
-                } label: {
-                    Image(systemName: "paperplane")
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundColor(.white)
-                        .frame(width: 24, height: 24)
-                        .scaledToFit()
                 }
             }
             
-            // results
-            VStack(alignment: .leading) {
-                ScrollView(showsIndicators: false) {
-                    ForEach(viewModel.predictedLocations, id:\.addressID) { item in
-                        Button {
-                            viewModel.selectedAddress = item
-                            viewModel.textSearched = item.addressName
-                            viewModel.updateLocation()
-                            
-                            viewModel.predictedLocations = []
-                            dismiss()
-                        } label: {
-                            HStack(spacing: 15) {
+            if !viewModel.predictedLocations.isEmpty {
+                // results
+                VStack(alignment: .leading) {
+                    ScrollView(showsIndicators: false) {
+                        ForEach(viewModel.predictedLocations, id:\.addressID) { item in
+                            Button {
+                                viewModel.selectedAddress = item
+                                viewModel.textSearched = item.addressName
+                                viewModel.updateLocation()
                                 
-                                Image(systemName: "mappin.circle.fill")
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .foregroundColor(Color("subtitle.gray"))
-                                    .frame(width: 14, height: 14)
-                                    .scaledToFit()
+                                textFieldDidReturned = true
+                                viewModel.predictedLocations = []
+                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 
-                                
-                                Text(item.addressName)
-                                    .foregroundColor(Color("background.first"))
-                                    .font(.abel(size: 18))
-                                    .multilineTextAlignment(.leading)
-                                
-                                Spacer()
+                                if viewModel.showCurrentLocation {
+                                    dismiss()
+                                }
+                            } label: {
+                                HStack(spacing: 15) {
+                                    
+                                    Image(systemName: "mappin.circle.fill")
+                                        .resizable()
+                                        .renderingMode(.template)
+                                        .foregroundColor(Color("subtitle.gray"))
+                                        .frame(width: 14, height: 14)
+                                        .scaledToFit()
+                                    
+                                    
+                                    Text(item.addressName)
+                                        .foregroundColor(Color("background.first"))
+                                        .font(.abel(size: 18))
+                                        .multilineTextAlignment(.leading)
+                                    
+                                    Spacer()
+                                }
+                                .padding(10)
                             }
-                            .padding(10)
                         }
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Color.white
+                                .cornerRadius(12)
+                        )
                     }
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        Color.white
-                            .cornerRadius(12)
-                    )
                 }
             }
         }
         .onChange(of: viewModel.textSearched) { newValue in
-            viewModel.searchForNearbyLocations()
+            if !textFieldDidReturned {
+                viewModel.searchForNearbyLocations()
+            }
         }
         
     }

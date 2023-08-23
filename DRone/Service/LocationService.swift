@@ -7,9 +7,7 @@ import SwiftyJSON
 
 
 
-class LocationService: NSObject, CLLocationManagerDelegate {
-    
-   
+class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     static let shared = LocationService()
     
@@ -85,7 +83,6 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
     }
     
     func moveToCurentLocation() {

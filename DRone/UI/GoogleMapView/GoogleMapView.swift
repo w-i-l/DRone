@@ -15,12 +15,28 @@ struct GoogleMapsView: View {
     
     @StateObject var viewModel: GoogleMapsViewModel
     
+    @EnvironmentObject private var navigation: Navigation
+    
     @State private var showTerrainOptions: Bool = false
+    @State private var textFieldFocussed: Bool = false
+    @State private var showInfoModal: Bool = false
     
     var body: some View {
         ZStack {
             viewModel.map
                 .ignoresSafeArea()
+                .simultaneousGesture (
+                
+                    TapGesture()
+                        .onEnded({ _ in
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            viewModel.searchingViewModel.predictedLocations = []
+                            
+                        })
+                )
+        
+            
+        
             
             VStack {
                 
@@ -56,7 +72,7 @@ struct GoogleMapsView: View {
                                 }
                             }
                             .padding(10)
-                            .background(Color.white)
+                            .background(Color.white.cornerRadius(12))
                             .offset(y: 116)
                         }
                         
@@ -65,7 +81,7 @@ struct GoogleMapsView: View {
                             Color.white
                                 .cornerRadius(12)
                                 .frame(width: 50)
-                                .frame(maxHeight: 110)
+                                .frame(maxHeight: 165)
                             
                             
                             VStack(spacing: 16) {
@@ -81,6 +97,7 @@ struct GoogleMapsView: View {
                                         .frame(width: 18, height: 18)
                                         .scaledToFit()
                                 }
+                                .padding(.top, 10)
                                 
                                 Color("gray.background")
                                     .frame(width: 50, height: 1)
@@ -97,11 +114,34 @@ struct GoogleMapsView: View {
                                         .scaledToFit()
                                 }
                                 
+                                Color("gray.background")
+                                    .frame(width: 50, height: 1)
+                                
+                                Button {
+                                    
+                                    navigation.presentModal(
+                                        NoFlyZoneInfoModal()
+                                            .edgesIgnoringSafeArea(.all)
+                                            .asDestination(),
+                                        animated: true) {
+                                            
+                                        } controllerConfig: { controller in
+                                            
+                                        }
+
+                                    showInfoModal.toggle()
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                        .resizable()
+                                        .renderingMode(.template)
+                                        .foregroundColor(Color("background.first"))
+                                        .frame(width: 18, height: 18)
+                                        .scaledToFit()
+                                }
+                                .padding(.bottom, 10)
                                 
                             }
-                            .padding(.vertical, 10)
-                            
-                            
+                            .padding(10)
                         }
                     }
                 }
@@ -110,9 +150,34 @@ struct GoogleMapsView: View {
             }
             .padding(20)
             .shadow(radius: 10)
+            .padding(.top, 80)
+            .onTapGesture {
+                textFieldFocussed = false
+            }
+            
+            VStack {
+                SearchingView(viewModel: viewModel.searchingViewModel)
+                    .onTapGesture {
+                        print("tapped on text field")
+                        textFieldFocussed = true
+                    }
+                    .onChange(of: viewModel.addressToFetchLocation!) { newValue in
+                        viewModel.map.mapView.camera = GMSCameraPosition(
+                            target: newValue,
+                            zoom: 12
+                        )
+                        
+                        textFieldFocussed = false
+                    }
+                    
+                
+                Spacer()
+            }
+            .padding(20)
         }
     }
 }
+
 
 struct GoogleMapsView_Previews: PreviewProvider {
     static var previews: some View {

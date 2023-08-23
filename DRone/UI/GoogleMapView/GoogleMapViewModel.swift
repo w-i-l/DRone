@@ -42,7 +42,6 @@ struct GoogleMapsViewBridge: UIViewRepresentable {
     }
     
     func updateUIView(_ mapView: GMSMapView, context: Context) {
-        
     }
     
     func centerMapTo(location: CLLocationCoordinate2D) {
@@ -50,30 +49,48 @@ struct GoogleMapsViewBridge: UIViewRepresentable {
             target: location,
             zoom: 15
         )
+        
+        currentLocationMarker.position = location
     }
 }
 
 class GoogleMapsViewModel: BaseViewModel {
     let map = GoogleMapsViewBridge()
     
+    @Published var addressToFetchLocation: CLLocationCoordinate2D? = CLLocationCoordinate2D()
+    @Published var searchingViewModel: SearchingViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
+    
     override init() {
         super.init()
         
-        for _ in 0...200 {
-            FirebaseService.shared.addNoFlyZone(
-                coordinates: FirebaseService.shared.generateSimulatedNoFlyZone(),
-                type: .poligon,
-                zoneType: .firstZone
-            )
-        }
+        var addressToFetchLocationBinding: Binding<CLLocationCoordinate2D?> = .init(get: {
+            self.addressToFetchLocation
+        }, set: { newValue in
+            self.addressToFetchLocation = newValue
+        })
+        
+        searchingViewModel = .init(
+            adressToFetchLocation: addressToFetchLocationBinding,
+            showCurrentLocation: false
+        )
+        
+//        for _ in 0...50 {
+//            FirebaseService.shared.addNoFlyZoneShape(shape: FirebaseService.shared.generateSimulatedNoFlyZoneCircle())
+//        }
         
         FirebaseService.shared.fetchAllNoFlyZones()
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { [weak self] value in
-                for coordinates in value {
-                    self?.drawPolygon(coordinates: coordinates)
+                
+                value.forEach {
+                    switch $0.geometrycType {
+                    case .circle:
+                        self?.drawCircle(circle: $0 as! NoFlyZoneCircle )
+                    case .polygon:
+                        self?.drawPolygon(polygon: $0 as! NoFlyZonePolygon)
+                    }
                 }
             }
             .store(in: &bag)
@@ -105,23 +122,43 @@ class GoogleMapsViewModel: BaseViewModel {
         }
     }
     
-    func drawPolygon(coordinates: [CLLocationCoordinate2D]) {
+    func drawCircle(circle: NoFlyZoneCircle) {
+        let circleToDraw = GMSCircle(
+            position: circle.center,
+            radius: circle.radius
+        )
+    
+    
+        
+        var color: UIColor
+        switch circle.type {
+        case .firstZone:
+            color = .yellow
+        case .requestZone:
+            color = .orange
+        case .restricted:
+            color = .red
+        }
+        circleToDraw.strokeWidth = 1
+        circleToDraw.fillColor = color.withAlphaComponent(0.3)
+        circleToDraw.strokeColor = color.withAlphaComponent(0.5)
+        
+        circleToDraw.map = self.map.mapView
+    }
+    
+    func drawPolygon(polygon: NoFlyZonePolygon) {
         let path = GMSMutablePath()
-        for coord in coordinates {
+        for coord in polygon.coordinates {
             path.add(coord)
         }
-        path.add(coordinates.first!)
+        path.add(polygon.coordinates.first!)
         
-        let polygon = GMSPolygon(path: path)
-        polygon.fillColor = UIColor.blue.withAlphaComponent(0.5) // Set the fill color and alpha
-        polygon.strokeColor = UIColor.blue
-        polygon.strokeWidth = 3.0
+        let polygonToDraw = GMSPolygon(path: path)
+        polygonToDraw.fillColor = UIColor.blue.withAlphaComponent(0.2) // Set the fill color and alpha
+        polygonToDraw.strokeColor = UIColor.blue
+        polygonToDraw.strokeWidth = 3.0
         
-        let circle = GMSCircle(position: coordinates[2], radius: 1000)
-        circle.fillColor = .red
-        circle.map = self.map.mapView
-        
-        polygon.map = self.map.mapView
+        polygonToDraw.map = self.map.mapView
     }
 
 
