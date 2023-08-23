@@ -133,7 +133,7 @@ class FirebaseService: BaseViewModel {
         var arrayToReturn: [NoFlyZoneShape] = []
         return Future<[NoFlyZoneShape], Error> { [weak self] promise in
             
-            self?.db.collection("airports").getDocuments(completion: { querrySnapshot, error in
+            self?.db.collection("no-fly-zones").getDocuments(completion: { querrySnapshot, error in
                 guard error == nil else {
                     promise(.failure(error!))
                     return
@@ -181,7 +181,7 @@ class FirebaseService: BaseViewModel {
         }
     }
     
-    func generateSimulatedNoFlyZonePolygon() -> NoFlyZonePolygon {
+    func generateSimulatedNoFlyZonePolygon(latitudeRange: ClosedRange<Double> = -90...90, longitudeRange: ClosedRange<Double> = -180...180) -> NoFlyZonePolygon {
 
         // we draw an hexagon with points
         /*
@@ -192,8 +192,8 @@ class FirebaseService: BaseViewModel {
         
         let hexagonSideLengh: Double = Double.random(in: 0.1...0.4)
         let pointA = CLLocationCoordinate2D(
-            latitude: Double.random(in: -90...90),
-            longitude: Double.random(in: -180...180)
+            latitude: Double.random(in: latitudeRange),
+            longitude: Double.random(in: longitudeRange)
         )
         
         let pointB = CLLocationCoordinate2D(
@@ -229,10 +229,10 @@ class FirebaseService: BaseViewModel {
         )
     }
 
-    func generateSimulatedNoFlyZoneCircle() -> NoFlyZoneCircle {
+    func generateSimulatedNoFlyZoneCircle(latitudeRange: ClosedRange<Double> = -90...90, longitudeRange: ClosedRange<Double> = -180...180) -> NoFlyZoneCircle {
         let center = CLLocationCoordinate2D(
-            latitude: Double.random(in: 43.4...48),
-            longitude: Double.random(in: 20...31)
+            latitude: Double.random(in: latitudeRange),
+            longitude: Double.random(in: longitudeRange)
         )
         
         let radius: CLLocationDistance = Double.random(in: 10000...100000)
@@ -247,7 +247,7 @@ class FirebaseService: BaseViewModel {
     
     func addNoFlyZoneShape(shape: NoFlyZoneShape) {
         
-        let docRef = db.collection("airports").document()
+        let docRef = db.collection("no-fly-zones").document()
         
         var data: [String: Any] = [
             "type": shape.geometrycType.rawValue,

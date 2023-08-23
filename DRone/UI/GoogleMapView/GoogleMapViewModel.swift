@@ -92,6 +92,8 @@ class GoogleMapsViewModel: BaseViewModel {
     @Published var addressToFetchLocation: CLLocationCoordinate2D? = CLLocationCoordinate2D()
     @Published var searchingViewModel: SearchingViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
     
+    var noFlyZonesRendered: [GMSCircle] = []
+    
     override init() {
         super.init()
         
@@ -159,12 +161,13 @@ class GoogleMapsViewModel: BaseViewModel {
     }
     
     func drawCircle(circle: NoFlyZoneCircle) {
+        
         let circleToDraw = GMSCircle(
             position: circle.center,
             radius: circle.radius
         )
     
-    
+        noFlyZonesRendered.append(circleToDraw)
         
         var color: UIColor
         switch circle.type {
@@ -197,6 +200,26 @@ class GoogleMapsViewModel: BaseViewModel {
         polygonToDraw.map = self.map.mapView
     }
 
+    func renderNoFlyZonesGeneratedForLocation(northEst: CLLocationCoordinate2D, southWest: CLLocationCoordinate2D) {
+        
+        clearRenderedNoFlyZones()
+        
+        for _ in 0...20 {
+            
+            let circle = FirebaseService.shared.generateSimulatedNoFlyZoneCircle(
+                latitudeRange: southWest.latitude...northEst.latitude,
+                longitudeRange: southWest.longitude...northEst.longitude
+            )
+            
+            drawCircle(circle: circle)
+        }
+    }
+    
+    func clearRenderedNoFlyZones() {
+        for i in 0..<noFlyZonesRendered.count {
+            noFlyZonesRendered[i].map = nil
+        }
+    }
 
 }
 
@@ -205,14 +228,13 @@ class GoogleMapsDelegate: NSObject, GMSMapViewDelegate {
 
     weak var parent: GoogleMapsViewModel?
     
-    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-
-        let visibleRegion = mapView.projection.visibleRegion()
-        let bounds = GMSCoordinateBounds(region: visibleRegion)
+    
+    func drawRenderedRectangle(_ mapView: GMSMapView) {
+    
 
         let center = mapView.camera.target
         
-        let scale: Double = 3
+        let scale: Double = 5
         
         parent?.map.rectangleToRenderCoordinates.north = CLLocationCoordinate2D(
             latitude: center.latitude + scale,
@@ -245,5 +267,33 @@ class GoogleMapsDelegate: NSObject, GMSMapViewDelegate {
         
         parent?.map.rectangleToRender.path = path
         parent?.map.rectangleToRender.map = mapView
+    }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        
+        let visibleRegion = mapView.projection.visibleRegion()
+        
+        let center = mapView.camera.target
+        
+        if (!(center.latitude <= (self.parent?.map.rectangleToRenderCoordinates.north.latitude)! &&
+             center.latitude >= (self.parent?.map.rectangleToRenderCoordinates.south.latitude)! &&
+             center.longitude <= (self.parent?.map.rectangleToRenderCoordinates.west.longitude)! &&
+             center.longitude >= (self.parent?.map.rectangleToRenderCoordinates.est.longitude)!)) {
+            
+            drawRenderedRectangle(mapView)
+            
+            parent?.renderNoFlyZonesGeneratedForLocation(
+                northEst: CLLocationCoordinate2D(
+                    latitude: (self.parent?.map.rectangleToRenderCoordinates.north.latitude)!,
+                    longitude: (self.parent?.map.rectangleToRenderCoordinates.north.longitude)!
+                ) ,
+                southWest: CLLocationCoordinate2D(
+                    latitude: (self.parent?.map.rectangleToRenderCoordinates.south.latitude)!,
+                    longitude: (self.parent?.map.rectangleToRenderCoordinates.south.longitude)!
+                )
+            )
+        }
+
+        
     }
 }
