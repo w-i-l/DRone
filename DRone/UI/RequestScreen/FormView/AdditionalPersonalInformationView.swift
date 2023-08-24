@@ -44,7 +44,7 @@ struct AdditionalPersonalInformationView: View {
                                 Spacer()
                                 
                                 DatePicker(selection: $viewModel.birthdayDate,
-                                           in: ...(Date() - viewModel.maximumBirthdayDate),
+                                           in: (Date() - viewModel.minimumBirthdayDate)...(Date() - viewModel.maximumBirthdayDate),
                                            displayedComponents: .date) {
                                     Text("Date")
                                         .foregroundColor(.white)

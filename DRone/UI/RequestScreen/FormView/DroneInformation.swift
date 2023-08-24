@@ -40,9 +40,9 @@ struct DroneInformation: View {
                                 text: $viewModel.serialNumber,
                                 placeholderText: "Serial number",
                                 isTextGood: {
-                                    viewModel.serialNumberValidation(serial: viewModel.serialNumber)
+                                    viewModel.serialNumberValidation()
                                 },
-                                errorText: "Serial number should be valid",
+                                errorText: $viewModel.serialNumberError,
                                 viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.droneNextButtonPressed)
                             )
                             
@@ -142,6 +142,9 @@ struct DroneInformation: View {
             isPresented: $viewModel.isDroneModalShown
         ){
             DroneTypeModal(viewModel: viewModel)
+        }
+        .onTapGesture {
+            dismissKeyboard()
         }
     }
 }

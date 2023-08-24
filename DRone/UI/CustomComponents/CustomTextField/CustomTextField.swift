@@ -13,7 +13,8 @@ struct CustomTextField: View {
     @Binding var text: String
     let placeholderText: String
     let isTextGood: () -> Bool
-    let errorText: String
+    @Binding var errorText: String
+    let keyboardType: UIKeyboardType
     
     @StateObject var viewModel: CustomTextFieldViewModel
     @State private var textFieldDidReturn: Bool = false
@@ -23,14 +24,35 @@ struct CustomTextField: View {
     private static var textFieldIndex: Int = 0
     private let textFieldID: Int
     
+    
+    init(
+        text: Binding<String>,
+        placeholderText: String,
+        isTextGood: @escaping () -> Bool,
+        errorText: Binding<String>,
+        viewModel: CustomTextFieldViewModel,
+        keyboardType: UIKeyboardType = .default
+    ) {
+        self._text = text
+        self.placeholderText = placeholderText
+        self.isTextGood = isTextGood
+        self.textFieldID = CustomTextField.textFieldIndex + 1
+        self._errorText = errorText
+        CustomTextField.textFieldIndex += 1
+        self.keyboardType = keyboardType
+        
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     @State private var isFocused = false
+    @State private var showError = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             
-            if viewModel.nextButtonPressed && !isTextGood() {
+            if showError {
                 Text(errorText)
-                    .font(.abel(size: 16))
+                    .font(.abel(size: 18))
                     .foregroundColor(Color("red"))
             }
             
@@ -48,7 +70,8 @@ struct CustomTextField: View {
                     }
                 
                 TextField("", text: $text, onEditingChanged: { _ in
-                    
+                    showError = false
+                    strokeColor = Color("accent.blue")
                 }, onCommit: {
                     textFieldDidReturn = true
                 })
@@ -60,20 +83,23 @@ struct CustomTextField: View {
                 .padding(12)
                 .foregroundColor(Color("background.first"))
                 .frame(height: 40)
+                .keyboardType(keyboardType)
                 
             }
         }
         .onChange(of: textFieldDidReturn, perform: { newValue in
             if !newValue && viewModel.textFieldID == viewModel.focusedTextFieldID {
                 strokeColor = Color("accent.blue")
+                showError = false
             } else {
                 strokeColor = .white
             }
         })
         .onChange(of: viewModel.focusedTextFieldID, perform: { newValue in
-            if newValue == viewModel.textFieldID && !textFieldDidReturn{
+            if newValue == viewModel.textFieldID && !textFieldDidReturn {
                 strokeColor = Color("accent.blue")
-            } else {
+                showError = false
+            } else if newValue != viewModel.textFieldID && strokeColor != Color("red") {
                 strokeColor = .white
             }
         })
@@ -85,27 +111,13 @@ struct CustomTextField: View {
 //            guard newValue == true else { return }
             self.strokeColor = isTextGood() ? .white : Color("red")
             viewModel.nextButtonPressed = false
+            if !isTextGood() {
+                showError = true
+            }
         }
         .onChange(of: AppService.shared.screenIndex.value) { _ in
             self.strokeColor = .white
         }
-    }
-    
-    init(
-        text: Binding<String>,
-        placeholderText: String,
-        isTextGood: @escaping () -> Bool,
-        errorText: String,
-        viewModel: CustomTextFieldViewModel
-    ) {
-        self._text = text
-        self.placeholderText = placeholderText
-        self.isTextGood = isTextGood
-        self.textFieldID = CustomTextField.textFieldIndex + 1
-        self.errorText = errorText
-        CustomTextField.textFieldIndex += 1
-        
-        self._viewModel = StateObject(wrappedValue: viewModel)
     }
 }
 
@@ -120,9 +132,10 @@ struct CustomTextField_Previews: PreviewProvider {
                 isTextGood: {
                     .random()
                 },
-                errorText: "some error",
+                errorText: .constant("some error"),
                 viewModel: CustomTextFieldViewModel(nextButtonPressed: CurrentValueSubject<Bool, Never>.init(false))
             )
+
         }
             .frame(maxHeight: .infinity)
             .background(Color.black, alignment: .leading)

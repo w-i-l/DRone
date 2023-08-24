@@ -44,10 +44,8 @@ struct PersonalInfosRequest: View {
                                     CustomTextField(
                                         text: $viewModel.firstName,
                                         placeholderText: "First name...",
-                                        isTextGood: {
-                                            viewModel.onlyStringValidation(string: viewModel.firstName)
-                                        },
-                                        errorText: "Enter a valid last name",
+                                        isTextGood: viewModel.firstNameValidation,
+                                        errorText:  $viewModel.firstNameError,
                                         viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
                                     )
                                     
@@ -55,10 +53,8 @@ struct PersonalInfosRequest: View {
                                     CustomTextField(
                                         text: $viewModel.lastName,
                                         placeholderText: "Last name...",
-                                        isTextGood: {
-                                            viewModel.onlyStringValidation(string: viewModel.lastName)
-                                        },
-                                        errorText: "Enter a valid first name",
+                                        isTextGood: viewModel.lastNameValidation,
+                                        errorText: $viewModel.lastNameError,
                                         viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
                                     )
                                     .padding(.top, 9)
@@ -76,11 +72,10 @@ struct PersonalInfosRequest: View {
                                     CustomTextField(
                                         text: $viewModel.CNP,
                                         placeholderText: "CNP",
-                                        isTextGood: {
-                                            viewModel.personalNumberValidation(personalNumber: viewModel.CNP)
-                                        },
-                                        errorText: "The personal number shoudl have 13 digits",
-                                        viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
+                                        isTextGood: viewModel.cnpValidation,
+                                        errorText: $viewModel.cnpError,
+                                        viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed),
+                                        keyboardType: .numberPad
                                     )
                                 }
                                 .padding(.top, 32)
@@ -97,9 +92,12 @@ struct PersonalInfosRequest: View {
                                     
                                     if viewModel.onlyStringValidation(string: viewModel.firstName) &&
                                         viewModel.onlyStringValidation(string: viewModel.lastName) &&
-                                        viewModel.personalNumberValidation(personalNumber: viewModel.CNP) {
+                                        viewModel.personalNumberValidation(personalNumber: viewModel.CNP) &&
+                                        viewModel.getBirthDayFromCNP() != nil {
+                                        
                                         viewModel.personalNextButtonPressed.value = false
                                         AppService.shared.screenIndex.value = 1
+                                        viewModel.birthdayDate = viewModel.getBirthDayFromCNP()!
                                     }
                                     self.dismissKeyboard()
                                         
@@ -143,6 +141,9 @@ struct PersonalInfosRequest: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
+        .onTapGesture {
+            dismissKeyboard()
+        }
     }
 }
 

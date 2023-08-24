@@ -163,6 +163,9 @@ struct FlightInformation: View {
                             Spacer()
                             Button(
                                 action: {
+                                    
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    
                                     viewModel.getResponse()
                                     viewModel.showNavigationLink = true
                                     viewModel.postFlightRequestFor()
