@@ -15,8 +15,58 @@ class FirebaseService: BaseViewModel {
     static let shared: FirebaseService = .init()
     let db = Firestore.firestore()
     
+    var indexOfModifiedFlightRequest: CurrentValueSubject<Int, Never> = .init(0)
+    var allFlightsRequests: CurrentValueSubject<[RequestFormModel], Never> = .init([])
+    
     override private init() {
         super.init()
+        
+        let user = "Ocnaru Mihai"
+        
+        fetchFlightRequestsFor(user: user)
+            .sink { _ in
+                
+            } receiveValue: { [weak self] value in
+                self?.allFlightsRequests.value = value
+                self?.listenToFlightRequest(user: user)
+            }
+            .store(in: &bag)
+
+    }
+    
+    func listenToFlightRequest(user fullName: String) {
+        db.collection(fullName).addSnapshotListener { querrySnapshot, error in
+            
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let documents = querrySnapshot?.documents else {
+                print("Error fetching documents \(error!.localizedDescription)")
+                return
+            }
+            
+            querrySnapshot?.documentChanges.forEach({ [weak self] diff in
+                switch diff.type {
+                case .added:
+                    break
+                case .modified:
+                    let updatedFlightRequest = diff.document.data()
+                    self?.indexOfModifiedFlightRequest.value = (self?.allFlightsRequests.value.firstIndex { $0.responseModel.ID == updatedFlightRequest["ID"] as! String}!)!
+                    let response = ResponseResult.match(response: updatedFlightRequest["response"] as! String)
+                    let ID = updatedFlightRequest["ID"] as! String
+                    self?.allFlightsRequests.value[self!.indexOfModifiedFlightRequest.value].responseModel.response = response
+                    NotificationService.shared.postNotification(
+                        title: "Flight \(response.rawValue.lowercased())",
+                        subtitle: "Your flight with ID: \(ID) was \(response.rawValue.lowercased()). Tap to see more!"
+                    )
+                    
+                case .removed:
+                    break
+                }
+            })
+        }
     }
     
     func fetchFlightRequestsFor(user fullName: String) -> Future<[RequestFormModel], Error> {

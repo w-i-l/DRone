@@ -81,6 +81,8 @@ class WeatherService: BaseViewModel {
             return ("Be careful", [.yellow, Color("green")])
         } else {
             return ("Can't take off", [.red, Color("red")])
+        
+            
         }
     }
 }

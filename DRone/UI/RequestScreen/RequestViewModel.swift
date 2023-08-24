@@ -201,16 +201,23 @@ class RequestViewModel: BaseViewModel {
             }
             .store(in: &bag)
         
-        FirebaseService.shared.fetchFlightRequestsFor(user: "Ocnaru Mihai")
+//        FirebaseService.shared.fetchFlightRequestsFor(user: "Ocnaru Mihai")
+//            .receive(on: DispatchQueue.main)
+//            .sink { _ in
+//
+//            } receiveValue: { [weak self] value in
+//                self?.allFlightsRequest = value
+//                self?.fetchingState = .loaded
+//            }
+//            .store(in: &bag)
+
+        FirebaseService.shared.allFlightsRequests
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                
-            } receiveValue: { [weak self] value in
+            .sink { [weak self] value in
                 self?.allFlightsRequest = value
                 self?.fetchingState = .loaded
             }
             .store(in: &bag)
-
 
     }
     
@@ -250,23 +257,22 @@ class RequestViewModel: BaseViewModel {
             flightDate: flightDate,
             flightAdress: self.flightLocation,
             responseModel: ResponseModel(
-                response: .accepted,
+                response: .pending,
                 ID: ID,
                 reason: ""
             )
         )
+        
+        self.allFlightsRequest.append(formModel)
         
         ResponseService.shared.getResponse(formModel: formModel)
         .receive(on: DispatchQueue.main)
         .sink { _ in
             
         } receiveValue: { [weak self] value in
-            self?.response = value.response
-            formModel.responseModel.ID = String(value.ID.prefix(8))
-            self?.ID = String(value.ID.prefix(8))
+            // always pending
+            self?.response = .pending
             formModel.responseModel.reason = value.reason
-            self?.allFlightsRequest.append(formModel.updatedRequestStatus(state: value.response))
-            
         }
         .store(in: &bag)
 
@@ -378,9 +384,9 @@ class RequestViewModel: BaseViewModel {
             flightDate: flightDate,
             flightAdress: self.flightLocation,
             responseModel: ResponseModel(
-                response: .accepted,
-                ID: ID,
-                reason: ""
+                response: allFlightsRequest.last!.responseModel.response,
+                ID: allFlightsRequest.last!.responseModel.ID,
+                reason: allFlightsRequest.last!.responseModel.reason
             )
         )
         

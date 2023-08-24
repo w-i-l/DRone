@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		170C18D92A978D4100086471 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170C18D82A978D4100086471 /* NotificationService.swift */; };
 		1711B9362A863BC200D4B2D8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711B9352A863BC100D4B2D8 /* CustomTextField.swift */; };
 		1711B9382A86414100D4B2D8 /* CustomTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711B9372A86414100D4B2D8 /* CustomTextFieldViewModel.swift */; };
 		1711B93A2A865C1900D4B2D8 /* RequestFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1711B9392A865C1900D4B2D8 /* RequestFormView.swift */; };
@@ -81,6 +82,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		170C18D82A978D4100086471 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		1711B9352A863BC100D4B2D8 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		1711B9372A86414100D4B2D8 /* CustomTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldViewModel.swift; sourceTree = "<group>"; };
 		1711B9392A865C1900D4B2D8 /* RequestFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestFormView.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				172D63EA2A811EB0006621F4 /* LocationService.swift */,
 				17B916B92A8CFA410024B82C /* ResponseService.swift */,
 				17A7F2E32A939C86008721B7 /* FirestoreService.swift */,
+				170C18D82A978D4100086471 /* NotificationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				179D6ADF2A83C75C005700B8 /* LoaderView.swift in Sources */,
 				1720150F2A9613AB008A6D3C /* NoFlyZoneInfoModal.swift in Sources */,
 				179D6AE22A83CBC0005700B8 /* SearchingViewModel.swift in Sources */,
+				170C18D92A978D4100086471 /* NotificationService.swift in Sources */,
 				17599F762A80FD0600501E0A /* TabBarViewModel.swift in Sources */,
 				1711B93A2A865C1900D4B2D8 /* RequestFormView.swift in Sources */,
 				17599F5C2A80E11300501E0A /* TabBarView.swift in Sources */,

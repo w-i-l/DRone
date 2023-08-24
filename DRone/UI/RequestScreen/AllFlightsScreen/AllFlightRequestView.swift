@@ -118,29 +118,31 @@ struct AllFlightRequestView: View {
                                         }
                                     }
                                     
-                                    HStack {
-                                        Button(action: {
-                                            withAnimation(.default){
-                                                showCompletedFlights.toggle()
-                                            }
-                                        }, label: {
-                                            HStack(spacing: 12) {
-                                                
-                                                Text("Completed flights")
-                                                    .foregroundColor(.white)
-                                                    .font(.abel(size: 24))
-                                                
-                                                
-                                                Image(systemName: showCompletedFlights ? "chevron.down" : "chevron.up")
-                                                    .resizable()
-                                                    .foregroundColor(.white)
-                                                    .frame(width: 10, height: 10)
-                                                    .scaledToFit()
-                                            }
-                                            .animation(.none, value: showCompletedFlights)
-                                        })
-                                        
-                                        Spacer()
+                                    if !viewModel.completedFlights.isEmpty {
+                                        HStack {
+                                            Button(action: {
+                                                withAnimation(.default){
+                                                    showCompletedFlights.toggle()
+                                                }
+                                            }, label: {
+                                                HStack(spacing: 12) {
+                                                    
+                                                    Text("Completed flights")
+                                                        .foregroundColor(.white)
+                                                        .font(.abel(size: 24))
+                                                    
+                                                    
+                                                    Image(systemName: showCompletedFlights ? "chevron.down" : "chevron.up")
+                                                        .resizable()
+                                                        .foregroundColor(.white)
+                                                        .frame(width: 10, height: 10)
+                                                        .scaledToFit()
+                                                }
+                                                .animation(.none, value: showCompletedFlights)
+                                            })
+                                            
+                                            Spacer()
+                                        }
                                     }
                                     
                                     if !viewModel.completedFlights.isEmpty && showCompletedFlights {

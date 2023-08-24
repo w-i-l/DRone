@@ -7,10 +7,21 @@
 
 import Foundation
 
-enum ResponseResult: String {
+enum ResponseResult: String, CaseIterable {
     case rejected = "Rejected"
     case accepted = "Accepted"
     case pending = "Pending"
+    
+    static func match(response: String) -> ResponseResult {
+        
+        for responseCase in ResponseResult.allCases {
+            if response == responseCase.rawValue.lowercased() {
+                return responseCase
+            }
+        }
+        
+        return .pending
+    }
 }
 
 struct ResponseModel {
