@@ -35,7 +35,13 @@ class HomeViewModel : BaseViewModel {
         
     }
 
-
+    var weatherURL: URL {
+        if let location = LocationService.shared.locationManager.location?.coordinate {
+            return URL(string: "https://weather.com/weather/today/l/\(location.latitude),\(location.longitude)?par=google")!
+        }
+        
+        return URL(string: "https://weather.com/weather/today/l/44.45,26.07?par=google")!
+    }
     
     override init() {
         super.init()

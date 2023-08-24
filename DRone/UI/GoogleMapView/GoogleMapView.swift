@@ -34,10 +34,7 @@ struct GoogleMapsView: View {
                             
                         })
                 )
-        
-            
-        
-            
+
             VStack {
                 
                 HStack {

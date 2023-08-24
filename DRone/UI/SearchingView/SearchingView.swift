@@ -54,6 +54,9 @@ struct SearchingView: View {
                             }
                             .onTapGesture {
                                 textFieldDidReturned = false
+                                if !viewModel.textSearched.isEmpty {
+                                    viewModel.searchForNearbyLocations()
+                                }
                             }
                         
                         

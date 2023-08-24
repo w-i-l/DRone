@@ -39,9 +39,11 @@ struct HomeViewLoaded: View {
                                         .foregroundColor(.white)
                                         .underline(!isShowingAsChild)
                                     
-                                    Text(viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30))
-                                        .font(.abel(size: 20))
-                                        .foregroundColor(Color("subtitle.gray"))
+                                    if viewModel.locationWeatherModel.secondaryLocation != "No street" {
+                                        Text(viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30))
+                                            .font(.abel(size: 20))
+                                            .foregroundColor(Color("subtitle.gray"))
+                                    }
                                 }
                                 
                                 Spacer()
@@ -109,40 +111,44 @@ struct HomeViewLoaded: View {
                     .padding(.top, 32)
                     
                     // main weather infos
-                    ZStack {
-                        Color("gray.background")
-                            .cornerRadius(12)
-                        
-                        HStack {
-                            ForEach([
-                                ("sunset", "Sunset", viewModel.locationWeatherModel.sunset),
-                                ("cloud.rain", "Prec. prob.", "\(viewModel.locationWeatherModel.precipitaionProbability)%"),
-                                ("flag", "Wind speed", "\(viewModel.locationWeatherModel.windSpeed) km/h")
-                            ], id: \.0) { item in
-                                Spacer()
-                                VStack {
-                                    Image(systemName: item.0)
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .foregroundColor(.white)
-                                        .frame(width: 40, height: 40)
-                                        .scaledToFit()
-                                    
-                                    Text(item.1)
-                                        .font(.abel(size: 16))
-                                        .foregroundColor(.white)
-                                    
-                                    Text(item.2)
-                                        .font(.abel(size: 20))
-                                        .foregroundColor(.white)
+                    Link(
+                        destination: viewModel.weatherURL,
+                        label: {
+                        ZStack {
+                            Color("gray.background")
+                                .cornerRadius(12)
+                            
+                            HStack {
+                                ForEach([
+                                    ("sunset", "Sunset", viewModel.locationWeatherModel.sunset),
+                                    ("cloud.rain", "Prec. prob.", "\(viewModel.locationWeatherModel.precipitaionProbability)%"),
+                                    ("flag", "Wind speed", "\(viewModel.locationWeatherModel.windSpeed) km/h")
+                                ], id: \.0) { item in
+                                    Spacer()
+                                    VStack {
+                                        Image(systemName: item.0)
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .foregroundColor(.white)
+                                            .frame(width: 40, height: 40)
+                                            .scaledToFit()
+                                        
+                                        Text(item.1)
+                                            .font(.abel(size: 16))
+                                            .foregroundColor(.white)
+                                        
+                                        Text(item.2)
+                                            .font(.abel(size: 20))
+                                            .foregroundColor(.white)
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
                             }
+                            .padding(.vertical, 10)
                         }
-                        .padding(.vertical, 10)
-                    }
-                    .frame(height: UIScreen.main.bounds.height / 6.7)
+                        .frame(height: UIScreen.main.bounds.height / 6.7)
                     .padding(.top, 30)
+                    })
                     
                     // scodary weather infos
                     HStack(spacing: 15) {
@@ -153,30 +159,34 @@ struct HomeViewLoaded: View {
                         ], id: \.0) { item in
                             
                             //
-                            ZStack {
-                                
-                                Color("gray.background")
-                                    .frame(height: 100)
-                                    .cornerRadius(12)
-                                
-                                VStack() {
+                            Link (
+                                destination: viewModel.weatherURL,
+                                label: {
+                                ZStack {
                                     
-                                    Spacer()
+                                    Color("gray.background")
+                                        .frame(height: 100)
+                                        .cornerRadius(12)
                                     
-                                    Text(item.0)
-                                        .font(.abel(size: 16))
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
+                                    VStack() {
+                                        
+                                        Spacer()
+                                        
+                                        Text(item.0)
+                                            .font(.abel(size: 16))
+                                            .foregroundColor(.white)
+                                            .multilineTextAlignment(.center)
+                                        
+                                        Spacer()
+                                        
+                                        Text(item.1)
+                                            .font(.abel(size: 24))
+                                            .foregroundColor(.white)
+                                            .padding(.bottom, 10)
+                                    }
                                     
-                                    Spacer()
-                                    
-                                    Text(item.1)
-                                        .font(.abel(size: 24))
-                                        .foregroundColor(.white)
-                                        .padding(.bottom, 10)
                                 }
-                                
-                            }
+                            })
                         }
                     }
                     .frame(maxWidth: .infinity)

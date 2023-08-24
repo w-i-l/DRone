@@ -64,8 +64,9 @@ struct GoogleMapsViewBridge: UIViewRepresentable {
         
         rectangleToRender.path = path
 //        polygonToDraw.fillColor = UIColor.purple.withAlphaComponent(0.2) // Set the fill color and alpha
-        rectangleToRender.strokeColor = UIColor.purple
-        rectangleToRender.strokeWidth = 3.0
+//        rectangleToRender.strokeColor = UIColor.purple
+//        rectangleToRender.strokeWidth = 3.0
+        rectangleToRender.fillColor = .none
         
         rectangleToRender.map = self.mapView
         
@@ -271,7 +272,6 @@ class GoogleMapsDelegate: NSObject, GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         
-        let visibleRegion = mapView.projection.visibleRegion()
         
         let center = mapView.camera.target
         
@@ -293,7 +293,10 @@ class GoogleMapsDelegate: NSObject, GMSMapViewDelegate {
                 )
             )
         }
-
         
+        if abs((parent?.searchingViewModel.adressToFetchLocation!.latitude)! - center.latitude) > 2 ||
+            abs((parent?.searchingViewModel.adressToFetchLocation!.longitude)! - center.longitude) > 3 {
+            parent?.searchingViewModel.textSearched = ""
+        }
     }
 }
