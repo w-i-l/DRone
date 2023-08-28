@@ -12,7 +12,7 @@ struct LocationWeatherModel {
     let sunset: String
     let weatherStatus: String
     let weatherIcon: String
-    let precipitaionProbability: Int
+    let precipitationProbability: Int
     let windSpeed: Int
     let windDirection: String
     let visibility: Int

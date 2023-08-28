@@ -76,6 +76,9 @@
 		17B916BC2A8CFE650024B82C /* ResponseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BB2A8CFE650024B82C /* ResponseScreen.swift */; };
 		17B916BF2A8D13F50024B82C /* RequestDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BE2A8D13F50024B82C /* RequestDetailsView.swift */; };
 		17BDD6702A9C9DEF009AC026 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 17BDD66F2A9C9DEF009AC026 /* BottomSheet */; };
+		17BDD6732A9CA802009AC026 /* WeatherVerdictView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD6722A9CA802009AC026 /* WeatherVerdictView.swift */; };
+		17BDD6752A9CB26F009AC026 /* WeatherVerdictModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD6742A9CB26F009AC026 /* WeatherVerdictModal.swift */; };
+		17BDD6772A9CB586009AC026 /* WeatherVerdictViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD6762A9CB586009AC026 /* WeatherVerdictViewModel.swift */; };
 		17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 17C296BD2A8F9DC800BCB9F9 /* AlertToast */; };
 		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
@@ -150,6 +153,9 @@
 		17B916B92A8CFA410024B82C /* ResponseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseService.swift; sourceTree = "<group>"; };
 		17B916BB2A8CFE650024B82C /* ResponseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseScreen.swift; sourceTree = "<group>"; };
 		17B916BE2A8D13F50024B82C /* RequestDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDetailsView.swift; sourceTree = "<group>"; };
+		17BDD6722A9CA802009AC026 /* WeatherVerdictView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVerdictView.swift; sourceTree = "<group>"; };
+		17BDD6742A9CB26F009AC026 /* WeatherVerdictModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVerdictModal.swift; sourceTree = "<group>"; };
+		17BDD6762A9CB586009AC026 /* WeatherVerdictViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVerdictViewModel.swift; sourceTree = "<group>"; };
 		17F796442A82829F005E4135 /* HomeViewLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoading.swift; sourceTree = "<group>"; };
 		17F796462A8283AE005E4135 /* CardShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShimmer.swift; sourceTree = "<group>"; };
 		30822F99450DF6E7667D8AD3 /* libPods-DRone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DRone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -285,6 +291,7 @@
 		17599F572A80DF4C00501E0A /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				17BDD6712A9CA61A009AC026 /* WeatherVerdictScreen */,
 				178263F52A94B0310008529B /* GoogleMapView */,
 				1711B9342A863B4200D4B2D8 /* CustomComponents */,
 				178689332A850D1A002B908E /* RequestScreen */,
@@ -440,6 +447,16 @@
 				17B916B02A8CC5680024B82C /* FlightInformation.swift */,
 			);
 			path = FormView;
+			sourceTree = "<group>";
+		};
+		17BDD6712A9CA61A009AC026 /* WeatherVerdictScreen */ = {
+			isa = PBXGroup;
+			children = (
+				17BDD6722A9CA802009AC026 /* WeatherVerdictView.swift */,
+				17BDD6742A9CB26F009AC026 /* WeatherVerdictModal.swift */,
+				17BDD6762A9CB586009AC026 /* WeatherVerdictViewModel.swift */,
+			);
+			path = WeatherVerdictScreen;
 			sourceTree = "<group>";
 		};
 		17C296BB2A8F66CE00BCB9F9 /* CustomTextField */ = {
@@ -639,18 +656,21 @@
 				17599F682A80E97D00501E0A /* BaseViewModel.swift in Sources */,
 				178689302A84F110002B908E /* TextField.swift in Sources */,
 				17599F472A80DE3B00501E0A /* RootView.swift in Sources */,
+				17BDD6772A9CB586009AC026 /* WeatherVerdictViewModel.swift in Sources */,
 				172D63E12A8113E5006621F4 /* LocationWeatherModel.swift in Sources */,
 				17B916BA2A8CFA410024B82C /* ResponseService.swift in Sources */,
 				17B916AD2A8CBB510024B82C /* DroneTypeModal.swift in Sources */,
 				17B916BC2A8CFE650024B82C /* ResponseScreen.swift in Sources */,
 				17599F642A80E94D00501E0A /* HomeView.swift in Sources */,
 				1729B1AB2A8E29C40083785C /* AppDelegate.swift in Sources */,
+				17BDD6732A9CA802009AC026 /* WeatherVerdictView.swift in Sources */,
 				179D6ACF2A837A33005700B8 /* HomeViewFailed.swift in Sources */,
 				17B916B82A8CF5490024B82C /* RequestFormModel.swift in Sources */,
 				178689352A850D3E002B908E /* InfoRequestView.swift in Sources */,
 				179D6AD52A83938C005700B8 /* HomeViewLoaded.swift in Sources */,
 				17B916B62A8CF4D10024B82C /* ResponseAPI.swift in Sources */,
 				172D63DF2A81137B006621F4 /* WeatherAPI.swift in Sources */,
+				17BDD6752A9CB26F009AC026 /* WeatherVerdictModal.swift in Sources */,
 				1729B1AD2A8E29F10083785C /* Navigation.swift in Sources */,
 				179D6AD72A8393F0005700B8 /* LocationAPI.swift in Sources */,
 				179D6ADF2A83C75C005700B8 /* LoaderView.swift in Sources */,

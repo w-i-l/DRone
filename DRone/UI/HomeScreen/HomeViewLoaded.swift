@@ -39,11 +39,15 @@ struct HomeViewLoaded: View {
                                         .foregroundColor(.white)
                                         .underline(!isShowingAsChild)
                                     
-                                    if viewModel.locationWeatherModel.secondaryLocation != "No street" {
-                                        Text(viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30))
-                                            .font(.abel(size: 20))
-                                            .foregroundColor(Color("subtitle.gray"))
-                                    }
+                  
+                                    
+                                    Text(viewModel.locationWeatherModel.secondaryLocation != "No street" ?
+                                         viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30) :
+                                        ""
+                                    )
+                                        .font(.abel(size: 20))
+                                        .foregroundColor(Color("subtitle.gray"))
+
                                 }
                                 
                                 Spacer()
@@ -93,22 +97,32 @@ struct HomeViewLoaded: View {
                     }
                     .padding(.top, 32)
                     
-                    // weather verdict
-                    ZStack(alignment: .leading) {
-                        LinearGradient(
-                            colors: viewModel.weatherVerdict.1,
-                            startPoint: .leading,
-                            endPoint: .trailing
+                    Button {
+                        navigation.push(
+                            WeatherVerdictView(viewModel: viewModel).asDestination(),
+                            animated: true
                         )
-                        .cornerRadius(12)
+                    } label: {
                         
-                        Text(viewModel.weatherVerdict.0)
-                            .font(.abel(size: 32))
-                            .foregroundColor(Color("background.first"))
-                            .padding(.leading, 20)
+                        
+                        
+                        // weather verdict
+                        ZStack(alignment: .leading) {
+                            LinearGradient(
+                                colors: viewModel.weatherVerdict.1,
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                            .cornerRadius(12)
+                            
+                            Text(viewModel.weatherVerdict.0)
+                                .font(.abel(size: 32))
+                                .foregroundColor(Color("background.first"))
+                                .padding(.leading, 20)
+                        }
+                        .frame(height: UIScreen.main.bounds.height / 10)
+                        .padding(.top, 32)
                     }
-                    .frame(height: UIScreen.main.bounds.height / 10)
-                    .padding(.top, 32)
                     
                     // main weather infos
                     Link(
@@ -121,7 +135,7 @@ struct HomeViewLoaded: View {
                             HStack {
                                 ForEach([
                                     ("sunset", "Sunset", viewModel.locationWeatherModel.sunset),
-                                    ("cloud.rain", "Prec. prob.", "\(viewModel.locationWeatherModel.precipitaionProbability)%"),
+                                    ("cloud.rain", "Prec. prob.", "\(viewModel.locationWeatherModel.precipitationProbability)%"),
                                     ("flag", "Wind speed", "\(viewModel.locationWeatherModel.windSpeed) km/h")
                                 ], id: \.0) { item in
                                     Spacer()

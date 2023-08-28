@@ -62,7 +62,7 @@ class WeatherForecastViewModel: BaseViewModel {
                             sunset: item.sunset,
                             weatherStatus: item.weatherStatus,
                             weatherIcon: item.weatherIcon,
-                            precipitaionProbability: item.precipitaionProbability,
+                            precipitationProbability: item.precipitationProbability,
                             windSpeed: item.windSpeed,
                             windDirection: item.windDirection,
                             visibility: item.visibility,
