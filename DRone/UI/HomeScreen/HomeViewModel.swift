@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import BottomSheet
 
 
 class HomeViewModel : BaseViewModel {
@@ -28,6 +29,9 @@ class HomeViewModel : BaseViewModel {
     @Published var weatherVerdict: (String, [Color]) = ("", [])
     @Published var addressToFetchLocation: CLLocationCoordinate2D?
     @Published var changeLocationViewModel: ChangeLocationViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
+    
+    @Published var shouldDisplayLocationToast: Bool = false
+
     
     var addressToFetchLocationBinding: Binding<CLLocationCoordinate2D?> = .init {
         CLLocationCoordinate2D()
@@ -52,6 +56,8 @@ class HomeViewModel : BaseViewModel {
             .sink { [weak self] value in
                 if value == .authorizedAlways || value == .authorizedWhenInUse {
                     self?.updateUI()
+                } else {
+                    AppService.shared.isTabBarVisible.value = false
                 }
             }
             .store(in: &bag)
@@ -80,6 +86,8 @@ class HomeViewModel : BaseViewModel {
             .sink { [weak self] value in
                 if value == .authorizedAlways || value == .authorizedWhenInUse {
                     self?.updateUI()
+                    AppService.shared.isTabBarVisible.value = true
+                } else {
                 }
             }
             .store(in: &bag)

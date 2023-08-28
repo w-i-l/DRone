@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import AlertToast
+import Lottie
+import LottieSwiftUI
 
 struct HomeView: View {
     
@@ -36,8 +39,7 @@ struct HomeView: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-       
-        
+
     }
 }
 

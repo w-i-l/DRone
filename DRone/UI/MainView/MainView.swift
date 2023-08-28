@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LottieSwiftUI
 
 struct MainView: View {
     @EnvironmentObject private var navigation: Navigation
@@ -34,6 +35,76 @@ struct MainView: View {
                 }
                 .ignoresSafeArea()
             }
+            .overlay(viewModel.shouldDisplayLocationModal != .hidden ? Color.gray.opacity(0.7).ignoresSafeArea() : Color.clear.ignoresSafeArea())
+            .disabled(viewModel.shouldDisplayLocationModal != .hidden)
+            .bottomSheet(
+                bottomSheetPosition: $viewModel.shouldDisplayLocationModal,
+                switchablePositions: [.relativeTop(0.6)]) {
+                    VStack {
+                        
+                        Text("No location found!")
+                            .foregroundColor(Color("red"))
+                            .font(.asket(size: 32))
+                        
+                        
+                        LottieView(name: "NoLocation")
+                            .lottieLoopMode(.autoReverse)
+                            .frame(width: 200, height: 200)
+                        
+                        Text("Please enable location in order to use the app!")
+                            .foregroundColor(.white)
+                            .font(.asket(size: 20))
+                        
+                        Button {
+                            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                        } label: {
+                            
+                            Text("Go to settings")
+                                .foregroundColor(.white)
+                                .font(.asket(size: 16))
+                                .padding(10)
+                                .background(Color("accent.blue"))
+                                .cornerRadius(12)
+                        }
+
+                    }
+                }
+        
+            // network
+            .overlay(viewModel.isConnectedToNetwork != .hidden ? Color.gray.opacity(0.7).ignoresSafeArea() : Color.clear.ignoresSafeArea())
+            .disabled(viewModel.isConnectedToNetwork != .hidden)
+            .bottomSheet(
+                bottomSheetPosition: $viewModel.isConnectedToNetwork,
+                switchablePositions: [.relativeTop(0.6)]) {
+                    VStack {
+                        
+                        Text("No connection found!")
+                            .foregroundColor(Color("red"))
+                            .font(.asket(size: 32))
+                        
+                        
+                        LottieView(name: "NoInternet")
+                            .lottieLoopMode(.autoReverse)
+                            .frame(width: 200, height: 200)
+                        
+                        Text("Please turn on mobile data / Wi-Fi in order to use the app!")
+                            .foregroundColor(.white)
+                            .font(.asket(size: 20))
+                        
+                        Button {
+                            UIApplication.shared.openURL(URL(String: UIApplication.openSettingsURLString)!)
+                        } label: {
+                            
+                            Text("Go to settings")
+                                .foregroundColor(.white)
+                                .font(.asket(size: 16))
+                                .padding(10)
+                                .background(Color("accent.blue"))
+                                .cornerRadius(12)
+                        }
+
+                    }
+                }
     }
 }
 

@@ -13,49 +13,55 @@ struct TabBar: View {
     
     var body: some View {
         
-        ZStack {
-            
-            Color.white
-                .cornerRadius(12, corners: [.topLeft, .topRight])
-                .offset(y: -2)
-            
-            Color("background.second")
-                .cornerRadius(12, corners: [.topLeft, .topRight])
+        VStack {
+            if viewModel.isTabBarVisible {
+                ZStack {
+                
+                Color.white
+                    .cornerRadius(12, corners: [.topLeft, .topRight])
+                    .offset(y: -2)
+                
+                Color("background.second")
+                    .cornerRadius(12, corners: [.topLeft, .topRight])
 
-            HStack {
-                ForEach([
-                    (AppNavigationTabs.home, "house"),
-                    (AppNavigationTabs.request, "paperplane"),
-                    (AppNavigationTabs.map, "map")
-                ], id: \.1) { item in
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        AppService.shared.selectedTab.value = item.0
-                    }, label: {
-                        VStack {
-                            Image(systemName: item.1)
-                                .resizable()
-                                .renderingMode(.template)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 24)
-                                .foregroundColor(.white)
-                                .scaledToFit()
+                HStack {
+                    ForEach([
+                        (AppNavigationTabs.home, "house"),
+                        (AppNavigationTabs.request, "paperplane"),
+                        (AppNavigationTabs.map, "map")
+                    ], id: \.1) { item in
                         
-                            Circle()
-                                .fill(viewModel.selectedTab == item.0 ? Color("accent.blue") : .clear)
-                                .frame(width: 10, height: 10)
+                        Spacer()
+                        
+                        Button(action: {
+                            AppService.shared.selectedTab.value = item.0
+                        }, label: {
+                            VStack {
+                                Image(systemName: item.1)
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 24)
+                                    .foregroundColor(.white)
+                                    .scaledToFit()
                             
-                        }
-                        .frame(height: 50)
-                    })
-                    .padding(.top, 10)
-                    
-                    Spacer()
-            }}
+                                Circle()
+                                    .fill(viewModel.selectedTab == item.0 ? Color("accent.blue") : .clear)
+                                    .frame(width: 10, height: 10)
+                                
+                            }
+                            .frame(height: 50)
+                        })
+                        .padding(.top, 10)
+                        
+                        Spacer()
+                }}
+            }
+                .frame(height: UIScreen.main.bounds.height / 11.3)
+            } else {
+                /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
+            }
         }
-        .frame(height: UIScreen.main.bounds.height / 11.3)
         
     }
 }

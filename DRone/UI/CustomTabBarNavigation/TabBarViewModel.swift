@@ -9,6 +9,7 @@ import SwiftUI
 
 class TabBarViewModel: BaseViewModel {
     @Published var selectedTab: AppNavigationTabs = .home
+    @Published var isTabBarVisible: Bool = true
     
     override init() {
         
@@ -18,6 +19,13 @@ class TabBarViewModel: BaseViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.selectedTab = value
+            }
+            .store(in: &bag)
+        
+        AppService.shared.isTabBarVisible
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.isTabBarVisible = value
             }
             .store(in: &bag)
     }

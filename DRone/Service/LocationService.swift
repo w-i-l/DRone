@@ -74,7 +74,8 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
             break
         case .denied:
             // request to change from settings
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+//            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            break
         case .restricted:
             break
         @unknown default:
