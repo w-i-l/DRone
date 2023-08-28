@@ -98,7 +98,7 @@ struct RequestDetailsView: View {
                 VStack(spacing: 4) {
                     Text("Flight request with ID:")
                         .foregroundColor(.white)
-                        .font(.abel(size: 32))
+                        .font(.asket(size: 32))
                     
                     Button {
                         UIPasteboard.general.string = viewModel.formModel.responseModel.ID
@@ -107,7 +107,7 @@ struct RequestDetailsView: View {
                         HStack(spacing: 8) {
                             Text(viewModel.formModel.responseModel.ID)
                                 .foregroundColor(.blue)
-                                .font(.abel(size: 32))
+                                .font(.asket(size: 32))
                             
                             Image(systemName: "doc.on.doc")
                                 .resizable()
@@ -129,19 +129,19 @@ struct RequestDetailsView: View {
                 // request state
                 Text(viewModel.formModel.responseModel.response.rawValue)
                     .foregroundColor(.white)
-                    .font(.abel(size: 24))
+                    .font(.asket(size: 24))
                 
                 // reason
                 if viewModel.formModel.responseModel.response == .rejected {
                     Text(viewModel.formModel.responseModel.reason)
                         .foregroundColor(.white)
-                        .font(.abel(size: 16))
+                        .font(.asket(size: 16))
                 }
                 
                 HStack() {
                     Text("Your request information:")
                         .foregroundColor(.white)
-                        .font(.abel(size: 24))
+                        .font(.asket(size: 24))
                 Spacer()
                 }
                 .padding(.top, 32)
@@ -166,7 +166,7 @@ struct RequestDetailsView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         Text(item.0)
                             .foregroundColor(Color("accent.blue"))
-                            .font(.abel(size: 16))
+                            .font(.asket(size: 16))
                         
                         ForEach(item.1, id: \.0) { tuple in
                             
@@ -174,13 +174,13 @@ struct RequestDetailsView: View {
                             HStack {
                                 Text(tuple.0)
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 16))
+                                    .font(.asket(size: 16))
                                 
                                 Spacer()
                                 
                                 Text(tuple.1)
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 16))
+                                    .font(.asket(size: 16))
                             }
                             .padding(.top, 7)
                         }

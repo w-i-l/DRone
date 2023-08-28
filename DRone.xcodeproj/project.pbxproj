@@ -79,6 +79,7 @@
 		17BDD6732A9CA802009AC026 /* WeatherVerdictView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD6722A9CA802009AC026 /* WeatherVerdictView.swift */; };
 		17BDD6752A9CB26F009AC026 /* WeatherVerdictModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD6742A9CB26F009AC026 /* WeatherVerdictModal.swift */; };
 		17BDD6772A9CB586009AC026 /* WeatherVerdictViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD6762A9CB586009AC026 /* WeatherVerdictViewModel.swift */; };
+		17BDD6812A9CDEA7009AC026 /* asket.narrow-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 17BDD6802A9CDEA7009AC026 /* asket.narrow-light.otf */; };
 		17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 17C296BD2A8F9DC800BCB9F9 /* AlertToast */; };
 		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
@@ -156,6 +157,7 @@
 		17BDD6722A9CA802009AC026 /* WeatherVerdictView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVerdictView.swift; sourceTree = "<group>"; };
 		17BDD6742A9CB26F009AC026 /* WeatherVerdictModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVerdictModal.swift; sourceTree = "<group>"; };
 		17BDD6762A9CB586009AC026 /* WeatherVerdictViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVerdictViewModel.swift; sourceTree = "<group>"; };
+		17BDD6802A9CDEA7009AC026 /* asket.narrow-light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "asket.narrow-light.otf"; sourceTree = "<group>"; };
 		17F796442A82829F005E4135 /* HomeViewLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoading.swift; sourceTree = "<group>"; };
 		17F796462A8283AE005E4135 /* CardShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShimmer.swift; sourceTree = "<group>"; };
 		30822F99450DF6E7667D8AD3 /* libPods-DRone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DRone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -354,6 +356,7 @@
 		17599F692A80EF7600501E0A /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				17BDD6802A9CDEA7009AC026 /* asket.narrow-light.otf */,
 				17599F6A2A80EF9200501E0A /* Abel-Regular.ttf */,
 			);
 			path = Font;
@@ -562,6 +565,7 @@
 				17599F6B2A80EF9200501E0A /* Abel-Regular.ttf in Resources */,
 				17599F4E2A80DE3D00501E0A /* Preview Assets.xcassets in Resources */,
 				17599F4B2A80DE3D00501E0A /* Assets.xcassets in Resources */,
+				17BDD6812A9CDEA7009AC026 /* asket.narrow-light.otf in Resources */,
 				17A7F2E62A939DEC008721B7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

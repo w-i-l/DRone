@@ -20,11 +20,11 @@ struct HomeViewFailed: View {
                     HStack(spacing: 0) {
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Unknown location")
-                                .font(.abel(size: 32))
+                                .font(.asket(size: 32))
                                 .foregroundColor(.white)
                             
                             Text("")
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                                 .foregroundColor(Color("subtitle.gray"))
                         }
                         
@@ -36,11 +36,11 @@ struct HomeViewFailed: View {
                     HStack(spacing: 0) {
                         VStack(alignment: .leading, spacing: 0) {
                             Text("º C")
-                                .font(.abel(size: 64))
+                                .font(.asket(size: 64))
                                 .foregroundColor(.white)
                             
                             Text("Couldn't fetch")
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                                 .foregroundColor(Color("subtitle.gray"))
                         }
                         
@@ -61,7 +61,7 @@ struct HomeViewFailed: View {
                         .cornerRadius(12)
                         
                         Text("Can't determine")
-                            .font(.abel(size: 32))
+                            .font(.asket(size: 32))
                             .foregroundColor(Color("background.first"))
                             .padding(.leading, 20)
                     }
@@ -89,11 +89,11 @@ struct HomeViewFailed: View {
                                         .scaledToFit()
                                     
                                     Text(item.1)
-                                        .font(.abel(size: 16))
+                                        .font(.asket(size: 16))
                                         .foregroundColor(.white)
                                     
                                     Text(item.2)
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                         .foregroundColor(.white)
                                 }
                                 Spacer()
@@ -124,14 +124,14 @@ struct HomeViewFailed: View {
                                     Spacer()
                                     
                                     Text(item.0)
-                                        .font(.abel(size: 16))
+                                        .font(.asket(size: 16))
                                         .foregroundColor(.white)
                                         .multilineTextAlignment(.center)
                                     
                                     Spacer()
                                     
                                     Text(item.1)
-                                        .font(.abel(size: 24))
+                                        .font(.asket(size: 24))
                                         .foregroundColor(.white)
                                         .padding(.bottom, 10)
                                 }
@@ -153,7 +153,7 @@ struct HomeViewFailed: View {
                             HStack {
                                 
                                 Text("Refresh")
-                                    .font(.abel(size: 20))
+                                    .font(.asket(size: 20))
                                     .foregroundColor(Color("background.first"))
                                     .padding(.vertical, 12)
                                 

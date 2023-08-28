@@ -19,12 +19,12 @@ struct DroneInformation: View {
                 VStack(alignment: .leading, spacing: 0) {
                     
                     Text("Drone information")
-                        .font(.abel(size: 40))
+                        .font(.asket(size: 36))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.leading)
                     
                     Text("Complete the form with your drone information")
-                        .font(.abel(size: 18))
+                        .font(.asket(size: 16))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.leading)
                     
@@ -35,7 +35,7 @@ struct DroneInformation: View {
                         VStack(alignment: .leading, spacing: 7) {
                             Text("Serial number")
                                 .foregroundColor(.white)
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                             
                             CustomTextField(
                                 text: $viewModel.serialNumber,
@@ -55,10 +55,11 @@ struct DroneInformation: View {
                         VStack(alignment: .leading, spacing: 7) {
                             Text("Drone type")
                                 .foregroundColor(.white)
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                             
                             Button(
                                 action: {
+                                    dismissKeyboard()
                                     viewModel.isDroneModalShown = true
                                     viewModel.bottomSheetPosition = .relativeTop(0.7)
                             }, label: {
@@ -69,7 +70,7 @@ struct DroneInformation: View {
                                     
                                     Text("\(viewModel.droneType.associatedValues.type) drone")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 18))
+                                        .font(.asket(size: 18))
                                     
                                     Spacer()
                                     
@@ -96,7 +97,7 @@ struct DroneInformation: View {
                         Button {
                             viewModel.droneNextButtonPressed.value = true
                             
-                            if viewModel.serialNumberValidation(serial: viewModel.serialNumber){
+                            if viewModel.serialNumberValidation(){
                                 AppService.shared.screenIndex.value = 3
                                 viewModel.droneNextButtonPressed.value = false
                             }
@@ -110,7 +111,7 @@ struct DroneInformation: View {
                                 HStack {
                                     Text("Next")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 32))
+                                        .font(.asket(size: 32))
                                     
                                     Spacer()
                                     

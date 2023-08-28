@@ -52,7 +52,7 @@ struct CustomTextField: View {
             
             if showError {
                 Text(errorText)
-                    .font(.abel(size: 18))
+                    .font(.asket(size: 18))
                     .foregroundColor(Color("red"))
             }
             
@@ -78,7 +78,7 @@ struct CustomTextField: View {
                 .placeholder(when: text.isEmpty) {
                     Text(placeholderText)
                         .foregroundColor(Color("subtitle.gray"))
-                        .font(.abel(size: 16))
+                        .font(.asket(size: 16))
                 }
                 .padding(12)
                 .foregroundColor(Color("background.first"))

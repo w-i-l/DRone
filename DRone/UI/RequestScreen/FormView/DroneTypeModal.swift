@@ -34,11 +34,11 @@ struct DroneTypeModal: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("\(type.associatedValues.type) drone")
                                 .foregroundColor(.white)
-                                .font(.abel(size: 18))
+                                .font(.asket(size: 18))
                             
                             Text("\(type.associatedValues.weight.lowerBound.roundToOneDecimal()) - \(type.associatedValues.weight.upperBound.roundToOneDecimal()) kg")
                                 .foregroundColor(Color("subtitle.gray"))
-                                .font(.abel(size: 18))
+                                .font(.asket(size: 18))
                         }
                         
                         Spacer()

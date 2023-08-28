@@ -68,7 +68,7 @@ struct WeatherVerdictView: View {
                 ideal: WeatherService.shared.windSpeedIdealCondition,
                 good: WeatherService.shared.windSpeedGoodCondition,
                 bad: "> \(WeatherService.shared.windSpeedGoodCondition + 1)",
-                format: " km\\h"
+                format: " km/h"
             )
         ]
     }
@@ -89,7 +89,7 @@ struct WeatherVerdictView: View {
                         .cornerRadius(12)
                         
                         Text(viewModel.weatherVerdict.0)
-                            .font(.abel(size: 32))
+                            .font(.asket(size: 32))
                             .foregroundColor(Color("background.first"))
                             .padding(.leading, 20)
                     }
@@ -98,7 +98,7 @@ struct WeatherVerdictView: View {
                     
                     Text("How is determined?")
                         .foregroundColor(.white)
-                        .font(.abel(size: 24))
+                        .font(.asket(size: 24))
                         .padding(.top, 48)
                         .padding(.bottom, 24)
                     
@@ -145,7 +145,7 @@ struct WeatherVerdictView: View {
                         ),
                         (
                             "Wind speed",
-                            "\(viewModel.locationWeatherModel.windSpeed) km\\h",
+                            "\(viewModel.locationWeatherModel.windSpeed) km/h",
                             weatherVerdictModalModelArray[4],
                             verdictViewModel.displayWindSpeedBottomSheet,
                             (
@@ -161,13 +161,13 @@ struct WeatherVerdictView: View {
                                 HStack {
                                     Text(item.0)
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 18))
+                                        .font(.asket(size: 18))
                                     
                                     Spacer()
                                     
                                     Text("\(item.2.current)\(item.2.format)")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 18))
+                                        .font(.asket(size: 18))
                                 }
                                 .frame(width: UIScreen.main.bounds.width - 150)
                                 
@@ -176,7 +176,7 @@ struct WeatherVerdictView: View {
                                     if item.4.isIdeal {
                                         Text("Ideal")
                                             .foregroundColor(.white)
-                                            .font(.abel(size: 16))
+                                            .font(.asket(size: 16))
                                         
                                         Circle()
                                             .fill(Color("green"))
@@ -184,7 +184,7 @@ struct WeatherVerdictView: View {
                                     } else if item.4.isGood {
                                         Text("Good")
                                             .foregroundColor(.white)
-                                            .font(.abel(size: 16))
+                                            .font(.asket(size: 16))
                                         
                                         Circle()
                                             .fill(Color("yellow"))
@@ -192,7 +192,7 @@ struct WeatherVerdictView: View {
                                     } else {
                                         Text("Bad")
                                             .foregroundColor(.white)
-                                            .font(.abel(size: 16))
+                                            .font(.asket(size: 16))
                                         
                                         Circle()
                                             .fill(Color("red"))
@@ -231,7 +231,7 @@ struct WeatherVerdictView: View {
         )
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.precipitationBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.6)]) {
+            switchablePositions: [.relativeTop(0.4)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[0],
             condition: (
                 viewModel.locationWeatherModel.precipitationProbability <= weatherVerdictModalModelArray[0].ideal,
@@ -243,7 +243,7 @@ struct WeatherVerdictView: View {
         .enableSwipeToDismiss()
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.satellitesBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.6)]) {
+            switchablePositions: [.relativeTop(0.4)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[1],
             condition:
                 (
@@ -256,7 +256,7 @@ struct WeatherVerdictView: View {
         .enableSwipeToDismiss()
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.temperatureBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.6)]) {
+            switchablePositions: [.relativeTop(0.4)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[2],
                 condition: (
                     viewModel.locationWeatherModel.temperature >= weatherVerdictModalModelArray[2].ideal,
@@ -268,7 +268,7 @@ struct WeatherVerdictView: View {
         .enableSwipeToDismiss()
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.visibilityBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.6)]) {
+            switchablePositions: [.relativeTop(0.4)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[3],
             condition: (
                 viewModel.locationWeatherModel.visibility >= weatherVerdictModalModelArray[3].ideal,
@@ -280,7 +280,7 @@ struct WeatherVerdictView: View {
         .enableSwipeToDismiss()
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.windSpeedBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.6)]) {
+            switchablePositions: [.relativeTop(0.4)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[4],
             condition:(
                 viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].ideal,

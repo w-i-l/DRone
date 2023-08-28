@@ -20,12 +20,12 @@ struct FlightInformation: View {
                     VStack(alignment: .leading, spacing: 0) {
                         
                         Text("Flight information")
-                            .font(.abel(size: 40))
+                            .font(.asket(size: 36))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.leading)
                         
                         Text("Complete the form with your flight information")
-                            .font(.abel(size: 18))
+                            .font(.asket(size: 16))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.leading)
                         
@@ -37,7 +37,7 @@ struct FlightInformation: View {
                             HStack(spacing: 8) {
                                 Text("Flight date")
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 20))
+                                    .font(.asket(size: 20))
                                 
                                 Spacer()
                                 
@@ -46,7 +46,7 @@ struct FlightInformation: View {
                                            displayedComponents: .date) {
                                     Text("Date")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                 }
                                            .labelsHidden()
                                            .colorInvert()
@@ -61,14 +61,14 @@ struct FlightInformation: View {
                                 VStack(spacing: 8) {
                                     Text("Takeoff time")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                     
                                     DatePicker(selection: $viewModel.takeoffTime,
                                                in: ...viewModel.sunsetHourToday,
                                                displayedComponents: .hourAndMinute) {
                                         Text("Date")
                                             .foregroundColor(.white)
-                                            .font(.abel(size: 20))
+                                            .font(.asket(size: 20))
                                     }
                                                .labelsHidden()
                                                .colorInvert()
@@ -83,7 +83,7 @@ struct FlightInformation: View {
                                 VStack(spacing: 8) {
                                     Text("Landing time")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                     
                                     // AT LEAST 10 MINUTES DIFFERENCE
                                     DatePicker(selection: $viewModel.landingTime,
@@ -91,7 +91,7 @@ struct FlightInformation: View {
                                                displayedComponents: .hourAndMinute) {
                                         Text("Date")
                                             .foregroundColor(.white)
-                                            .font(.abel(size: 20))
+                                            .font(.asket(size: 20))
                                     }
                                                .labelsHidden()
                                                .colorInvert()
@@ -108,7 +108,7 @@ struct FlightInformation: View {
                             VStack(alignment: .leading, spacing: 7) {
                                 Text("Your flight location")
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 20))
+                                    .font(.asket(size: 20))
                                 
                                 Button(
                                     action: {
@@ -136,11 +136,11 @@ struct FlightInformation: View {
                                             VStack(alignment: .leading, spacing: 4) {
                                                 Text(viewModel.flightLocation.mainAdress.limitLettersFormattedString(limit: 30))
                                                     .foregroundColor(.white)
-                                                    .font(.abel(size: 16))
+                                                    .font(.asket(size: 16))
                                                 
                                                 Text(viewModel.flightLocation.secondaryAdress.limitLettersFormattedString(limit: 30))
                                                     .foregroundColor(Color("subtitle.gray"))
-                                                    .font(.abel(size: 12))
+                                                    .font(.asket(size: 12))
                                                 
                                             }
                                             Spacer()
@@ -179,7 +179,7 @@ struct FlightInformation: View {
                                         HStack {
                                             Text("Next")
                                                 .foregroundColor(.white)
-                                                .font(.abel(size: 32))
+                                                .font(.asket(size: 32))
                                             
                                             Spacer()
                                             

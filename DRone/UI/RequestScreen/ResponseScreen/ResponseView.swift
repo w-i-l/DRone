@@ -40,19 +40,19 @@ struct ResponseView: View {
                 
                 Text(title)
                     .foregroundColor(.white)
-                    .font(.abel(size: 40))
+                    .font(.asket(size: 40))
                     .padding(.top, 33)
                 
                 Text(subtitle)
                     .foregroundColor(.white)
-                    .font(.abel(size: 24))
+                    .font(.asket(size: 24))
                     .multilineTextAlignment(.center)
                     .padding(.top, 4)
                 
                 Spacer()
                 
                 Text(captation)
-                    .font(.abel(size: 16))
+                    .font(.asket(size: 16))
                     .foregroundColor(.white)
                     .padding(.top, UIScreen.main.bounds.height / 10)
                 
@@ -67,7 +67,7 @@ struct ResponseView: View {
                                 .frame(width: UIScreen.main.bounds.width / 2, height: 50)
                             
                             Text(buttonText)
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                                 .foregroundColor(.white)
                         }
                     }

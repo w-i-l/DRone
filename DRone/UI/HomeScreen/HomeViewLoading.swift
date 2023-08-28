@@ -58,7 +58,7 @@ struct HomeViewLoading: View {
                         
                         Text("Fetching data...")
                             .foregroundColor(Color("background.first"))
-                            .font(.abel(size: 32))
+                            .font(.asket(size: 32))
                             .padding(.leading, 20)
                     }
                 }
@@ -86,7 +86,7 @@ struct HomeViewLoading: View {
                                         .scaledToFit()
                                     
                                     Text(item.1)
-                                        .font(.abel(size: 16))
+                                        .font(.asket(size: 16))
                                         .foregroundColor(.white)
                                     
                                 }
@@ -120,14 +120,14 @@ struct HomeViewLoading: View {
                                 Spacer()
                                 
                                 Text(item.0)
-                                    .font(.abel(size: 16))
+                                    .font(.asket(size: 16))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
                                 
                                 Spacer()
                                 
                                 Text(item.1)
-                                    .font(.abel(size: 24))
+                                    .font(.asket(size: 24))
                                     .foregroundColor(.white)
                                     .padding(.bottom, 10)
                             }
@@ -150,7 +150,7 @@ struct HomeViewLoading: View {
                             HStack {
                                 
                                 Text("See more infos ")
-                                    .font(.abel(size: 20))
+                                    .font(.asket(size: 20))
                                     .foregroundColor(.white)
                                     .padding(.vertical, 12)
                                 

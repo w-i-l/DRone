@@ -35,7 +35,7 @@ struct HomeViewLoaded: View {
                             HStack(spacing: 0) {
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 20))
-                                        .font(.abel(size: 32))
+                                        .font(.asket(size: 32))
                                         .foregroundColor(.white)
                                         .underline(!isShowingAsChild)
                                     
@@ -45,7 +45,7 @@ struct HomeViewLoaded: View {
                                          viewModel.locationWeatherModel.secondaryLocation.limitLettersFormattedString(limit: 30) :
                                         ""
                                     )
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                         .foregroundColor(Color("subtitle.gray"))
 
                                 }
@@ -78,11 +78,11 @@ struct HomeViewLoaded: View {
                     HStack(spacing: 0) {
                         VStack(alignment: .leading, spacing: 0) {
                             Text("\(viewModel.locationWeatherModel.temperature)º C")
-                                .font(.abel(size: 64))
+                                .font(.asket(size: 64))
                                 .foregroundColor(.white)
                             
                             Text(viewModel.locationWeatherModel.weatherStatus)
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                                 .foregroundColor(Color("subtitle.gray"))
                         }
                         
@@ -116,7 +116,7 @@ struct HomeViewLoaded: View {
                             .cornerRadius(12)
                             
                             Text(viewModel.weatherVerdict.0)
-                                .font(.abel(size: 32))
+                                .font(.asket(size: 32))
                                 .foregroundColor(Color("background.first"))
                                 .padding(.leading, 20)
                         }
@@ -148,11 +148,11 @@ struct HomeViewLoaded: View {
                                             .scaledToFit()
                                         
                                         Text(item.1)
-                                            .font(.abel(size: 16))
+                                            .font(.asket(size: 16))
                                             .foregroundColor(.white)
                                         
                                         Text(item.2)
-                                            .font(.abel(size: 20))
+                                            .font(.asket(size: 20))
                                             .foregroundColor(.white)
                                     }
                                     Spacer()
@@ -187,14 +187,14 @@ struct HomeViewLoaded: View {
                                         Spacer()
                                         
                                         Text(item.0)
-                                            .font(.abel(size: 16))
+                                            .font(.asket(size: 16))
                                             .foregroundColor(.white)
                                             .multilineTextAlignment(.center)
                                         
                                         Spacer()
                                         
                                         Text(item.1)
-                                            .font(.abel(size: 24))
+                                            .font(.asket(size: 24))
                                             .foregroundColor(.white)
                                             .padding(.bottom, 10)
                                     }
@@ -218,9 +218,10 @@ struct HomeViewLoaded: View {
                                 HStack {
                                     
                                     Text("See more infos ")
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                         .foregroundColor(.white)
                                         .padding(.vertical, 12)
+                                        .padding(.horizontal, 5)
                                     
                                     
                                     
@@ -235,7 +236,7 @@ struct HomeViewLoaded: View {
                                 
                             }
                         }
-                        .frame(width: 180)
+                        .frame(width: 200)
                         .frame(height: 55)
                         .padding(.top, 30)
                     }

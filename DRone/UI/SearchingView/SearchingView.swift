@@ -43,13 +43,13 @@ struct SearchingView: View {
                             viewModel.predictedLocations = []
                         })
                             .foregroundColor(Color("background.first"))
-                            .font(.abel(size: 20))
+                            .font(.asket(size: 20))
                             .autocorrectionDisabled(true)
                             .keyboardType(.asciiCapable)
                             .autocapitalization(.words)
                             .placeholder(when: viewModel.textSearched.isEmpty) {
                                 Text("Search for a location")
-                                    .font(.abel(size: 20))
+                                    .font(.asket(size: 20))
                                     .foregroundColor(Color("subtitle.gray"))
                             }
                             .onTapGesture {
@@ -134,7 +134,7 @@ struct SearchingView: View {
                                     
                                     Text(item.addressName)
                                         .foregroundColor(Color("background.first"))
-                                        .font(.abel(size: 18))
+                                        .font(.asket(size: 18))
                                         .multilineTextAlignment(.leading)
                                     
                                     Spacer()

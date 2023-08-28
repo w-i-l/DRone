@@ -12,7 +12,7 @@ struct NoFlyZoneInfoModal: View {
         VStack {
             Text("Legend")
                 .foregroundColor(.white)
-                .font(.abel(size: 32))
+                .font(.asket(size: 32))
             
             
             ScrollView(showsIndicators: false) {
@@ -31,14 +31,14 @@ struct NoFlyZoneInfoModal: View {
                                 
                                 Text(item.1)
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 24))
+                                    .font(.asket(size: 24))
                                 
                             }
                             
                             HStack {
                                 Text(item.2 )
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 20))
+                                    .font(.asket(size: 20))
                                 
                                 Spacer()
                             }

@@ -44,7 +44,7 @@ struct AllFlightRequestView: View {
                     HStack {
                         Text("All requests")
                             .foregroundColor(.white)
-                            .font(.abel(size: 40))
+                            .font(.asket(size: 40))
                         
                         Spacer()
                         
@@ -67,7 +67,7 @@ struct AllFlightRequestView: View {
                             
                             Spacer()
                             Text("No flight request")
-                                .font(.abel(size: 40))
+                                .font(.asket(size: 40))
                                 .foregroundColor(.white)
                             Spacer()
                             
@@ -87,7 +87,7 @@ struct AllFlightRequestView: View {
                                                     
                                                     Text("Upcoming flights")
                                                         .foregroundColor(.white)
-                                                        .font(.abel(size: 24))
+                                                        .font(.asket(size: 24))
                                                     
                                                     
                                                     Image(systemName: showUpcomingFlights ? "chevron.down" : "chevron.up")
@@ -129,7 +129,7 @@ struct AllFlightRequestView: View {
                                                     
                                                     Text("Completed flights")
                                                         .foregroundColor(.white)
-                                                        .font(.abel(size: 24))
+                                                        .font(.asket(size: 24))
                                                     
                                                     
                                                     Image(systemName: showCompletedFlights ? "chevron.down" : "chevron.up")
@@ -181,7 +181,7 @@ struct AllFlightRequestView: View {
                                     HStack {
                                         Text("New request")
                                             .foregroundColor(.white)
-                                            .font(.abel(size: 24))
+                                            .font(.asket(size: 24))
                                         
                                         Image(systemName: "chevron.right")
                                             .resizable()
@@ -196,6 +196,7 @@ struct AllFlightRequestView: View {
                         }
                         
                     }
+                    .padding(.top, 10)
                     
                     .padding(.bottom, UIScreen.main.bounds.height / 11.3)
                     Spacer()
@@ -206,7 +207,7 @@ struct AllFlightRequestView: View {
                 } label: {
                     Text("Retry")
                         .foregroundColor(.white)
-                        .font(.abel(size: 32))
+                        .font(.asket(size: 32))
                 }
                 
             }

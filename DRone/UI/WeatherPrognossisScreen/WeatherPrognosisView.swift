@@ -33,7 +33,7 @@ struct WeatherForecastView: View {
                             HStack {
                                 Text("Weekly forecast")
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 40))
+                                    .font(.asket(size: 40))
                                 
                                 Spacer()
                             }
@@ -51,7 +51,7 @@ struct WeatherForecastView: View {
                                         // day of the week
                                         HStack {
                                             Text("\(viewModel.daysOfWeek[dayOfWeek]) - \(viewModel.daysOfWeekDate[dayOfWeek])")
-                                                .font(.abel(size: 24))
+                                                .font(.asket(size: 24))
                                                 .foregroundColor(.white)
                                             
                                             Spacer()
@@ -81,7 +81,7 @@ struct WeatherForecastView: View {
                                                         .cornerRadius(12)
                                                     
                                                     Text("\(viewModel.weaTherWeekForecast[dayOfWeek].temperature) ºC")
-                                                        .font(.abel(size: 36))
+                                                        .font(.asket(size: 36))
                                                         .foregroundColor(.white)
                                                 }
                                             })
@@ -127,7 +127,7 @@ struct WeatherForecastView: View {
                                                         
                                                         Text("\(viewModel.weaTherWeekForecast[dayOfWeek].windSpeed) km/h")
                                                             .foregroundColor(.white)
-                                                            .font(.abel(size: 20))
+                                                            .font(.asket(size: 20))
                                                     }
                                                 }
                                             })

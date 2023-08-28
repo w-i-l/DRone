@@ -8,6 +8,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>asket.narrow-light.otf</string>
 		<string>Abel-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>

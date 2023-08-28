@@ -63,7 +63,7 @@ struct GoogleMapsView: View {
                                                 .scaledToFit()
                                             Text(mapType.capitalized)
                                                 .foregroundColor(Color("background.first"))
-                                                .font(.abel(size: 12))
+                                                .font(.asket(size: 12))
                                         }
                                     })
                                 }

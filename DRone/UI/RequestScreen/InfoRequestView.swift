@@ -31,11 +31,11 @@ struct InfoRequestView: View {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("REQUEST")
-                                        .font(.abel(size: 40))
+                                        .font(.asket(size: 40))
                                         .foregroundColor(.white)
                                     
                                     Text("a flight")
-                                        .font(.abel(size: 32))
+                                        .font(.asket(size: 32))
                                         .foregroundColor(.white)
                                 }
                                 
@@ -60,12 +60,12 @@ struct InfoRequestView: View {
                                             
                                             Text("\(item.0)")
                                                 .foregroundColor(Color("background.first"))
-                                                .font(.abel(size: 36))
+                                                .font(.asket(size: 36))
                                         }
                                         
                                         Text(item.1)
                                             .foregroundColor(.white)
-                                            .font(.abel(size: 32))
+                                            .font(.asket(size: 32))
                                     }
                                     
                                 }
@@ -88,7 +88,7 @@ struct InfoRequestView: View {
                                             HStack {
                                                 Text("Start")
                                                     .foregroundColor(.white)
-                                                    .font(.abel(size: 32))
+                                                    .font(.asket(size: 32))
                                                 
                                                 Spacer()
                                                 

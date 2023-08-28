@@ -15,16 +15,15 @@ struct BackButton<TrailingItems: View>: View {
                     dismiss()
                 }
             }) {
-                HStack(spacing: 14) {
+                HStack(spacing: 10) {
                     Image(systemName: "chevron.left")
                         .resizable()
                         .renderingMode(.template)
-                        .frame(width: 14, height: 14)
-                        .scaledToFit()
+                        .frame(width: 14, height: 18)
                         .foregroundColor(.white)
                     
                     Text(text)
-                        .font(.custom("Arial", size: 24)) // Use your custom font here
+                        .font(.custom("Arial", size: 17)) // Use your custom font here
                         .foregroundColor(.white)
                 }
             }
@@ -34,6 +33,7 @@ struct BackButton<TrailingItems: View>: View {
             trailingItems()
         }
         .padding(.leading, 10)
+        .padding(.vertical, 10)
     }
     
     init(text: String, @ViewBuilder trailingItems: @escaping () -> TrailingItems = {EmptyView()}, action: (() -> Void)? = nil) {

@@ -12,4 +12,8 @@ extension Font {
     static func abel(size: CGFloat) -> Font {
         .custom("Abel-Regular", size: size)
     }
+    
+    static func asket(size: CGFloat) -> Font {
+        .custom("asket.narrow-light", size: size)
+    }
 }

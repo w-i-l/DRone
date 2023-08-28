@@ -21,12 +21,12 @@ struct PersonalInfosRequest: View {
                         VStack(alignment: .leading, spacing: 0) {
                             
                             Text("Personal information")
-                                .font(.abel(size: 40))
+                                .font(.asket(size: 36))
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.leading)
                             
                             Text("Complete the form with your personal information")
-                                .font(.abel(size: 18))
+                                .font(.asket(size: 16))
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.leading)
                             
@@ -37,7 +37,7 @@ struct PersonalInfosRequest: View {
                                 VStack(alignment: .leading, spacing: 7) {
                                     Text("Full name")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                     
                                     
                                     // first name
@@ -65,7 +65,7 @@ struct PersonalInfosRequest: View {
                                 VStack(alignment: .leading, spacing: 7) {
                                     Text("Personal identification number")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                     
                                 
                                     // first name
@@ -110,7 +110,7 @@ struct PersonalInfosRequest: View {
                                             HStack {
                                                 Text("Next")
                                                     .foregroundColor(.white)
-                                                    .font(.abel(size: 32))
+                                                    .font(.asket(size: 32))
                                                 
                                                 Spacer()
                                                 

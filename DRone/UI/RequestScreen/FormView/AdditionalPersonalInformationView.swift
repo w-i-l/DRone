@@ -18,12 +18,12 @@ struct AdditionalPersonalInformationView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     
                     Text("Additional information")
-                        .font(.abel(size: 40))
+                        .font(.asket(size: 36))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.leading)
                     
                     Text("Complete the form with your personal information")
-                        .font(.abel(size: 18))
+                        .font(.asket(size: 16))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.leading)
                     
@@ -34,12 +34,12 @@ struct AdditionalPersonalInformationView: View {
                         VStack(alignment: .leading, spacing: 7) {
                             Text("Birthday")
                                 .foregroundColor(.white)
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                             
                             HStack {
                                 Text("Date")
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 20))
+                                    .font(.asket(size: 20))
                                 
                                 Spacer()
                                 
@@ -48,7 +48,7 @@ struct AdditionalPersonalInformationView: View {
                                            displayedComponents: .date) {
                                     Text("Date")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 20))
+                                        .font(.asket(size: 20))
                                 }
                                            .labelsHidden()
                                            .colorInvert()
@@ -65,7 +65,7 @@ struct AdditionalPersonalInformationView: View {
                         VStack(alignment: .leading, spacing: 7) {
                             Text("Your current location")
                                 .foregroundColor(.white)
-                                .font(.abel(size: 20))
+                                .font(.asket(size: 20))
                             
                             HStack(spacing: 14) {
                                 Image(systemName: "mappin.circle")
@@ -78,11 +78,11 @@ struct AdditionalPersonalInformationView: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(viewModel.currentLocation.mainAdress.limitLettersFormattedString(limit: 30))
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 16))
+                                        .font(.asket(size: 16))
                                     
                                     Text(viewModel.currentLocation.secondaryAdress.limitLettersFormattedString(limit: 30))
                                         .foregroundColor(Color("subtitle.gray"))
-                                        .font(.abel(size: 12))
+                                        .font(.asket(size: 12))
                                     
                                 }
                                 Spacer()
@@ -108,7 +108,7 @@ struct AdditionalPersonalInformationView: View {
                                 HStack {
                                     Text("Next")
                                         .foregroundColor(.white)
-                                        .font(.abel(size: 32))
+                                        .font(.asket(size: 32))
                                     
                                     Spacer()
                                     

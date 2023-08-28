@@ -42,15 +42,15 @@ struct TabBar: View {
                                 .frame(height: 24)
                                 .foregroundColor(.white)
                                 .scaledToFit()
-                            
-                            if viewModel.selectedTab == item.0 {
-                                Circle()
-                                    .fill(Color("accent.blue"))
-                                    .frame(width: 10, height: 10)
-                            }
+                        
+                            Circle()
+                                .fill(viewModel.selectedTab == item.0 ? Color("accent.blue") : .clear)
+                                .frame(width: 10, height: 10)
                             
                         }
+                        .frame(height: 50)
                     })
+                    .padding(.top, 10)
                     
                     Spacer()
             }}

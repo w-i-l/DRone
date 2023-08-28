@@ -60,19 +60,20 @@ struct FlightRequestCardView: View {
                         
                         Text(flightRequest.responseModel.response.rawValue)
                             .foregroundColor(.white)
-                            .font(.abel(size: 12))
+                            .font(.asket(size: 12))
                     }
                     
                     VStack(alignment: .leading) {
                         Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)".limitLettersFormattedString(limit: 30))
                             .foregroundColor(.white)
-                            .font(.abel(size: 18))
+                            .font(.asket(size: 18))
+                            .multilineTextAlignment(.leading)
                         
                         // time interval
                         HStack {
                             Text(dateFormatter.string(from: flightRequest.flightDate))
                                 .foregroundColor(.white)
-                                .font(.abel(size: 16))
+                                .font(.asket(size: 14))
                             
                             Spacer()
                             
@@ -80,7 +81,8 @@ struct FlightRequestCardView: View {
                                 
                                 Text(hourFormatter.string(from: flightRequest.takeoffTime))
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 16))
+                                    .font(.asket(size: 14))
+                                    .lineLimit(1)
                                 
                                 Image(systemName: "arrow.right")
                                     .resizable()
@@ -90,7 +92,8 @@ struct FlightRequestCardView: View {
                                 
                                 Text(hourFormatter.string(from: flightRequest.landingTime))
                                     .foregroundColor(.white)
-                                    .font(.abel(size: 16))
+                                    .font(.asket(size: 14))
+                                    .lineLimit(1)
                             }
                             
                         }
