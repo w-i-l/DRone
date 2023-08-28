@@ -92,7 +92,7 @@ struct MainView: View {
                             .font(.asket(size: 20))
                         
                         Button {
-                            UIApplication.shared.openURL(URL(String: UIApplication.openSettingsURLString)!)
+                            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                         } label: {
                             
                             Text("Go to settings")
