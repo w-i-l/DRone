@@ -15,41 +15,44 @@ struct NoFlyZoneInfoModal: View {
                 .font(.abel(size: 32))
             
             
-            VStack {
-                ForEach([
-                    (Color.red, NoFlyZoneType.restricted.rawValue.capitalized, "Any kind of flight is strictly forbidden."),
-                    (Color.orange, NoFlyZoneType.firstZone.rawValue.capitalized, "Only with the approvement from the landlord."),
-                    (Color.yellow, NoFlyZoneType.requestZone.rawValue.capitalized, "In order to fly, you need an additional request from MAPN.")
-                ], id: \.2){ item in
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    ForEach([
+                        (Color.red, NoFlyZoneType.restricted.rawValue.capitalized, "Any kind of flight is strictly forbidden."),
+                        (Color.orange, NoFlyZoneType.firstZone.rawValue.capitalized, "Only with the approvement from the landlord."),
+                        (Color.yellow, NoFlyZoneType.requestZone.rawValue.capitalized, "In order to fly, you need an additional request from MAPN.")
+                    ], id: \.2){ item in
+                        
+                        VStack(alignment: .leading, spacing: 24) {
+                            HStack(spacing: 8) {
+                                Circle()
+                                    .fill(item.0)
+                                    .frame(width: 20, height: 20)
+                                
+                                Text(item.1)
+                                    .foregroundColor(.white)
+                                    .font(.abel(size: 24))
+                                
+                            }
+                            
+                            HStack {
+                                Text(item.2 )
+                                    .foregroundColor(.white)
+                                    .font(.abel(size: 20))
+                                
+                                Spacer()
+                            }
+                            .frame(maxWidth: .infinity)
+                            
+                            if item.0 != Color.yellow {
+                                Color.white
+                                    .frame(height: 1)
+                            }
+                        }
                     
-                    VStack(alignment: .leading, spacing: 24) {
-                        HStack(spacing: 8) {
-                            Circle()
-                                .fill(item.0)
-                                .frame(width: 20, height: 20)
-                            
-                            Text(item.1)
-                                .foregroundColor(.white)
-                                .font(.abel(size: 24))
-                            
-                        }
-                        
-                        HStack {
-                            Text(item.2 )
-                                .foregroundColor(.white)
-                                .font(.abel(size: 20))
-                            
-                            Spacer()
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        if item.0 != Color.yellow {
-                            Color.white
-                                .frame(height: 1)
-                        }
                     }
-                
                 }
+                .padding(.vertical, 20)
             }
         }
         .padding(20)

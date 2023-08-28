@@ -43,7 +43,7 @@ struct PersonalInfosRequest: View {
                                     // first name
                                     CustomTextField(
                                         text: $viewModel.firstName,
-                                        placeholderText: "First name...",
+                                        placeholderText: "First name",
                                         isTextGood: viewModel.firstNameValidation,
                                         errorText:  $viewModel.firstNameError,
                                         viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)
@@ -52,7 +52,7 @@ struct PersonalInfosRequest: View {
                                     // last name
                                     CustomTextField(
                                         text: $viewModel.lastName,
-                                        placeholderText: "Last name...",
+                                        placeholderText: "Last name",
                                         isTextGood: viewModel.lastNameValidation,
                                         errorText: $viewModel.lastNameError,
                                         viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.personalNextButtonPressed)

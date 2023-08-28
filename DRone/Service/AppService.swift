@@ -12,6 +12,7 @@ import SwiftUI
 import Combine
 import CoreLocation
 import NotificationCenter
+import BackgroundTasks
 
 enum AppNavigationTabs: CaseIterable {
     case home

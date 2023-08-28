@@ -93,16 +93,16 @@ struct HomeViewLoaded: View {
                     }
                     .padding(.top, 32)
                     
-                    // flight verdict
+                    // weather verdict
                     ZStack(alignment: .leading) {
                         LinearGradient(
-                            colors: [.green, Color("green")],
+                            colors: viewModel.weatherVerdict.1,
                             startPoint: .leading,
                             endPoint: .trailing
                         )
                         .cornerRadius(12)
                         
-                        Text("Good to fly")
+                        Text(viewModel.weatherVerdict.0)
                             .font(.abel(size: 32))
                             .foregroundColor(Color("background.first"))
                             .padding(.leading, 20)

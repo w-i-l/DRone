@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import GoogleMaps
+import BottomSheet
 
 
 struct GoogleMapsViewBridge: UIViewRepresentable {
@@ -92,6 +93,7 @@ class GoogleMapsViewModel: BaseViewModel {
     
     @Published var addressToFetchLocation: CLLocationCoordinate2D? = CLLocationCoordinate2D()
     @Published var searchingViewModel: SearchingViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
+    @Published var bottomSheetPosition: BottomSheetPosition = .hidden
     
     var noFlyZonesRendered: [GMSCircle] = []
     

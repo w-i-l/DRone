@@ -8,7 +8,7 @@
 
 import SwiftUI
 import GoogleMaps
-
+import BottomSheet
 
 
 struct GoogleMapsView: View {
@@ -115,18 +115,8 @@ struct GoogleMapsView: View {
                                     .frame(width: 50, height: 1)
                                 
                                 Button {
-                                    
-                                    navigation.presentModal(
-                                        NoFlyZoneInfoModal()
-                                            .edgesIgnoringSafeArea(.all)
-                                            .asDestination(),
-                                        animated: true) {
-                                            
-                                        } controllerConfig: { controller in
-                                            
-                                        }
-
-                                    showInfoModal.toggle()
+                                    viewModel.bottomSheetPosition = .relativeTop(0.8)
+            
                                 } label: {
                                     Image(systemName: "info.circle")
                                         .resizable()
@@ -155,7 +145,6 @@ struct GoogleMapsView: View {
             VStack {
                 SearchingView(viewModel: viewModel.searchingViewModel)
                     .onTapGesture {
-                        print("tapped on text field")
                         textFieldFocussed = true
                     }
                     .onChange(of: viewModel.addressToFetchLocation!) { newValue in
@@ -172,6 +161,15 @@ struct GoogleMapsView: View {
             }
             .padding(20)
         }
+        .bottomSheet(
+            bottomSheetPosition: $viewModel.bottomSheetPosition,
+            switchablePositions: [.relativeTop(0.8)],
+            content: {
+                NoFlyZoneInfoModal()
+            }
+        )
+        .enableSwipeToDismiss()
+        .enableTapToDismiss()
     }
 }
 

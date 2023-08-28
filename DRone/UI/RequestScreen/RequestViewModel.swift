@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreLocation
 import Combine
+import BottomSheet
 
 enum DroneType: CaseIterable {
     case agricultural
@@ -92,6 +93,7 @@ class RequestViewModel: BaseViewModel {
     @Published var serialNumberError: String = "Enter a valid serial number"
     @Published var droneType: DroneType = .toy
     @Published var isDroneModalShown: Bool = false
+    @Published var bottomSheetPosition: BottomSheetPosition = .hidden
     
     func serialNumberValidation() -> Bool {
         if !containsOnlyLettersAndNumbers(serialNumber) {

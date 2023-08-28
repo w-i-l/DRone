@@ -34,13 +34,22 @@ struct TabBar: View {
                     Button(action: {
                         AppService.shared.selectedTab.value = item.0
                     }, label: {
-                        Image(systemName: item.1)
-                            .resizable()
-                            .renderingMode(.template)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 24)
-                            .foregroundColor(viewModel.selectedTab == item.0 ? Color("accent.blue") : .white)
-                            .scaledToFit()
+                        VStack {
+                            Image(systemName: item.1)
+                                .resizable()
+                                .renderingMode(.template)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 24)
+                                .foregroundColor(.white)
+                                .scaledToFit()
+                            
+                            if viewModel.selectedTab == item.0 {
+                                Circle()
+                                    .fill(Color("accent.blue"))
+                                    .frame(width: 10, height: 10)
+                            }
+                            
+                        }
                     })
                     
                     Spacer()

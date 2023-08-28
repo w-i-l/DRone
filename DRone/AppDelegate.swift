@@ -69,10 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             completionHandler(.noData)
         }
     }
-
-
 }
-
 
 @available(iOS 10, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {

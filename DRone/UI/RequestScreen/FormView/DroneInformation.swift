@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BottomSheet
 
 struct DroneInformation: View {
     @Environment(\.dismiss) private var dismiss
@@ -59,6 +60,7 @@ struct DroneInformation: View {
                             Button(
                                 action: {
                                     viewModel.isDroneModalShown = true
+                                    viewModel.bottomSheetPosition = .relativeTop(0.7)
                             }, label: {
                                 HStack(spacing: 14) {
                                     Circle()
@@ -138,11 +140,14 @@ struct DroneInformation: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        .sheet(
-            isPresented: $viewModel.isDroneModalShown
-        ){
-            DroneTypeModal(viewModel: viewModel)
-        }
+        .bottomSheet(
+            bottomSheetPosition: $viewModel.bottomSheetPosition,
+            switchablePositions: [.relativeTop(0.7)],
+            content: {
+                DroneTypeModal(viewModel: viewModel)
+            })
+        .enableSwipeToDismiss()
+        .enableTapToDismiss()
         .onTapGesture {
             dismissKeyboard()
         }

@@ -17,7 +17,7 @@ struct DroneTypeModal: View {
                 Button(
                     action: {
                         viewModel.droneType = type
-                        dismiss()
+                        viewModel.bottomSheetPosition = .hidden
                     }, label: {
                     HStack(spacing: 18) {
                         Group {

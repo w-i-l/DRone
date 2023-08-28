@@ -75,6 +75,7 @@
 		17B916BA2A8CFA410024B82C /* ResponseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916B92A8CFA410024B82C /* ResponseService.swift */; };
 		17B916BC2A8CFE650024B82C /* ResponseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BB2A8CFE650024B82C /* ResponseScreen.swift */; };
 		17B916BF2A8D13F50024B82C /* RequestDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916BE2A8D13F50024B82C /* RequestDetailsView.swift */; };
+		17BDD6702A9C9DEF009AC026 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 17BDD66F2A9C9DEF009AC026 /* BottomSheet */; };
 		17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 17C296BD2A8F9DC800BCB9F9 /* AlertToast */; };
 		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
@@ -162,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				172D63E92A811BC0006621F4 /* netfox in Frameworks */,
+				17BDD6702A9C9DEF009AC026 /* BottomSheet in Frameworks */,
 				17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */,
 				172D63E42A811667006621F4 /* SwiftyJSON in Frameworks */,
 				17A7F2E22A939AED008721B7 /* FirebaseFirestore in Frameworks */,
@@ -489,6 +491,7 @@
 				172D63E82A811BC0006621F4 /* netfox */,
 				17C296BD2A8F9DC800BCB9F9 /* AlertToast */,
 				17A7F2E12A939AED008721B7 /* FirebaseFirestore */,
+				17BDD66F2A9C9DEF009AC026 /* BottomSheet */,
 			);
 			productName = DRone;
 			productReference = 17599F432A80DE3B00501E0A /* DRone.app */;
@@ -523,6 +526,7 @@
 				172D63E72A811BC0006621F4 /* XCRemoteSwiftPackageReference "netfox" */,
 				17C296BC2A8F9DC800BCB9F9 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				17A7F2E02A939AED008721B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				17BDD66E2A9C9DEF009AC026 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = 17599F442A80DE3B00501E0A /* Products */;
 			projectDirPath = "";
@@ -895,6 +899,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		17BDD66E2A9C9DEF009AC026 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lucaszischka/BottomSheet.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		17C296BC2A8F9DC800BCB9F9 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast.git";
@@ -920,6 +932,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 17A7F2E02A939AED008721B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		17BDD66F2A9C9DEF009AC026 /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17BDD66E2A9C9DEF009AC026 /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
 		};
 		17C296BD2A8F9DC800BCB9F9 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;

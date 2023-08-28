@@ -71,14 +71,14 @@ class WeatherService: BaseViewModel {
             locationWeatherModel.satellites >= 12 &&
             locationWeatherModel.temperature >= 10 &&
             locationWeatherModel.visibility >= 5 &&
-            locationWeatherModel.windSpeed <= 5 {
+            locationWeatherModel.windSpeed <= 15 {
             return ("Good to fly", [.green, Color("green")])
         } else if locationWeatherModel.precipitaionProbability <= 40 &&
                     locationWeatherModel.satellites >= 6 &&
-                    locationWeatherModel.temperature >= 5 &&
-                    locationWeatherModel.visibility >= 3 &&
-                    locationWeatherModel.windSpeed <= 10 {
-            return ("Be careful", [.yellow, Color("green")])
+                    locationWeatherModel.temperature >= 0 &&
+                    locationWeatherModel.visibility >= 10 &&
+                    locationWeatherModel.windSpeed <= 20 {
+            return ("Be careful", [.yellow, Color("yellow")])
         } else {
             return ("Can't take off", [.red, Color("red")])
         
