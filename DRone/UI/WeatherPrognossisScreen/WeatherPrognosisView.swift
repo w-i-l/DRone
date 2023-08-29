@@ -44,8 +44,9 @@ struct WeatherForecastView: View {
                                     Button {
                                         
                                         navigation.push(HomeView(viewModel: HomeViewModel(
-                                            locationWeatherModel: viewModel.weaTherWeekForecast[dayOfWeek]), isShowingAsChild: true
-                                        ).asDestination(), animated: true)
+                                            locationWeatherModel: viewModel.weaTherWeekForecast[dayOfWeek],
+                                            isShowingAsChild: true
+                                        )).asDestination(), animated: true)
                                         
                                     } label: {
                                         // day of the week

@@ -29,6 +29,7 @@ protocol NavigationHost: NSObject, ObservableObject {
     func replaceNavigationStack(_ views: [NavigationDestination], animated: Bool)
     func push(_ dest: NavigationDestination, animated: Bool)
     func push(_ dest: BaseNavigationController, animated: Bool)
+    func setRoot(_ dest: NavigationDestination, animated: Bool)
     func pop(animated: Bool)
     func popToRoot(animated: Bool)
     func popTo(tag: String, animated: Bool)
@@ -104,6 +105,12 @@ class BaseNavigationController: UIViewController {
 }
 
 extension Navigation: NavigationHost {
+    
+    func setRoot(_ dest: NavigationDestination, animated: Bool) {
+        if let dest = dest as? ViewDestination {
+            navigationController.setViewControllers([wrapView(dest)], animated: animated)
+        }
+    }
     
     func presentController(_ controller: UIViewController, animated: Bool, completion: (() -> (Void))?) {
         navigationController.present(controller, animated: true, completion: completion)

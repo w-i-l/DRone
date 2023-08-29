@@ -32,6 +32,7 @@ class HomeViewModel : BaseViewModel {
     
     @Published var shouldDisplayLocationToast: Bool = false
 
+    let isShowingAsChild: Bool
     
     var addressToFetchLocationBinding: Binding<CLLocationCoordinate2D?> = .init {
         CLLocationCoordinate2D()
@@ -47,7 +48,8 @@ class HomeViewModel : BaseViewModel {
         return URL(string: "https://weather.com/weather/today/l/44.45,26.07?par=google")!
     }
     
-    override init() {
+    init(isShowingAsChild: Bool) {
+        self.isShowingAsChild = isShowingAsChild
         super.init()
         updateUI()
         
@@ -75,9 +77,11 @@ class HomeViewModel : BaseViewModel {
         
     }
     
-    init(locationWeatherModel: LocationWeatherModel) {
+    init(locationWeatherModel: LocationWeatherModel, isShowingAsChild: Bool) {
         self.locationWeatherModel = locationWeatherModel
         self.fetchingState = .loaded
+        
+        self.isShowingAsChild = isShowingAsChild
         
         super.init()
   
@@ -85,8 +89,12 @@ class HomeViewModel : BaseViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 if value == .authorizedAlways || value == .authorizedWhenInUse {
-                    self?.updateUI()
-                    AppService.shared.isTabBarVisible.value = true
+                    if self?.isShowingAsChild == false {
+                        self?.updateUI()
+                        AppService.shared.isTabBarVisible.value = true
+                    } else {
+                        self?.weatherVerdict = WeatherService.shared.getWeatherVerdict(locationWeatherModel: self!.locationWeatherModel)
+                    }
                 } else {
                 }
             }

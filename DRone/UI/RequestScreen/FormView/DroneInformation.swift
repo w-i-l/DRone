@@ -18,15 +18,18 @@ struct DroneInformation: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     
-                    Text("Drone information")
-                        .font(.asket(size: 36))
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.leading)
-                    
-                    Text("Complete the form with your drone information")
-                        .font(.asket(size: 16))
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.leading)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Drone information")
+                            .font(.asket(size: 36))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.leading)
+                        
+                        Text("Complete the form with your drone information")
+                            .font(.asket(size: 16))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.leading)
+                    }
+                    .padding(.top, 10)
                     
                     Spacer()
                     

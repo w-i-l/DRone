@@ -96,7 +96,7 @@ struct WeatherVerdictView: View {
                     .frame(height: UIScreen.main.bounds.height / 10)
                     .padding(.top, 32)
                     
-                    Text("How is determined?")
+                    Text("How is it determined?")
                         .foregroundColor(.white)
                         .font(.asket(size: 24))
                         .padding(.top, 48)
@@ -294,6 +294,6 @@ struct WeatherVerdictView: View {
 
 struct WeatherVerdictView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherVerdictView(viewModel: HomeViewModel())
+        WeatherVerdictView(viewModel: HomeViewModel(isShowingAsChild: false))
     }
 }

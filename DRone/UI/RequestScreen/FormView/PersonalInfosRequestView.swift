@@ -20,15 +20,19 @@ struct PersonalInfosRequest: View {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 0) {
                             
-                            Text("Personal information")
-                                .font(.asket(size: 36))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.leading)
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Personal information")
+                                    .font(.asket(size: 36))
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.leading)
+                                
+                                Text("Complete the form with your personal information")
+                                    .font(.asket(size: 16))
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            .padding(.top, 10)
                             
-                            Text("Complete the form with your personal information")
-                                .font(.asket(size: 16))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.leading)
                             
                             Spacer()
                             
@@ -90,9 +94,9 @@ struct PersonalInfosRequest: View {
                                     
                                     viewModel.personalNextButtonPressed.value = true
                                     
-                                    if viewModel.onlyStringValidation(string: viewModel.firstName) &&
-                                        viewModel.onlyStringValidation(string: viewModel.lastName) &&
-                                        viewModel.personalNumberValidation(personalNumber: viewModel.CNP) &&
+                                    if viewModel.firstNameValidation() &&
+                                        viewModel.lastNameValidation() &&
+                                        viewModel.cnpValidation() &&
                                         viewModel.getBirthDayFromCNP() != nil {
                                         
                                         viewModel.personalNextButtonPressed.value = false

@@ -15,9 +15,9 @@ struct MainView: View {
     var body: some View {
             ZStack{
                 
+                
                 HomeView(
-                    viewModel: HomeViewModel(),
-                    isShowingAsChild: false
+                    viewModel: HomeViewModel(isShowingAsChild: false)                    
                 )
                 .opacity(viewModel.selectedTab == .home ? 1 : 0)
                 .environmentObject(navigation)

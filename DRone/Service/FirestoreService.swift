@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import Combine
 import CoreLocation
+import FirebaseAuth
 
 class FirebaseService: BaseViewModel {
     
@@ -322,4 +323,105 @@ class FirebaseService: BaseViewModel {
         
         docRef.setData(data)
     }
+}
+
+
+enum LoginState: String, CaseIterable {
+    case notLoggedIn = "notLoggedIn"
+    case loggedIn = "loggedIn"
+    case authentificated = "authentificated"
+    case emailNotVerified = "emailNotVerified"
+    case alreadyExistsUser = "alreadyExistsUser"
+    case wrongPassword = "wrongPassword"
+    case error = "error"
+    case tooManyRequests = "tooManyRequests"
+    
+    static func match(loginState: String) -> LoginState {
+        for state in LoginState.allCases {
+            if state.rawValue == loginState {
+                return state
+            }
+        }
+        
+        return .notLoggedIn
+    }
+}
+
+// login and auth
+extension FirebaseService{
+    
+    func auth(email: String, password: String) -> Future<LoginState, Never> {
+        
+        Future<LoginState, Never> { promise in
+            
+            Auth.auth().createUser(
+                withEmail: email,
+                password: password
+            ) { result, error in
+                
+                if let nsError = error as? NSError {
+                    
+                    let authError = AuthErrorCode(_nsError: nsError)
+                    
+                    switch authError.code {
+                    case .emailAlreadyInUse :
+                        print("email exists")
+                        promise(.success(.alreadyExistsUser))
+                    default:
+                        print(error!.localizedDescription)
+                        promise(.success(.error))
+                    }
+                }
+                
+                guard result == nil else {
+                    promise(.success(.error))
+                    return
+                }
+                
+                promise(.success(.authentificated))
+            }
+        }
+    }
+    
+    func login(email: String, password: String) -> Future<LoginState, Never> {
+        
+        Future<LoginState, Never> { promise in
+            
+            Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
+                
+                if let nsError = error as? NSError {
+                    
+                    let authError = AuthErrorCode(_nsError: nsError)
+                    
+                    switch authError.code {
+                    case .wrongPassword :
+                        print("wrong password")
+                        promise(.success(.wrongPassword))
+                    case .tooManyRequests:
+                        print("too many wrong requests")
+                        promise(.success(.tooManyRequests))
+                    default:
+                        print(error!.localizedDescription)
+                        promise(.success(.error))
+                    }
+                }
+                
+                guard let result else {
+                    print(error!.localizedDescription)
+                    return
+                    
+                }
+                
+                print(result.user.isEmailVerified)
+                if !result.user.isEmailVerified {
+                    promise(.success(.emailNotVerified))
+                    result.user.sendEmailVerification()
+                } else {
+                    promise(.success(.loggedIn))
+                }
+                
+            }
+        }
+    }
+    
 }

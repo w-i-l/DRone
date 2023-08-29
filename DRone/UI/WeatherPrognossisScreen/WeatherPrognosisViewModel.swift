@@ -31,19 +31,20 @@ class WeatherForecastViewModel: BaseViewModel {
         daysOfWeek = (0..<7)
             .map {
                 
-                let dateFormmater = DateFormatter()
-                dateFormmater.dateFormat = "EEEE"
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US")
+                dateFormatter.dateFormat = "EEEE"
                 
-                return dateFormmater.string(from: Date() + TimeInterval(secondsInDay * $0))
+                return dateFormatter.string(from: Date() + TimeInterval(secondsInDay * $0)).capitalized
             }
         
         daysOfWeekDate = (0..<7)
             .map {
                 
-                let dateFormmater = DateFormatter()
-                dateFormmater.dateFormat = "dd MMMM"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd MMMM"
                 
-                return dateFormmater.string(from: Date() + TimeInterval(secondsInDay * $0))
+                return dateFormatter.string(from: Date() + TimeInterval(secondsInDay * $0))
             }
         
         super.init()

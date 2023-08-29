@@ -9,6 +9,9 @@ struct BackButton<TrailingItems: View>: View {
     var body: some View {
         HStack {
             Button(action: {
+                
+                dismissKeyboard()
+                
                 if let action = action {
                     action()
                 } else {

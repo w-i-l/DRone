@@ -74,10 +74,13 @@ class RequestViewModel: BaseViewModel {
             cnpError = "CNP should contain only numbers!"
             return false
         } else if CNP.count != 13 {
-            cnpError = "CNP should have 13 characters"
+            cnpError = "CNP should have 13 characters!"
             return false
         } else if getBirthDayFromCNP() == nil {
             cnpError = "Your birthday isn't valid!"
+            return false
+        } else if !["1", "2", "5", "6"].contains(CNP[CNP.startIndex]) {
+            cnpError = "Your first digit must represent your sex!"
             return false
         }
         
@@ -311,30 +314,6 @@ class RequestViewModel: BaseViewModel {
             .store(in: &bag)
     }
     
-    func onlyStringValidation(string: String) -> Bool {
-        return !string.isEmpty && containsOnlyLetters(string)
-    }
-    
-    func containsOnlyNumbers(_ input: String) -> Bool {
-        let regexPattern = "^[0-9]*$"
-        let regex = try! NSRegularExpression(pattern: regexPattern)
-        let range = NSRange(location: 0, length: input.utf16.count)
-        return regex.firstMatch(in: input, options: [], range: range) != nil
-    }
-    
-    func containsOnlyLettersAndNumbers(_ input: String) -> Bool {
-        let regexPattern = "^[a-zA-Z0-9]*$"
-        let regex = try! NSRegularExpression(pattern: regexPattern)
-        let range = NSRange(location: 0, length: input.utf16.count)
-        return regex.firstMatch(in: input, options: [], range: range) != nil
-    }
-    
-    func containsOnlyLetters(_ input: String) -> Bool {
-        let regexPattern = "^[a-zA-Z]*$"
-        let regex = try! NSRegularExpression(pattern: regexPattern)
-        let range = NSRange(location: 0, length: input.utf16.count)
-        return regex.firstMatch(in: input, options: [], range: range) != nil
-    }
     
     func getBirthDayFromCNP() -> Date? {
         let dateFormatter = DateFormatter()

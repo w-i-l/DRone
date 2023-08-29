@@ -13,12 +13,10 @@ struct HomeViewLoaded: View {
     @ObservedObject var navigation: Navigation
     @ObservedObject var viewModel: HomeViewModel
     
-    let isShowingAsChild: Bool
-    
     var body: some View {
         VStack {
             
-            if isShowingAsChild {
+            if viewModel.isShowingAsChild {
                 // back button
                 BackButton(text: "Weekly forecast")
             }
@@ -37,7 +35,7 @@ struct HomeViewLoaded: View {
                                     Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 20))
                                         .font(.asket(size: 32))
                                         .foregroundColor(.white)
-                                        .underline(!isShowingAsChild)
+                                        .underline(!viewModel.isShowingAsChild)
                                     
                   
                                     
@@ -54,13 +52,13 @@ struct HomeViewLoaded: View {
                                 
                             }
                         }
-                        .disabled(isShowingAsChild)
+                        .disabled(viewModel.isShowingAsChild)
                         
                         
                         
                         Spacer()
                         
-                        if !isShowingAsChild {
+                        if !viewModel.isShowingAsChild {
                             Button {
                                 viewModel.updateUI()
                             } label: {
@@ -207,7 +205,7 @@ struct HomeViewLoaded: View {
                     .frame(height: UIScreen.main.bounds.height / 8)
                     .padding(.top, 20)
                     
-                    if !isShowingAsChild {
+                    if !viewModel.isShowingAsChild {
                         // see more button
                         Button {
                             navigation.push(WeatherForecastView(viewModel: WeatherForecastViewModel(location: viewModel.addressToFetchLocation!)).asDestination(), animated: true)
@@ -253,9 +251,8 @@ struct HomeViewLoaded: View {
         }
     }
     
-    init(viewModel: HomeViewModel, isShowingAsChild: Bool) {
+    init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
-        self.isShowingAsChild = isShowingAsChild
         self.navigation = SceneDelegate.navigation
     }
 }
@@ -263,8 +260,7 @@ struct HomeViewLoaded: View {
 struct HomeViewLoaded_Previews: PreviewProvider {
     static var previews: some View {
         HomeViewLoaded(
-            viewModel: HomeViewModel(),
-            isShowingAsChild: false
+            viewModel: HomeViewModel(isShowingAsChild: false)            
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)

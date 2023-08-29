@@ -14,20 +14,18 @@ struct HomeView: View {
     
     @EnvironmentObject private var navigation: Navigation
     @StateObject var viewModel: HomeViewModel
-    let isShowingAsChild: Bool
     
     var body: some View {
         VStack {
             switch viewModel.fetchingState {
             case .loading :
                 
-                HomeViewLoading(isShowingAsChild: isShowingAsChild)
+                HomeViewLoading(isShowingAsChild: viewModel.isShowingAsChild)
                 Spacer()
                 
             case .loaded:
                 HomeViewLoaded(
-                    viewModel: viewModel,
-                    isShowingAsChild: isShowingAsChild
+                    viewModel: viewModel
                 )
                 .environmentObject(navigation)
                 
@@ -46,8 +44,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(
-            viewModel: HomeViewModel(),
-            isShowingAsChild: true
+            viewModel: HomeViewModel(isShowingAsChild: false)
         )
     }
 }

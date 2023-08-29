@@ -45,7 +45,7 @@ struct DroneTypeModal: View {
                     }
                     .padding(.vertical, 4)
                     .padding(.horizontal, 10)
-                    .background(Color("gray.background"))
+                    .background(Color("gray.background").cornerRadius(12))
                 })
             }
         }

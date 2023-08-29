@@ -199,6 +199,6 @@ struct HomeViewFailed: View {
 
 struct HomeViewFailed_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewFailed(viewModel: HomeViewModel())
+        HomeViewFailed(viewModel: HomeViewModel(isShowingAsChild: false))
     }
 }

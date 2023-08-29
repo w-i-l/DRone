@@ -31,5 +31,13 @@ class AppService {
     var focusedTextFieldID: CurrentValueSubject<Int, Never> = .init(0)
     var screenIndex: CurrentValueSubject<Int, Never> = .init(0)
     
-    private init() {}
+    var loginState: CurrentValueSubject<LoginState, Never> = .init(.notLoggedIn)
+    
+    private init() {
+        if let stateFromDefaults = UserDefaults.standard.object(forKey: "loginState") as? String {
+            loginState.value = .match(loginState: stateFromDefaults)
+        }
+//        UserDefaults.standard.removeObject(forKey: "loginState")
+//        UserDefaults.standard.removeObject(forKey: "email")
+    }
 }

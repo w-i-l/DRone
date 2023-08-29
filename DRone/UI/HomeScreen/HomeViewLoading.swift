@@ -167,7 +167,7 @@ struct HomeViewLoading: View {
                             
                         }
                     }
-                    .frame(width: 180)
+                    .frame(width: 200)
                     .frame(height: 55)
                     .padding(.top, 30)
                     .disabled(true)

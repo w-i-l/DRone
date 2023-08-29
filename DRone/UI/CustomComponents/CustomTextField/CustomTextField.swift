@@ -15,6 +15,7 @@ struct CustomTextField: View {
     let isTextGood: () -> Bool
     @Binding var errorText: String
     let keyboardType: UIKeyboardType
+    @Binding var isTextFieldSecured: Bool
     
     @StateObject var viewModel: CustomTextFieldViewModel
     @State private var textFieldDidReturn: Bool = false
@@ -31,7 +32,8 @@ struct CustomTextField: View {
         isTextGood: @escaping () -> Bool,
         errorText: Binding<String>,
         viewModel: CustomTextFieldViewModel,
-        keyboardType: UIKeyboardType = .default
+        keyboardType: UIKeyboardType = .default,
+        isTextFieldSecured: Binding<Bool> = .constant(false)
     ) {
         self._text = text
         self.placeholderText = placeholderText
@@ -40,6 +42,7 @@ struct CustomTextField: View {
         self._errorText = errorText
         CustomTextField.textFieldIndex += 1
         self.keyboardType = keyboardType
+        self._isTextFieldSecured = isTextFieldSecured
         
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -69,12 +72,23 @@ struct CustomTextField: View {
                         isFocused = true
                     }
                 
-                TextField("", text: $text, onEditingChanged: { _ in
-                    showError = false
-                    strokeColor = Color("accent.blue")
-                }, onCommit: {
-                    textFieldDidReturn = true
-                })
+                Group {
+                    if isTextFieldSecured {
+                        SecureField(
+                            "",
+                            text: $text) {
+                                textFieldDidReturn = true
+                            }
+                    } else {
+                        TextField("", text: $text, onEditingChanged: { _ in
+                            showError = false
+                            strokeColor = Color("accent.blue")
+                        }, onCommit: {
+                            textFieldDidReturn = true
+                        })
+                       
+                    }
+                }
                 .placeholder(when: text.isEmpty) {
                     Text(placeholderText)
                         .foregroundColor(Color("subtitle.gray"))

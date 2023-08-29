@@ -42,6 +42,11 @@
 		17599F762A80FD0600501E0A /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F752A80FD0600501E0A /* TabBarViewModel.swift */; };
 		178263F72A94B0470008529B /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178263F62A94B0470008529B /* GoogleMapView.swift */; };
 		178263F92A94DD1C0008529B /* GoogleMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */; };
+		178530242A9DE6C700EA18AC /* FlyingDrone.json in Resources */ = {isa = PBXBuildFile; fileRef = 178530232A9DE6C700EA18AC /* FlyingDrone.json */; };
+		178530272A9DEE8C00EA18AC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178530262A9DEE8C00EA18AC /* LoginView.swift */; };
+		178530292A9DF16D00EA18AC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178530282A9DF16D00EA18AC /* LoginViewModel.swift */; };
+		1785302B2A9DFD7D00EA18AC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1785302A2A9DFD7D00EA18AC /* FirebaseAuth */; };
+		1785302D2A9E20C800EA18AC /* RegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1785302C2A9E20C800EA18AC /* RegEx.swift */; };
 		178689272A84CB31002B908E /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178689262A84CB31002B908E /* EnvironmentValues.swift */; };
 		178689292A84D8F3002B908E /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178689282A84D8F3002B908E /* CLLocation.swift */; };
 		1786892C2A84E824002B908E /* ChangeLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1786892B2A84E824002B908E /* ChangeLocationView.swift */; };
@@ -127,6 +132,10 @@
 		17599F752A80FD0600501E0A /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		178263F62A94B0470008529B /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewModel.swift; sourceTree = "<group>"; };
+		178530232A9DE6C700EA18AC /* FlyingDrone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FlyingDrone.json; sourceTree = "<group>"; };
+		178530262A9DEE8C00EA18AC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		178530282A9DF16D00EA18AC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		1785302C2A9E20C800EA18AC /* RegEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegEx.swift; sourceTree = "<group>"; };
 		178689262A84CB31002B908E /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
 		178689282A84D8F3002B908E /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		1786892B2A84E824002B908E /* ChangeLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLocationView.swift; sourceTree = "<group>"; };
@@ -182,6 +191,7 @@
 				17BDD68D2A9CF153009AC026 /* LottieSwiftUI in Frameworks */,
 				17BDD6842A9CEC94009AC026 /* Lottie in Frameworks */,
 				17BDD6702A9C9DEF009AC026 /* BottomSheet in Frameworks */,
+				1785302B2A9DFD7D00EA18AC /* FirebaseAuth in Frameworks */,
 				17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */,
 				172D63E42A811667006621F4 /* SwiftyJSON in Frameworks */,
 				17A7F2E22A939AED008721B7 /* FirebaseFirestore in Frameworks */,
@@ -305,6 +315,7 @@
 		17599F572A80DF4C00501E0A /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				178530252A9DEE7700EA18AC /* LoginScreen */,
 				17BDD6712A9CA61A009AC026 /* WeatherVerdictScreen */,
 				178263F52A94B0310008529B /* GoogleMapView */,
 				1711B9342A863B4200D4B2D8 /* CustomComponents */,
@@ -334,6 +345,7 @@
 				17599F5F2A80E1CF00501E0A /* Extensions */,
 				17599F672A80E97D00501E0A /* BaseViewModel.swift */,
 				179D6AD02A83882B005700B8 /* ReactiveData.swift */,
+				1785302C2A9E20C800EA18AC /* RegEx.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -391,6 +403,15 @@
 				178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */,
 			);
 			path = GoogleMapView;
+			sourceTree = "<group>";
+		};
+		178530252A9DEE7700EA18AC /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				178530262A9DEE8C00EA18AC /* LoginView.swift */,
+				178530282A9DF16D00EA18AC /* LoginViewModel.swift */,
+			);
+			path = LoginScreen;
 			sourceTree = "<group>";
 		};
 		1786892A2A84E7FF002B908E /* ChangeLocationScreen */ = {
@@ -477,6 +498,7 @@
 		17BDD6852A9CED61009AC026 /* Looties */ = {
 			isa = PBXGroup;
 			children = (
+				178530232A9DE6C700EA18AC /* FlyingDrone.json */,
 				17BDD6902A9CF7F1009AC026 /* NoInternet.json */,
 				17BDD6862A9CED6C009AC026 /* NoLocation.json */,
 			);
@@ -535,6 +557,7 @@
 				17BDD66F2A9C9DEF009AC026 /* BottomSheet */,
 				17BDD6832A9CEC94009AC026 /* Lottie */,
 				17BDD68C2A9CF153009AC026 /* LottieSwiftUI */,
+				1785302A2A9DFD7D00EA18AC /* FirebaseAuth */,
 			);
 			productName = DRone;
 			productReference = 17599F432A80DE3B00501E0A /* DRone.app */;
@@ -593,6 +616,7 @@
 				17BDD6872A9CED6C009AC026 /* NoLocation.json in Resources */,
 				17599F4B2A80DE3D00501E0A /* Assets.xcassets in Resources */,
 				17BDD6812A9CDEA7009AC026 /* asket.narrow-light.otf in Resources */,
+				178530242A9DE6C700EA18AC /* FlyingDrone.json in Resources */,
 				17A7F2E62A939DEC008721B7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,6 +680,7 @@
 				17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */,
 				17599F6E2A80EFD800501E0A /* Fonts.swift in Sources */,
 				179D6ADC2A83991C005700B8 /* WeatherPrognosisViewModel.swift in Sources */,
+				178530272A9DEE8C00EA18AC /* LoginView.swift in Sources */,
 				179D6ADA2A8398A7005700B8 /* WeatherPrognosisView.swift in Sources */,
 				17B916AB2A8CB8E40024B82C /* DroneInformation.swift in Sources */,
 				178689372A852102002B908E /* PersonalInfosRequestView.swift in Sources */,
@@ -668,6 +693,7 @@
 				1729B1A42A8E033C0083785C /* RequestDetailsViewModel.swift in Sources */,
 				17599F702A80FB7400501E0A /* MainView.swift in Sources */,
 				17599F612A80E1E400501E0A /* ViewModifiers.swift in Sources */,
+				178530292A9DF16D00EA18AC /* LoginViewModel.swift in Sources */,
 				178689272A84CB31002B908E /* EnvironmentValues.swift in Sources */,
 				17599F662A80E96D00501E0A /* HomeViewModel.swift in Sources */,
 				1711B9382A86414100D4B2D8 /* CustomTextFieldViewModel.swift in Sources */,
@@ -699,6 +725,7 @@
 				179D6ACF2A837A33005700B8 /* HomeViewFailed.swift in Sources */,
 				17B916B82A8CF5490024B82C /* RequestFormModel.swift in Sources */,
 				178689352A850D3E002B908E /* InfoRequestView.swift in Sources */,
+				1785302D2A9E20C800EA18AC /* RegEx.swift in Sources */,
 				179D6AD52A83938C005700B8 /* HomeViewLoaded.swift in Sources */,
 				17B916B62A8CF4D10024B82C /* ResponseAPI.swift in Sources */,
 				172D63DF2A81137B006621F4 /* WeatherAPI.swift in Sources */,
@@ -995,6 +1022,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 172D63E72A811BC0006621F4 /* XCRemoteSwiftPackageReference "netfox" */;
 			productName = netfox;
+		};
+		1785302A2A9DFD7D00EA18AC /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17A7F2E02A939AED008721B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 		17A7F2E12A939AED008721B7 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
