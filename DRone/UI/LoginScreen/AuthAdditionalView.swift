@@ -1,6 +1,5 @@
-
 //
-//  LoginView.swift
+//  AuthAdditionalView.swift
 //  DRone
 //
 //  Created by Mihai Ocnaru on 29.08.2023.
@@ -10,9 +9,15 @@ import SwiftUI
 import LottieSwiftUI
 import AlertToast
 
-struct LoginView: View {
+struct AuthAdditionalView: View {
     
-    @StateObject var viewModel: LoginViewModel
+    @ObservedObject var viewModel: LoginViewModel
+    @ObservedObject private var navigation: Navigation
+    
+    init(viewModel: LoginViewModel) {
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self.navigation = SceneDelegate.navigation
+    }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -23,7 +28,7 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width, height: 300)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Login")
+                    Text("Sign up")
                         .foregroundColor(.white)
                         .font(.asket(size: 36))
                     
@@ -37,7 +42,7 @@ struct LoginView: View {
                 VStack(spacing: 4) {
                     
                     HStack(spacing: 10) {
-                        Image(systemName: "envelope")
+                        Image(systemName: "person")
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(.white)
@@ -48,10 +53,10 @@ struct LoginView: View {
                             .frame(width: 1, height: 40)
                         
                         CustomTextField(
-                            text: $viewModel.email,
-                            placeholderText: "email",
-                            isTextGood: viewModel.emailValidation,
-                            errorText: $viewModel.emailError,
+                            text: $viewModel.firstName,
+                            placeholderText: "first name",
+                            isTextGood: viewModel.firstNameValidation,
+                            errorText: $viewModel.firstNameError,
                             viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed),
                             keyboardType: .emailAddress
                         )
@@ -77,7 +82,7 @@ struct LoginView: View {
                         .padding(.vertical, 10)
                     
                     HStack(spacing: 10) {
-                        Image(systemName: "lock")
+                        Image(systemName: "person")
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(.white)
@@ -88,13 +93,11 @@ struct LoginView: View {
                             .frame(width: 1, height: 40)
                         
                         CustomTextField(
-                            text: $viewModel.password,
-                            placeholderText: "password",
-                            isTextGood: viewModel.passwordValidation,
-                            errorText: $viewModel.passwordError,
-                            viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed),
-                            isTextFieldSecured: $viewModel.isTextFieldSecures
-                            
+                            text: $viewModel.lastName,
+                            placeholderText: "last name",
+                            isTextGood: viewModel.lastNameValidation,
+                            errorText: $viewModel.lastNameError,
+                            viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed)
                         )
                         .frame(width: UIScreen.main.bounds.width / 1.5)
                         .padding(.trailing, 10)
@@ -102,7 +105,7 @@ struct LoginView: View {
                         Button {
                             viewModel.isTextFieldSecures.toggle()
                         } label: {
-                            Image(systemName: viewModel.isTextFieldSecures ? "eye.slash.fill" : "eye")
+                            Image("")
                                 .resizable()
                                 .renderingMode(.template)
                                 .foregroundColor(Color("accent.blue"))
@@ -116,6 +119,47 @@ struct LoginView: View {
                         .frame(height: 1)
                         .padding(.horizontal, 35)
                         .padding(.vertical, 10)
+                    
+                    
+                    HStack(spacing: 10) {
+                        Image(systemName: "creditcard.and.123")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(.white)
+                            .frame(width: 20, height: 20)
+                            .scaledToFit()
+                        
+                        Color("accent.blue")
+                            .frame(width: 1, height: 40)
+                        
+                        CustomTextField(
+                            text: $viewModel.CNP,
+                            placeholderText: "CNP",
+                            isTextGood: viewModel.cnpValidation,
+                            errorText: $viewModel.CNPError,
+                            viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed)
+                        )
+                        .frame(width: UIScreen.main.bounds.width / 1.5)
+                        .padding(.trailing, 10)
+                        
+                        Button {
+                            viewModel.isTextFieldSecures.toggle()
+                        } label: {
+                            Image("")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(Color("accent.blue"))
+                                .frame(width: 20, height: 15)
+                                .scaledToFit()
+                        }
+                        
+                    }
+                    .padding(.top, 30)
+                    
+                    Color("accent.blue")
+                        .frame(height: 1)
+                        .padding(.horizontal, 35)
+                        .padding(.vertical, 10)
                 }
                 .padding(.top, 40)
                 
@@ -124,15 +168,16 @@ struct LoginView: View {
                     
                     Toggle(
                         isOn: $viewModel.rememberMe) {
-                        }
-                        .frame(width: 70)
+                        }.opacity(0)
+                        
                     
-                    Text("Remember me")
+                    Text("")
                         .foregroundColor(.white)
                         .font(.asket(size: 16))
                     
                     Spacer()
                 }
+                .frame(width: 70)
                 .frame(maxWidth: .infinity)
                 
 
@@ -149,27 +194,29 @@ struct LoginView: View {
                             .frame(width: 250, height: 50)
                             .cornerRadius(12)
                         
-                        Text("Login")
+                        Text("Next")
                             .foregroundColor(.white)
                             .font(.asket(size: 20))
                     }
                 }
                 
                 HStack {
-                    Text("Don't have an account?")
+                    Text("Already have an account?")
                         .foregroundColor(.white)
                         .font(.asket(size: 16))
                     
                     Button {
-                        viewModel.goToAuth()
+                        viewModel.clear()
+                        navigation.pop(animated: true)
                     } label: {
-                        Text("Sign up")
+                        Text("Login")
                             .foregroundColor(Color("accent.blue"))
                             .font(.asket(size: 20))
                     }
 
                 }
                 .padding(.top, 10)
+
 
                 
             }
@@ -237,8 +284,8 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
+struct AuthAdditionalView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(viewModel: LoginViewModel())
+        AuthAdditionalView(viewModel: LoginViewModel())
     }
 }

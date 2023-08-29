@@ -47,6 +47,8 @@
 		178530292A9DF16D00EA18AC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178530282A9DF16D00EA18AC /* LoginViewModel.swift */; };
 		1785302B2A9DFD7D00EA18AC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1785302A2A9DFD7D00EA18AC /* FirebaseAuth */; };
 		1785302D2A9E20C800EA18AC /* RegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1785302C2A9E20C800EA18AC /* RegEx.swift */; };
+		1785302F2A9E3AD800EA18AC /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1785302E2A9E3AD800EA18AC /* AuthView.swift */; };
+		178530312A9E3D3900EA18AC /* AuthAdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178530302A9E3D3900EA18AC /* AuthAdditionalView.swift */; };
 		178689272A84CB31002B908E /* EnvironmentValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178689262A84CB31002B908E /* EnvironmentValues.swift */; };
 		178689292A84D8F3002B908E /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178689282A84D8F3002B908E /* CLLocation.swift */; };
 		1786892C2A84E824002B908E /* ChangeLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1786892B2A84E824002B908E /* ChangeLocationView.swift */; };
@@ -136,6 +138,8 @@
 		178530262A9DEE8C00EA18AC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		178530282A9DF16D00EA18AC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1785302C2A9E20C800EA18AC /* RegEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegEx.swift; sourceTree = "<group>"; };
+		1785302E2A9E3AD800EA18AC /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		178530302A9E3D3900EA18AC /* AuthAdditionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAdditionalView.swift; sourceTree = "<group>"; };
 		178689262A84CB31002B908E /* EnvironmentValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValues.swift; sourceTree = "<group>"; };
 		178689282A84D8F3002B908E /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		1786892B2A84E824002B908E /* ChangeLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLocationView.swift; sourceTree = "<group>"; };
@@ -409,6 +413,8 @@
 			isa = PBXGroup;
 			children = (
 				178530262A9DEE8C00EA18AC /* LoginView.swift */,
+				1785302E2A9E3AD800EA18AC /* AuthView.swift */,
+				178530302A9E3D3900EA18AC /* AuthAdditionalView.swift */,
 				178530282A9DF16D00EA18AC /* LoginViewModel.swift */,
 			);
 			path = LoginScreen;
@@ -705,6 +711,7 @@
 				172D63E62A8118D5006621F4 /* WeatherService.swift in Sources */,
 				17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */,
 				172D63EB2A811EB0006621F4 /* LocationService.swift in Sources */,
+				1785302F2A9E3AD800EA18AC /* AuthView.swift in Sources */,
 				1729B1A92A8E296A0083785C /* SceneDelegate.swift in Sources */,
 				178689392A852201002B908E /* RequestViewModel.swift in Sources */,
 				179D6AE42A83CBD6005700B8 /* SearchingView.swift in Sources */,
@@ -726,6 +733,7 @@
 				17B916B82A8CF5490024B82C /* RequestFormModel.swift in Sources */,
 				178689352A850D3E002B908E /* InfoRequestView.swift in Sources */,
 				1785302D2A9E20C800EA18AC /* RegEx.swift in Sources */,
+				178530312A9E3D3900EA18AC /* AuthAdditionalView.swift in Sources */,
 				179D6AD52A83938C005700B8 /* HomeViewLoaded.swift in Sources */,
 				17B916B62A8CF4D10024B82C /* ResponseAPI.swift in Sources */,
 				172D63DF2A81137B006621F4 /* WeatherAPI.swift in Sources */,

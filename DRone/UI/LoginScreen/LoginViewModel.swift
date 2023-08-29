@@ -19,6 +19,15 @@ class LoginViewModel: BaseViewModel {
     @Published var passwordError: String = ""
     @Published var isTextFieldSecures: Bool = true
     
+    @Published var firstName: String = ""
+    @Published var firstNameError: String = ""
+    
+    @Published var lastName: String = ""
+    @Published var lastNameError: String = ""
+    
+    @Published var CNP: String = ""
+    @Published var CNPError: String = ""
+    
     @Published var showWrongPasswordToast: Bool = false
     @Published var showTooManyRequestsToast: Bool = false
     @Published var showEmailNotVerifiedToast: Bool = false
@@ -65,6 +74,50 @@ class LoginViewModel: BaseViewModel {
     func emailValidation() -> Bool {
         if isValidEmail(email) == false {
             emailError = "Please enter a valid email adress"
+            return false
+        }
+        
+        return true
+    }
+    
+    func firstNameValidation() -> Bool {
+        
+        if !containsOnlyLetters(firstName) {
+            firstNameError = "First name should contain only letters!"
+            return false
+        } else if firstName.contains(where: { $0 == " " }) {
+            firstNameError = "Enter only a first name!"
+            return false
+        }
+        
+        return onlyStringValidation(string: firstName)
+    }
+    
+    func lastNameValidation() -> Bool {
+        
+        if !containsOnlyLetters(lastName) {
+            lastNameError = "Last name should contain only letters!"
+            return false
+        } else if firstName.contains(where: { $0 == " " }) {
+            lastNameError = "Enter only a last name!"
+            return false
+        }
+        
+        return onlyStringValidation(string: lastName)
+    }
+    
+    func cnpValidation() -> Bool {
+        if !containsOnlyNumbers(CNP) {
+            CNPError = "CNP should contain only numbers!"
+            return false
+        } else if CNP.count != 13 {
+            CNPError = "CNP should have 13 characters!"
+            return false
+        } else if getBirthDayFromCNP() == nil {
+            CNPError = "Your birthday isn't valid!"
+            return false
+        } else if !["1", "2", "5", "6"].contains(CNP[CNP.startIndex]) {
+            CNPError = "Your first digit must represent your sex!"
             return false
         }
         
@@ -120,4 +173,48 @@ class LoginViewModel: BaseViewModel {
             })
             .store(in: &bag)
     }
+    
+    
+    func getBirthDayFromCNP() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        
+        let yearStartIndex = CNP.index(CNP.startIndex, offsetBy: 1)
+        let yearEndIndex = CNP.index(CNP.startIndex, offsetBy: 2)
+        let last2DigitsOfBirthdayYear = String(CNP[yearStartIndex...yearEndIndex])
+        let birthdayYear = "\(Int(last2DigitsOfBirthdayYear)! > 23 ? "19" : "20")\(last2DigitsOfBirthdayYear)"
+        
+        let monthStartIndex = CNP.index(CNP.startIndex, offsetBy: 3)
+        let monthEndIndex = CNP.index(CNP.startIndex, offsetBy: 4)
+        let birthdayMonth = String(CNP[monthStartIndex...monthEndIndex])
+        
+        let dayStartIndex = CNP.index(CNP.startIndex, offsetBy: 5)
+        let dayEndIndex = CNP.index(CNP.startIndex, offsetBy: 6)
+        let birthdayDay = String(CNP[dayStartIndex...dayEndIndex])
+        
+        let birthdayDateFromCNP = "\(birthdayDay)/\(birthdayMonth)/\(birthdayYear)"
+        return dateFormatter.date(from: birthdayDateFromCNP)
+        
+    }
+    
+    func clear() {
+        
+        email = ""
+        emailError = ""
+        password = ""
+        passwordError = ""
+        
+        showWrongPasswordToast = false
+        showTooManyRequestsToast = false
+        showEmailNotVerifiedToast = false
+        showLoginSuccesfulToast = false
+        showLoadingToast = false
+        
+    }
+    
+    func goToAuth() {
+        clear()
+        navigation.push(AuthView(viewModel: self).asDestination(), animated: true)
+    }
+    
 }

@@ -1,6 +1,5 @@
-
 //
-//  LoginView.swift
+//  AuthView.swift
 //  DRone
 //
 //  Created by Mihai Ocnaru on 29.08.2023.
@@ -10,9 +9,15 @@ import SwiftUI
 import LottieSwiftUI
 import AlertToast
 
-struct LoginView: View {
+struct AuthView: View {
     
-    @StateObject var viewModel: LoginViewModel
+    @ObservedObject var viewModel: LoginViewModel
+    @ObservedObject private var navigation: Navigation
+    
+    init(viewModel: LoginViewModel) {
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self._navigation = ObservedObject(wrappedValue: SceneDelegate.navigation)
+    }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -23,7 +28,7 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width, height: 300)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Login")
+                    Text("Sign up")
                         .foregroundColor(.white)
                         .font(.asket(size: 36))
                     
@@ -124,15 +129,16 @@ struct LoginView: View {
                     
                     Toggle(
                         isOn: $viewModel.rememberMe) {
-                        }
-                        .frame(width: 70)
+                        }.opacity(0)
+                        
                     
-                    Text("Remember me")
+                    Text("")
                         .foregroundColor(.white)
                         .font(.asket(size: 16))
                     
                     Spacer()
                 }
+                .frame(width: 70)
                 .frame(maxWidth: .infinity)
                 
 
@@ -140,7 +146,10 @@ struct LoginView: View {
                 
                 Button {
                     viewModel.loginButtonPressed.value = true
-                    viewModel.login()
+                    if viewModel.emailValidation() && viewModel.passwordValidation() {
+                        viewModel.loginButtonPressed.value = false
+                        self.navigation.push(AuthAdditionalView(viewModel: viewModel).asDestination(), animated: true)
+                    }
                     
                     dismissKeyboard()
                 } label: {
@@ -149,27 +158,29 @@ struct LoginView: View {
                             .frame(width: 250, height: 50)
                             .cornerRadius(12)
                         
-                        Text("Login")
+                        Text("Next")
                             .foregroundColor(.white)
                             .font(.asket(size: 20))
                     }
                 }
                 
                 HStack {
-                    Text("Don't have an account?")
+                    Text("Already have an account?")
                         .foregroundColor(.white)
                         .font(.asket(size: 16))
                     
                     Button {
-                        viewModel.goToAuth()
+                        viewModel.clear()
+                        navigation.pop(animated: true)
                     } label: {
-                        Text("Sign up")
+                        Text("Login")
                             .foregroundColor(Color("accent.blue"))
                             .font(.asket(size: 20))
                     }
 
                 }
                 .padding(.top, 10)
+
 
                 
             }
@@ -237,8 +248,9 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
+
+struct AuthView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(viewModel: LoginViewModel())
+        AuthView(viewModel: LoginViewModel())
     }
 }
