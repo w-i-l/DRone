@@ -18,9 +18,18 @@ enum AppNavigationTabs: CaseIterable {
     case home
     case request
     case map
+    case settings
 }
 
-class AppService {
+struct User {
+    let uid: String
+    let email: String
+    let firstName: String
+    let lastName: String
+    let CNP: String
+}
+
+class AppService : BaseViewModel {
     
     static let shared = AppService()
     
@@ -33,11 +42,26 @@ class AppService {
     
     var loginState: CurrentValueSubject<LoginState, Never> = .init(.notLoggedIn)
     
-    private init() {
-        if let stateFromDefaults = UserDefaults.standard.object(forKey: "loginState") as? String {
-            loginState.value = .match(loginState: stateFromDefaults)
+    var user: CurrentValueSubject< User?, Never> = .init(nil)
+    
+    override private init() {
+        super.init()
+
+        if let stateFromDefaults = UserDefaults.standard.object(forKey: "userUID") as? String {
+            loginState.value = .loggedIn
+            
+            self.syncUser()
         }
 //        UserDefaults.standard.removeObject(forKey: "loginState")
 //        UserDefaults.standard.removeObject(forKey: "email")
+    }
+    
+    func syncUser() {
+        FirebaseService.shared.getUserWithInfo()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.user.value = value
+            }
+            .store(in: &bag)
     }
 }

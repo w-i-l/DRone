@@ -17,21 +17,27 @@ struct LoginView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                
+
                 LottieView(name: "FlyingDrone")
                     .lottieLoopMode(.autoReverse)
                     .frame(width: UIScreen.main.bounds.width, height: 300)
                 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Login")
-                        .foregroundColor(.white)
-                        .font(.asket(size: 36))
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Login")
+                            .foregroundColor(.white)
+                            .font(.asket(size: 36))
+                        
+                        Text("Enter you email and password")
+                            .foregroundColor(.white)
+                            .font(.asket(size: 20))
+                    }
                     
-                    Text("Enter you email and password")
-                        .foregroundColor(.white)
-                        .font(.asket(size: 20))
+                    Spacer()
                 }
                 .padding(.top, 20)
+                .padding(.horizontal, 20)
                 
                 // email and password
                 VStack(spacing: 4) {
@@ -138,22 +144,54 @@ struct LoginView: View {
 
                 Spacer()
                 
-                Button {
-                    viewModel.loginButtonPressed.value = true
-                    viewModel.login()
-                    
-                    dismissKeyboard()
-                } label: {
-                    ZStack {
-                        Color("accent.blue")
-                            .frame(width: 250, height: 50)
-                            .cornerRadius(12)
+                HStack {
+                    Button {
+                        viewModel.loginButtonPressed.value = true
+                        dismissKeyboard()
                         
-                        Text("Login")
-                            .foregroundColor(.white)
-                            .font(.asket(size: 20))
+                        viewModel.login()
+                        
+                    } label: {
+                        ZStack {
+                            Color("accent.blue")
+                                .frame(height: 50)
+                                .cornerRadius(12)
+                            
+                            Text("Login")
+                                .foregroundColor(.white)
+                                .font(.asket(size: 20))
+                        }
+                    }
+                    
+                    Button {
+                        dismissKeyboard()
+                        
+                        viewModel.continueAsGuest()
+                        
+                    } label: {
+                        ZStack {
+                            Color.white
+                                .frame(height: 50)
+                                .cornerRadius(12)
+                            
+                            HStack {
+                                
+                                Image(systemName: "person")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color("background.first"))
+                                    .frame(width: 16, height: 16)
+                                    .scaledToFit()
+                                
+                                Text("Continue as guest")
+                                    .foregroundColor(Color("background.first"))
+                                .font(.asket(size: 16))
+                            }
+                        }
                     }
                 }
+                .padding(.top, 10)
+                .padding(.horizontal, 20)
                 
                 HStack {
                     Text("Don't have an account?")
@@ -222,10 +260,22 @@ struct LoginView: View {
                 )
             }
         )
+        .toast(
+            isPresenting: $viewModel.showNoUserFoundToast,
+            duration: 10,
+            tapToDismiss: true,
+            alert: {
+                AlertToast(
+                    displayMode: .alert,
+                    type: .systemImage("person.fill.xmark", .red),
+                    title: "No user found",
+                    subTitle: "Please create an account first!"
+                )
+            }
+        )
         .disabled(viewModel.showLoadingToast)
         .toast(
             isPresenting: $viewModel.showLoadingToast,
-            duration: 10,
             tapToDismiss: false,
             alert: {
                 AlertToast(

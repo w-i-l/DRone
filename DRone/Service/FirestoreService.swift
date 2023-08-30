@@ -335,6 +335,7 @@ enum LoginState: String, CaseIterable {
     case wrongPassword = "wrongPassword"
     case error = "error"
     case tooManyRequests = "tooManyRequests"
+    case noUserFound = "noUserFound"
     
     static func match(loginState: String) -> LoginState {
         for state in LoginState.allCases {
@@ -373,12 +374,33 @@ extension FirebaseService{
                     }
                 }
                 
-                guard result == nil else {
+                guard result != nil else {
                     promise(.success(.error))
                     return
                 }
                 
                 promise(.success(.authentificated))
+            }
+        }
+    }
+    
+    func saveUserInfoToFirestore(firstName: String, lastName: String, CNP: String, email: String) {
+        
+        if let user = Auth.auth().currentUser {
+            let db = Firestore.firestore()
+            let userData: [String: Any] = [
+                "first-name": firstName,
+                "last-name": lastName,
+                "CNP": CNP,
+                "email": email
+            ]
+
+            db.collection("users").document(user.uid).setData(userData) { error in
+                if let error = error {
+                    print("Error saving user data: \(error.localizedDescription)")
+                } else {
+                    print("User data saved successfully.")
+                }
             }
         }
     }
@@ -400,6 +422,9 @@ extension FirebaseService{
                     case .tooManyRequests:
                         print("too many wrong requests")
                         promise(.success(.tooManyRequests))
+                    case .userNotFound:
+                        print("no user found")
+                        promise(.success(.noUserFound))
                     default:
                         print(error!.localizedDescription)
                         promise(.success(.error))
@@ -424,4 +449,52 @@ extension FirebaseService{
         }
     }
     
+    func verifyEmailExists(email: String) -> Future<Bool, Never> {
+        Future<Bool, Never> { promise in
+            Auth.auth().fetchSignInMethods(forEmail: email, completion: { (providers, error) in
+
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else if let providers = providers {
+                        print(providers)
+                        promise(.success(true))
+                    }
+                
+                promise(.success(false))
+                })
+        }
+    }
+    
+    func getUserWithInfo() -> Future<User?, Never> {
+        Future<User?, Never> { promise in
+            if let user = Auth.auth().currentUser {
+                let db = Firestore.firestore()
+                let docRef = db.collection("users").document(user.uid)
+
+                docRef.getDocument { document, error in
+                    if let document = document, document.exists {
+                        let data = document.data()!
+                        let firstName = data["first-name"] as! String
+                        let lastName = data["last-name"] as! String
+                        let CNP = data["CNP"] as! String
+                        let email = data["email"] as! String
+                        
+                        promise(.success(User(
+                            uid: user.uid,
+                            email: email,
+                            firstName: firstName,
+                            lastName: lastName,
+                            CNP: CNP
+                        )))
+                        
+                    } else {
+                        print("Document does not exist")
+                    }
+                }
+            } else {
+                
+                promise(.success(nil))
+            }
+        }
+    }
 }

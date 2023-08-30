@@ -42,7 +42,6 @@
 		17599F762A80FD0600501E0A /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F752A80FD0600501E0A /* TabBarViewModel.swift */; };
 		178263F72A94B0470008529B /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178263F62A94B0470008529B /* GoogleMapView.swift */; };
 		178263F92A94DD1C0008529B /* GoogleMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */; };
-		178530242A9DE6C700EA18AC /* FlyingDrone.json in Resources */ = {isa = PBXBuildFile; fileRef = 178530232A9DE6C700EA18AC /* FlyingDrone.json */; };
 		178530272A9DEE8C00EA18AC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178530262A9DEE8C00EA18AC /* LoginView.swift */; };
 		178530292A9DF16D00EA18AC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178530282A9DF16D00EA18AC /* LoginViewModel.swift */; };
 		1785302B2A9DFD7D00EA18AC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1785302A2A9DFD7D00EA18AC /* FirebaseAuth */; };
@@ -93,6 +92,9 @@
 		17BDD68F2A9CF4FF009AC026 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDD68E2A9CF4FF009AC026 /* NetworkService.swift */; };
 		17BDD6912A9CF7F1009AC026 /* NoInternet.json in Resources */ = {isa = PBXBuildFile; fileRef = 17BDD6902A9CF7F1009AC026 /* NoInternet.json */; };
 		17C296BE2A8F9DC800BCB9F9 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 17C296BD2A8F9DC800BCB9F9 /* AlertToast */; };
+		17E21D542A9F280F0092494C /* FlyingDrone.json in Resources */ = {isa = PBXBuildFile; fileRef = 17E21D532A9F280F0092494C /* FlyingDrone.json */; };
+		17E21D572A9F3F750092494C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E21D562A9F3F750092494C /* SettingsView.swift */; };
+		17E21D592A9F3F840092494C /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E21D582A9F3F840092494C /* SettingsViewModel.swift */; };
 		17F796452A82829F005E4135 /* HomeViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796442A82829F005E4135 /* HomeViewLoading.swift */; };
 		17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F796462A8283AE005E4135 /* CardShimmer.swift */; };
 		B81664878F5A4489154D1E4A /* libPods-DRone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30822F99450DF6E7667D8AD3 /* libPods-DRone.a */; };
@@ -134,7 +136,6 @@
 		17599F752A80FD0600501E0A /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		178263F62A94B0470008529B /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewModel.swift; sourceTree = "<group>"; };
-		178530232A9DE6C700EA18AC /* FlyingDrone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FlyingDrone.json; sourceTree = "<group>"; };
 		178530262A9DEE8C00EA18AC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		178530282A9DF16D00EA18AC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1785302C2A9E20C800EA18AC /* RegEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegEx.swift; sourceTree = "<group>"; };
@@ -179,6 +180,9 @@
 		17BDD6862A9CED6C009AC026 /* NoLocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NoLocation.json; sourceTree = "<group>"; };
 		17BDD68E2A9CF4FF009AC026 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		17BDD6902A9CF7F1009AC026 /* NoInternet.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = NoInternet.json; sourceTree = "<group>"; };
+		17E21D532A9F280F0092494C /* FlyingDrone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FlyingDrone.json; sourceTree = "<group>"; };
+		17E21D562A9F3F750092494C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		17E21D582A9F3F840092494C /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		17F796442A82829F005E4135 /* HomeViewLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewLoading.swift; sourceTree = "<group>"; };
 		17F796462A8283AE005E4135 /* CardShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardShimmer.swift; sourceTree = "<group>"; };
 		30822F99450DF6E7667D8AD3 /* libPods-DRone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DRone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				17599F6C2A80EFA800501E0A /* Info.plist */,
+				17A7F2E52A939DEC008721B7 /* GoogleService-Info.plist */,
 				17599F692A80EF7600501E0A /* Font */,
 				17599F4C2A80DE3D00501E0A /* Preview Content */,
 				17599F462A80DE3B00501E0A /* RootView.swift */,
@@ -263,7 +268,6 @@
 				1729B1AC2A8E29F10083785C /* Navigation.swift */,
 				17599F4A2A80DE3D00501E0A /* Assets.xcassets */,
 				17BDD6852A9CED61009AC026 /* Looties */,
-				17A7F2E52A939DEC008721B7 /* GoogleService-Info.plist */,
 				17599F542A80DF3300501E0A /* API */,
 				17599F552A80DF3800501E0A /* Service */,
 				17599F562A80DF4300501E0A /* Models */,
@@ -319,6 +323,7 @@
 		17599F572A80DF4C00501E0A /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				17E21D552A9F3F610092494C /* SettingsScreen */,
 				178530252A9DEE7700EA18AC /* LoginScreen */,
 				17BDD6712A9CA61A009AC026 /* WeatherVerdictScreen */,
 				178263F52A94B0310008529B /* GoogleMapView */,
@@ -504,7 +509,7 @@
 		17BDD6852A9CED61009AC026 /* Looties */ = {
 			isa = PBXGroup;
 			children = (
-				178530232A9DE6C700EA18AC /* FlyingDrone.json */,
+				17E21D532A9F280F0092494C /* FlyingDrone.json */,
 				17BDD6902A9CF7F1009AC026 /* NoInternet.json */,
 				17BDD6862A9CED6C009AC026 /* NoLocation.json */,
 			);
@@ -518,6 +523,15 @@
 				1711B9372A86414100D4B2D8 /* CustomTextFieldViewModel.swift */,
 			);
 			path = CustomTextField;
+			sourceTree = "<group>";
+		};
+		17E21D552A9F3F610092494C /* SettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				17E21D562A9F3F750092494C /* SettingsView.swift */,
+				17E21D582A9F3F840092494C /* SettingsViewModel.swift */,
+			);
+			path = SettingsScreen;
 			sourceTree = "<group>";
 		};
 		7339BFCAA6BE72838CDE7180 /* Frameworks */ = {
@@ -621,8 +635,8 @@
 				17BDD6912A9CF7F1009AC026 /* NoInternet.json in Resources */,
 				17BDD6872A9CED6C009AC026 /* NoLocation.json in Resources */,
 				17599F4B2A80DE3D00501E0A /* Assets.xcassets in Resources */,
+				17E21D542A9F280F0092494C /* FlyingDrone.json in Resources */,
 				17BDD6812A9CDEA7009AC026 /* asket.narrow-light.otf in Resources */,
-				178530242A9DE6C700EA18AC /* FlyingDrone.json in Resources */,
 				17A7F2E62A939DEC008721B7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -689,6 +703,7 @@
 				178530272A9DEE8C00EA18AC /* LoginView.swift in Sources */,
 				179D6ADA2A8398A7005700B8 /* WeatherPrognosisView.swift in Sources */,
 				17B916AB2A8CB8E40024B82C /* DroneInformation.swift in Sources */,
+				17E21D592A9F3F840092494C /* SettingsViewModel.swift in Sources */,
 				178689372A852102002B908E /* PersonalInfosRequestView.swift in Sources */,
 				1786892E2A84E82F002B908E /* ChangeLocationViewModel.swift in Sources */,
 				17B916B12A8CC5680024B82C /* FlightInformation.swift in Sources */,
@@ -725,6 +740,7 @@
 				17B916BA2A8CFA410024B82C /* ResponseService.swift in Sources */,
 				17B916AD2A8CBB510024B82C /* DroneTypeModal.swift in Sources */,
 				17B916BC2A8CFE650024B82C /* ResponseScreen.swift in Sources */,
+				17E21D572A9F3F750092494C /* SettingsView.swift in Sources */,
 				17599F642A80E94D00501E0A /* HomeView.swift in Sources */,
 				1729B1AB2A8E29C40083785C /* AppDelegate.swift in Sources */,
 				17BDD68F2A9CF4FF009AC026 /* NetworkService.swift in Sources */,

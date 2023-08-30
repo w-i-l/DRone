@@ -29,6 +29,9 @@ struct MainView: View {
                 GoogleMapsView(viewModel: GoogleMapsViewModel())
                     .opacity(viewModel.selectedTab == .map ? 1 : 0)
                 
+                SettingView(viewModel: SettingsViewModel())
+                    .opacity(viewModel.selectedTab == .settings ? 1 : 0)
+                
                 VStack {
                     Spacer()
                     TabBar()

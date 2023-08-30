@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import FirebaseAuth
 
 class LoginViewModel: BaseViewModel {
     
@@ -33,6 +34,11 @@ class LoginViewModel: BaseViewModel {
     @Published var showEmailNotVerifiedToast: Bool = false
     @Published var showLoginSuccesfulToast: Bool = false
     @Published var showLoadingToast: Bool = false
+    @Published var showEmailALreadyExistsToast: Bool = false
+    @Published var showNoUserFoundToast: Bool = false
+    
+    @Published var canProcedSecondAuth: Bool = false
+    @Published var snapshot: (email: String, password: String) = ("", "")
     
     @Published var loginStatus: FetchingState = .loaded
     
@@ -124,6 +130,45 @@ class LoginViewModel: BaseViewModel {
         return true
     }
     
+    func auth() {
+        if firstNameValidation() && lastNameValidation() && cnpValidation() {
+            self.loginButtonPressed.value = false
+        } else {
+            return
+        }
+        
+        self.loginStatus = .loading
+        self.showLoadingToast = true
+        
+        FirebaseService.shared.auth(email: email, password: password)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                switch value {
+                case .authentificated:
+                    
+                    self?.showLoginSuccesfulToast = true
+                    AppService.shared.loginState.value = .loggedIn
+                    
+                    FirebaseService.shared.saveUserInfoToFirestore(
+                        firstName: self!.firstName,
+                        lastName: self!.lastName,
+                        CNP: self!.CNP,
+                        email: self!.email
+                    )
+                    
+                    self?.navigation.popToRoot(animated: true)
+                    self?.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
+                    
+                    let emailCopy = self!.email
+                    self?.clear()
+                    self?.email = emailCopy
+                default:
+                    break
+                }
+            }
+            .store(in: &bag)
+    }
+    
     func login() {
         
         if emailValidation() && passwordValidation() {
@@ -147,19 +192,25 @@ class LoginViewModel: BaseViewModel {
                     
                 case .emailNotVerified:
                     self?.showEmailNotVerifiedToast = true
-                    
+                case .noUserFound:
+                    self?.showNoUserFoundToast = true
                 case .loggedIn:
                     self?.showLoginSuccesfulToast = true
                     AppService.shared.loginState.value = .loggedIn
+                    
                     self?.navigation.replaceNavigationStack([MainView().asDestination()], animated: true)
+                    self?.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
                     
                     if self!.rememberMe {
-                        UserDefaults.standard.set(self?.email, forKey: "email")
-                        UserDefaults.standard.set(AppService.shared.loginState.value.rawValue, forKey: "loginState")
+                        UserDefaults.standard.set(Auth.auth().currentUser!.uid, forKey: "userUID")
                     } else {
-                        UserDefaults.standard.removeObject(forKey: "email")
-                        UserDefaults.standard.removeObject(forKey: "loginState")
+                        UserDefaults.standard.removeObject(forKey: "userUID")
                     }
+                    
+                    AppService.shared.loginState.value = .loggedIn
+                    AppService.shared.syncUser()
+                    self?.clear()
+                    
                 case .error:
                     self?.loginStatus = .failure
                     return
@@ -169,11 +220,24 @@ class LoginViewModel: BaseViewModel {
                 
                 self?.loginStatus = .loaded
                 self?.showLoadingToast = false
-                print(value)
             })
             .store(in: &bag)
     }
     
+    func continueAsGuest() {
+        AppService.shared.loginState.value = .notLoggedIn
+        
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            
+        }
+        UserDefaults.standard.removeObject(forKey: "userUID")
+        
+        navigation.replaceNavigationStack([MainView().asDestination()], animated: true)
+        
+        clear()
+    }
     
     func getBirthDayFromCNP() -> Date? {
         let dateFormatter = DateFormatter()
@@ -210,11 +274,47 @@ class LoginViewModel: BaseViewModel {
         showLoginSuccesfulToast = false
         showLoadingToast = false
         
+        loginButtonPressed.value = false
+        
+        showWrongPasswordToast = false
+        showTooManyRequestsToast = false
+        showEmailNotVerifiedToast = false
+        showLoginSuccesfulToast = false
+        showLoadingToast = false
+        showEmailALreadyExistsToast = false
+        showNoUserFoundToast = false
+        
+        canProcedSecondAuth = false
     }
     
     func goToAuth() {
         clear()
         navigation.push(AuthView(viewModel: self).asDestination(), animated: true)
+        self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
+    }
+    
+    func verifyAvailableEmail() {
+        showLoadingToast = true
+
+        FirebaseService.shared.verifyEmailExists(email: email)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                self?.showLoadingToast = false
+
+                if value == true {
+                    self?.showEmailALreadyExistsToast = true
+                } else {
+                    self?.canProcedSecondAuth = true
+                    self?.showLoadingToast = false
+                    self?.snapshot.email = self!.email
+                    self?.snapshot.password = self!.password
+                }
+            }
+            .store(in: &bag)
+    }
+    
+    func sameCredentialsAsSnapshot() -> Bool {
+        return snapshot.email == email && snapshot.password == password
     }
     
 }

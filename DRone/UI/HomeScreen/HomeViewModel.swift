@@ -50,6 +50,7 @@ class HomeViewModel : BaseViewModel {
     
     init(isShowingAsChild: Bool) {
         self.isShowingAsChild = isShowingAsChild
+        self.addressToFetchLocation = CLLocationCoordinate2D()
         super.init()
         updateUI()
         
@@ -82,6 +83,7 @@ class HomeViewModel : BaseViewModel {
         self.fetchingState = .loaded
         
         self.isShowingAsChild = isShowingAsChild
+        self.addressToFetchLocation = CLLocationCoordinate2D()
         
         super.init()
   

@@ -11,6 +11,24 @@ struct TabBar: View {
     
     @StateObject private var viewModel: TabBarViewModel = TabBarViewModel()
     
+    var tabBarItems: [(AppNavigationTabs, String)] {
+        
+        if viewModel.guestMode {
+            return [
+                (AppNavigationTabs.home, "house"),
+                (AppNavigationTabs.map, "map"),
+                (AppNavigationTabs.settings, "gear")
+            ]
+        } else {
+            return [
+                (AppNavigationTabs.home, "house"),
+                (AppNavigationTabs.request, "paperplane"),
+                (AppNavigationTabs.map, "map"),
+                (AppNavigationTabs.settings, "gear")
+            ]
+        }
+    }
+    
     var body: some View {
         
         VStack {
@@ -25,11 +43,7 @@ struct TabBar: View {
                     .cornerRadius(12, corners: [.topLeft, .topRight])
 
                 HStack {
-                    ForEach([
-                        (AppNavigationTabs.home, "house"),
-                        (AppNavigationTabs.request, "paperplane"),
-                        (AppNavigationTabs.map, "map")
-                    ], id: \.1) { item in
+                    ForEach(tabBarItems, id: \.1) { item in
                         
                         Spacer()
                         
@@ -42,12 +56,13 @@ struct TabBar: View {
                                     .renderingMode(.template)
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 24)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(viewModel.selectedTab == item.0 ? Color("accent.blue") : .white)
                                     .scaledToFit()
-                            
-                                Circle()
-                                    .fill(viewModel.selectedTab == item.0 ? Color("accent.blue") : .clear)
-                                    .frame(width: 10, height: 10)
+                                    .padding(.bottom, 20)
+//
+//                                Circle()
+//                                    .fill(viewModel.selectedTab == item.0 ? Color("accent.blue") : .clear)
+//                                    .frame(width: 10, height: 10)
                                 
                             }
                             .frame(height: 50)

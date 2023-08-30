@@ -8,8 +8,11 @@
 import SwiftUI
 
 class TabBarViewModel: BaseViewModel {
+    
     @Published var selectedTab: AppNavigationTabs = .home
     @Published var isTabBarVisible: Bool = true
+    
+    @Published var guestMode: Bool = true
     
     override init() {
         
@@ -26,6 +29,17 @@ class TabBarViewModel: BaseViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.isTabBarVisible = value
+            }
+            .store(in: &bag)
+        
+        AppService.shared.loginState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                if value == .loggedIn {
+                    self?.guestMode = false
+                } else {
+                    self?.guestMode = true
+                }
             }
             .store(in: &bag)
     }

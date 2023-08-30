@@ -146,12 +146,32 @@ struct AuthView: View {
                 
                 Button {
                     viewModel.loginButtonPressed.value = true
-                    if viewModel.emailValidation() && viewModel.passwordValidation() {
+
+                    dismissKeyboard()
+
+                    if (viewModel.emailValidation() && viewModel.passwordValidation() && !viewModel.canProcedSecondAuth) || !viewModel.sameCredentialsAsSnapshot() {
+                        viewModel.canProcedSecondAuth = false
                         viewModel.loginButtonPressed.value = false
-                        self.navigation.push(AuthAdditionalView(viewModel: viewModel).asDestination(), animated: true)
+                        viewModel.verifyAvailableEmail()
+                    } else if viewModel.canProcedSecondAuth && viewModel.sameCredentialsAsSnapshot() {
+                        viewModel.loginButtonPressed.value = true
+                        
+                        dismissKeyboard()
+                        
+                        if viewModel.emailValidation() && viewModel.passwordValidation() {
+                            viewModel.loginButtonPressed.value = false
+                            self.navigation.push(
+                                AuthAdditionalView(viewModel: viewModel)
+                                    .onDisappear {
+                                        self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
+                                    }
+                                    .asDestination(),
+                                 animated: true
+                            )
+                            self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
+                        }
                     }
                     
-                    dismissKeyboard()
                 } label: {
                     ZStack {
                         Color("accent.blue")
@@ -172,6 +192,7 @@ struct AuthView: View {
                     Button {
                         viewModel.clear()
                         navigation.pop(animated: true)
+                        self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
                     } label: {
                         Text("Login")
                             .foregroundColor(Color("accent.blue"))
@@ -194,49 +215,41 @@ struct AuthView: View {
         .onTapGesture {
             dismissKeyboard()
         }
-        .toast(
-            isPresenting: $viewModel.showWrongPasswordToast,
-            duration: 10,
-            tapToDismiss: true,
-            alert: {
-                AlertToast(
-                    displayMode: .alert,
-                    type: .error(.red),
-                    title: "Wrong password",
-                    subTitle: "Tap to dimiss"
-                )
+        .onChange(of: viewModel.canProcedSecondAuth, perform: { newValue in
+            if newValue == true {
+                viewModel.loginButtonPressed.value = true
+                if viewModel.emailValidation() && viewModel.passwordValidation() {
+                    viewModel.loginButtonPressed.value = false
+                    self.navigation.push(
+                        AuthAdditionalView(viewModel: viewModel)
+                            .onDisappear {
+                                self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
+                            }
+                            .asDestination(),
+                         animated: true
+                    )
+                    self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
+                }
+                
+                dismissKeyboard()
             }
-        )
+        })
         .toast(
-            isPresenting: $viewModel.showTooManyRequestsToast,
+            isPresenting: $viewModel.showEmailALreadyExistsToast,
             duration: 10,
             tapToDismiss: true,
             alert: {
                 AlertToast(
                     displayMode: .alert,
-                    type: .systemImage("exclamationmark.triangle", .yellow),
-                    title: "Too many requests",
-                    subTitle: "Please wait 3 minutes."
-                )
-            }
-        )
-        .toast(
-            isPresenting: $viewModel.showEmailNotVerifiedToast,
-            duration: 10,
-            tapToDismiss: true,
-            alert: {
-                AlertToast(
-                    displayMode: .alert,
-                    type: .systemImage("envelope", .white),
-                    title: "Please verify your email",
-                    subTitle: "A request was sent!"
+                    type: .systemImage("person", .white),
+                    title: "Email alreay in use",
+                    subTitle: "Tap to dismiss"
                 )
             }
         )
         .disabled(viewModel.showLoadingToast)
         .toast(
             isPresenting: $viewModel.showLoadingToast,
-            duration: 10,
             tapToDismiss: false,
             alert: {
                 AlertToast(

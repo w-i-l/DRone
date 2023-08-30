@@ -87,3 +87,13 @@ struct AnimatableGradientModifier: AnimatableModifier {
         return Color(red: Double(red), green: Double(green), blue: Double(blue))
     }
 }
+
+// dismiss keyboard
+extension View {
+    func dismissKeyboard() {
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
+        
+        // synchronise with text fields
+        AppService.shared.focusedTextFieldID.value = -1
+      }
+}

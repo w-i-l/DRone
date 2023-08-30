@@ -44,7 +44,9 @@ struct RequestFormView: View {
                     GeometryReader { proxy in
                         VStack(spacing: 0){
                             if !viewModel.showNavigationLink {
-                                BackButton(text: viewModel.screenIndex == 0 ? "Personal infos" : "Back", action:
+                                BackButton(
+                                    text: viewModel.screenIndex == 0 ? "Personal infos" : "Back",
+                                    action:
                                             viewModel.screenIndex == 0 ? {dismiss()} : {AppService.shared.screenIndex.value -= 1}
                                 )
                                 
