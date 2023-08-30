@@ -227,6 +227,7 @@ class LoginViewModel: BaseViewModel {
     
     func continueAsGuest() {
         AppService.shared.loginState.value = .notLoggedIn
+        AppService.shared.syncUser()
         
         do {
             try Auth.auth().signOut()
