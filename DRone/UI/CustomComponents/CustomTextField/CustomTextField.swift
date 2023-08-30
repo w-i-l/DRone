@@ -132,6 +132,11 @@ struct CustomTextField: View {
         .onChange(of: AppService.shared.screenIndex.value) { _ in
             self.strokeColor = .white
         }
+        .onChange(of: text) { newValue in
+            if AppService.shared.focusedTextFieldID.value != viewModel.textFieldID {
+                AppService.shared.focusedTextFieldID.value = viewModel.textFieldID
+            }
+        }
     }
 }
 

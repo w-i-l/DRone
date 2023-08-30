@@ -305,6 +305,14 @@ class RequestViewModel: BaseViewModel {
     }
     
     
+    func syncDataWithCurrentUserInfo() {
+        if let user = AppService.shared.user.value {
+            firstName = user.firstName
+            lastName = user.lastName
+            CNP = user.CNP
+        }
+    }
+    
     func getBirthDayFromCNP() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"

@@ -78,6 +78,8 @@ struct InfoRequestView: View {
                                 Button(
                                     action: {
                                         viewModel.clearData()
+                                        viewModel.syncDataWithCurrentUserInfo()
+                                        
                                         navigation.push(RequestFormView(viewModel: viewModel).asDestination(), animated: true)
                                     }, label: {
                                         ZStack {
