@@ -49,7 +49,7 @@ struct AllFlightRequestView: View {
                         Spacer()
                         
                         Button {
-                            viewModel.fetchAllFlightsFor(user: "Ocnaru Mihai")
+                            viewModel.fetchAllFlightsFor(user: AppService.shared.user.value!.uid)
                         } label: {
                             Image(systemName: "arrow.clockwise")
                                 .resizable()
@@ -203,7 +203,7 @@ struct AllFlightRequestView: View {
                 }
             case .failure:
                 Button {
-                    viewModel.fetchAllFlightsFor(user: "Ocnaru Mihai")
+                    viewModel.fetchAllFlightsFor(user: AppService.shared.user.value!.uid)
                 } label: {
                     Text("Retry")
                         .foregroundColor(.white)

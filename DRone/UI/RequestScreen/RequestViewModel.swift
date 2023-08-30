@@ -206,16 +206,6 @@ class RequestViewModel: BaseViewModel {
             }
             .store(in: &bag)
         
-//        FirebaseService.shared.fetchFlightRequestsFor(user: "Ocnaru Mihai")
-//            .receive(on: DispatchQueue.main)
-//            .sink { _ in
-//
-//            } receiveValue: { [weak self] value in
-//                self?.allFlightsRequest = value
-//                self?.fetchingState = .loaded
-//            }
-//            .store(in: &bag)
-
         FirebaseService.shared.allFlightsRequests
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
@@ -226,16 +216,16 @@ class RequestViewModel: BaseViewModel {
 
     }
     
-    func fetchAllFlightsFor(user: String) {
+    func fetchAllFlightsFor(user uid: String) {
         
         self.fetchingState = .loading
         
-        FirebaseService.shared.fetchFlightRequestsFor(user: "Ocnaru Mihai")
+        FirebaseService.shared.fetchFlightRequestsFor(user: uid)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
             } receiveValue: { [weak self] value in
-                self?.allFlightsRequest = value
+                FirebaseService.shared.allFlightsRequests.value = value
                 self?.fetchingState = .loaded
             }
             .store(in: &bag)
@@ -372,7 +362,7 @@ class RequestViewModel: BaseViewModel {
         )
         
         FirebaseService.shared.postFlightRequestFor(
-            user: "\(firstName) \(lastName)",
+            user: AppService.shared.user.value!.uid,
             formModel: formModel
         )
         

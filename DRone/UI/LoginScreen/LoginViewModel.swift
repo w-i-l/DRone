@@ -209,6 +209,7 @@ class LoginViewModel: BaseViewModel {
                     
                     AppService.shared.loginState.value = .loggedIn
                     AppService.shared.syncUser()
+                    
                     self?.clear()
                     
                 case .error:

@@ -46,14 +46,14 @@ class AppService : BaseViewModel {
     
     override private init() {
         super.init()
-
+//
         if let stateFromDefaults = UserDefaults.standard.object(forKey: "userUID") as? String {
             loginState.value = .loggedIn
-            
+
             self.syncUser()
         }
-//        UserDefaults.standard.removeObject(forKey: "loginState")
-//        UserDefaults.standard.removeObject(forKey: "email")
+        
+//        UserDefaults.standard.removeObject(forKey: "userUID")
     }
     
     func syncUser() {
@@ -61,6 +61,7 @@ class AppService : BaseViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.user.value = value
+                FirebaseService.shared.fetchFlightRequestsForCurrentUser()
             }
             .store(in: &bag)
     }

@@ -64,7 +64,9 @@ class SettingsViewModel: BaseViewModel {
         } catch {
             
         }
+        
         UserDefaults.standard.removeObject(forKey: "userUID")
         AppService.shared.loginState.value = .notLoggedIn
+        FirebaseService.shared.removeListener()
     }
 }

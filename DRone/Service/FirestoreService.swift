@@ -19,24 +19,33 @@ class FirebaseService: BaseViewModel {
     var indexOfModifiedFlightRequest: CurrentValueSubject<Int, Never> = .init(0)
     var allFlightsRequests: CurrentValueSubject<[RequestFormModel], Never> = .init([])
     
+    private var isCollectionListened: Bool = false
+    private var listenerRegistration: ListenerRegistration
+    
     override private init() {
-        super.init()
-        
-        let user = "Ocnaru Mihai"
-        
-        fetchFlightRequestsFor(user: user)
-            .sink { _ in
-                
-            } receiveValue: { [weak self] value in
-                self?.allFlightsRequests.value = value
-                self?.listenToFlightRequest(user: user)
-            }
-            .store(in: &bag)
+    
+        listenerRegistration = db.collection("users")
+        .addSnapshotListener { _, _ in
+                        
+        }
 
+        super.init()
     }
     
-    func listenToFlightRequest(user fullName: String) {
-        db.collection(fullName).addSnapshotListener { querrySnapshot, error in
+    func removeListener() {
+        listenerRegistration.remove()
+        isCollectionListened = false
+    }
+    
+    func listenToFlightRequest(user uid: String) {
+       
+        guard self.isCollectionListened == false else {
+            print("Already listened")
+            return
+        }
+        
+        self.isCollectionListened = true
+        self.listenerRegistration = db.collection("users").document(uid).collection("fly-requests").addSnapshotListener { querrySnapshot, error in
             
             guard error == nil else {
                 print(error!.localizedDescription)
@@ -47,6 +56,8 @@ class FirebaseService: BaseViewModel {
                 print("Error fetching documents \(error!.localizedDescription)")
                 return
             }
+            
+
             
             querrySnapshot?.documentChanges.forEach({ [weak self] diff in
                 switch diff.type {
@@ -70,12 +81,32 @@ class FirebaseService: BaseViewModel {
         }
     }
     
-    func fetchFlightRequestsFor(user fullName: String) -> Future<[RequestFormModel], Error> {
+    func fetchFlightRequestsForCurrentUser() {
+        
+        AppService.shared.user
+            .sink { [weak self] value in
+                if let value {
+                    self?.fetchFlightRequestsFor(user: value.uid)
+                        .receive(on: DispatchQueue.main)
+                        .sink(receiveCompletion: { _ in
+                            
+                        }, receiveValue: { flights in
+                            self?.allFlightsRequests.value = flights
+                            self?.listenToFlightRequest(user: value.uid)
+                        })
+                        .store(in: &self!.bag)
+                }
+            }
+            .store(in: &bag)
+            
+        }
+    
+    func fetchFlightRequestsFor(user uid: String) -> Future<[RequestFormModel], Error> {
         Future<[RequestFormModel], Error> { [weak self] promise in
             
             var arrayToReturn: [RequestFormModel] = []
             
-            self?.db.collection(fullName).getDocuments(completion: { (querySnapshot, error) in
+            self?.db.collection("users").document(uid).collection("fly-requests").getDocuments(completion: { (querySnapshot, error) in
                 guard error == nil else {promise( .failure(error!)); return }
                 
                 for document in querySnapshot!.documents {
@@ -147,9 +178,9 @@ class FirebaseService: BaseViewModel {
         }
     }
     
-    func postFlightRequestFor(user fullName: String, formModel: RequestFormModel) {
+    func postFlightRequestFor(user uid: String, formModel: RequestFormModel) {
         
-        let docRef = db.collection(fullName).document()
+        let docRef = db.collection("users").document(uid).collection("fly-requests").document()
         
         let docData: [String: Any] = [
             "first-name": formModel.firstName,
@@ -395,7 +426,7 @@ extension FirebaseService{
                 "email": email
             ]
 
-            db.collection("users").document(user.uid).setData(userData) { error in
+            db.collection("users").document(user.uid).collection("info").document("user-data").setData(userData) { error in
                 if let error = error {
                     print("Error saving user data: \(error.localizedDescription)")
                 } else {
@@ -469,8 +500,8 @@ extension FirebaseService{
         Future<User?, Never> { promise in
             if let user = Auth.auth().currentUser {
                 let db = Firestore.firestore()
-                let docRef = db.collection("users").document(user.uid)
-
+                let docRef = db.collection("users").document(user.uid).collection("info").document("user-data")
+                
                 docRef.getDocument { document, error in
                     if let document = document, document.exists {
                         let data = document.data()!
@@ -489,6 +520,27 @@ extension FirebaseService{
                         
                     } else {
                         print("Document does not exist")
+                    }
+                }
+            } else if let userUID = UserDefaults.standard.object(forKey: "userUID") as? String{
+                let db = Firestore.firestore()
+                let docRef = db.collection("users").document(userUID).collection("info").document("user-data")
+                
+                docRef.getDocument { document, error in
+                    if let document = document, document.exists {
+                        let data = document.data()!
+                        let firstName = data["first-name"] as! String
+                        let lastName = data["last-name"] as! String
+                        let CNP = data["CNP"] as! String
+                        let email = data["email"] as! String
+                        
+                        promise(.success(User(
+                            uid: userUID,
+                            email: email,
+                            firstName: firstName,
+                            lastName: lastName,
+                            CNP: CNP
+                        )))
                     }
                 }
             } else {

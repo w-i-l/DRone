@@ -76,9 +76,6 @@ struct SettingView: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        .onAppear {
-            AppService.shared.syncUser()
-        }
     }
 }
 
