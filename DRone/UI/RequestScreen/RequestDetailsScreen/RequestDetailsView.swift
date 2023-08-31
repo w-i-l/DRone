@@ -40,7 +40,7 @@ struct RequestDetailsView: View {
     private var dateFormatter: DateFormatter {
         get {
             let formatter = DateFormatter()
-            formatter.dateFormat = "dd\\MM\\yyyy"
+            formatter.dateFormat = "dd.MM.yyyy"
             return formatter
         }
     }
@@ -98,7 +98,7 @@ struct RequestDetailsView: View {
                 VStack(spacing: 4) {
                     Text("Flight request with ID:")
                         .foregroundColor(.white)
-                        .font(.asket(size: 32))
+                        .font(.asket(size: 24))
                     
                     Button {
                         UIPasteboard.general.string = viewModel.formModel.responseModel.ID
@@ -107,7 +107,7 @@ struct RequestDetailsView: View {
                         HStack(spacing: 8) {
                             Text(viewModel.formModel.responseModel.ID)
                                 .foregroundColor(.blue)
-                                .font(.asket(size: 32))
+                                .font(.asket(size: 24))
                             
                             Image(systemName: "doc.on.doc")
                                 .resizable()
@@ -129,7 +129,7 @@ struct RequestDetailsView: View {
                 // request state
                 Text(viewModel.formModel.responseModel.response.rawValue)
                     .foregroundColor(.white)
-                    .font(.asket(size: 24))
+                    .font(.asket(size: 18   ))
                 
                 // reason
                 if viewModel.formModel.responseModel.response == .rejected {
@@ -141,7 +141,7 @@ struct RequestDetailsView: View {
                 HStack() {
                     Text("Your request information:")
                         .foregroundColor(.white)
-                        .font(.asket(size: 24))
+                        .font(.asket(size: 20))
                 Spacer()
                 }
                 .padding(.top, 32)
@@ -151,16 +151,17 @@ struct RequestDetailsView: View {
                 ForEach([
                     ("Personal information", [
                         ("Full name", "\(viewModel.formModel.firstName) \(viewModel.formModel.lastName)"),
-                        ("Personal number identification", viewModel.formModel.CNP)
+                        ("Person number", viewModel.formModel.CNP)
                     ]),
                     ("Drone information", [
                         ("Serial number", viewModel.formModel.serialNumber),
                         ("Drone type", viewModel.formModel.droneType.associatedValues.type)
                     ]),
                     ("Flight information", [
+                        ("Flight Date", dateFormatter.string(from: viewModel.formModel.flightDate)),
                         ("Takeoff time", hourFormatter.string(from: viewModel.formModel.takeoffTime)),
                         ("Landing time", hourFormatter.string(from: viewModel.formModel.landingTime)),
-                        ("Location", "\(viewModel.formModel.flightAdress.secondaryAdress), \(viewModel.formModel.flightAdress.mainAdress)")
+                        ("Location", "\(viewModel.formModel.flightAdress.secondaryAdress), \(viewModel.formModel.flightAdress.mainAdress)".limitLettersFormattedString(limit: 30))
                     ])
                 ], id: \.0) { item in
                     VStack(alignment: .leading, spacing: 0) {
@@ -173,7 +174,7 @@ struct RequestDetailsView: View {
                             
                             HStack {
                                 Text(tuple.0)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color("subtitle.gray"))
                                     .font(.asket(size: 16))
                                 
                                 Spacer()

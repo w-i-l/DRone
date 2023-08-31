@@ -123,24 +123,6 @@ struct AuthView: View {
                         .padding(.vertical, 10)
                 }
                 .padding(.top, 40)
-                
-                // remember me toggle
-                HStack {
-                    
-                    Toggle(
-                        isOn: $viewModel.rememberMe) {
-                        }.opacity(0)
-                        
-                    
-                    Text("")
-                        .foregroundColor(.white)
-                        .font(.asket(size: 16))
-                    
-                    Spacer()
-                }
-                .frame(width: 70)
-                .frame(maxWidth: .infinity)
-                
 
                 Spacer()
                 

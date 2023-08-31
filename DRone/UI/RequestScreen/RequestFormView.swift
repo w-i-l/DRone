@@ -13,7 +13,7 @@ struct RequestFormView: View {
     
     @State var offset: CGFloat = 0
     @ObservedObject var viewModel: RequestViewModel
-    @ObservedObject private var navigation: Navigation
+    @EnvironmentObject private var navigationRequests: Navigation
     
     @Environment(\.dismiss) private var dismiss
     
@@ -32,8 +32,6 @@ struct RequestFormView: View {
         
         noOfItemsOffset = ((view.count - 2) / 2)
         totalOffset = CGFloat(UIScreen.main.bounds.width * (CGFloat(noOfItemsOffset) + 0.5))
-        
-        self.navigation = SceneDelegate.navigation
     }
     
     var body: some View {
@@ -71,9 +69,9 @@ struct RequestFormView: View {
                     }
                     
                     if newValue == 0 {
-                        navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
+                        navigationRequests.navigationController.interactivePopGestureRecognizer?.isEnabled = true
                     } else {
-                        navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
+                        navigationRequests.navigationController.interactivePopGestureRecognizer?.isEnabled = false
                     }
                 }
                 .offset(x: view.count % 2 == 0 ? CGFloat(totalOffset) : 0)
@@ -95,7 +93,7 @@ struct RequestFormView: View {
                                 AppService.shared.screenIndex.value -= 1
                             }
                         } else {
-                            navigation.pop(animated: true)
+                            navigationRequests.pop(animated: true)
                         }
                     })
         )

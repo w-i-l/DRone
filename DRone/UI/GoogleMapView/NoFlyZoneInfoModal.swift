@@ -31,14 +31,14 @@ struct NoFlyZoneInfoModal: View {
                                 
                                 Text(item.1)
                                     .foregroundColor(.white)
-                                    .font(.asket(size: 24))
+                                    .font(.asket(size: 20))
                                 
                             }
                             
                             HStack {
                                 Text(item.2 )
                                     .foregroundColor(.white)
-                                    .font(.asket(size: 20))
+                                    .font(.asket(size: 16))
                                 
                                 Spacer()
                             }
@@ -53,6 +53,7 @@ struct NoFlyZoneInfoModal: View {
                     }
                 }
                 .padding(.vertical, 20)
+                .padding(.bottom, 30)
             }
         }
         .padding(20)

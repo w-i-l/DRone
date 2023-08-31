@@ -72,12 +72,12 @@ struct HomeViewLoading: View {
                         
                         HStack {
                             ForEach([
-                                ("sunset", "Sunset", ""),
-                                ("cloud.rain", "Prec. prob.", "\("")"),
-                                ("flag", "Wind speed", "\("")")
+                                ("sunset.fill", "Sunset", ""),
+                                ("cloud.rain.fill", "Prec. prob.", "\("")"),
+                                ("flag.fill", "Wind speed", "\("")")
                             ], id: \.0) { item in
                                 Spacer()
-                                VStack {
+                                VStack(spacing: 0) {
                                     Image(systemName: item.0)
                                         .resizable()
                                         .renderingMode(.template)
@@ -86,8 +86,10 @@ struct HomeViewLoading: View {
                                         .scaledToFit()
                                     
                                     Text(item.1)
-                                        .font(.asket(size: 16))
+                                        .font(.asket(size: 12))
                                         .foregroundColor(.white)
+                                        .padding(.top, 10)
+                                        .padding(.bottom, 3)
                                     
                                 }
                                 Spacer()
@@ -120,7 +122,7 @@ struct HomeViewLoading: View {
                                 Spacer()
                                 
                                 Text(item.0)
-                                    .font(.asket(size: 16))
+                                    .font(.asket(size: 14))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
                                 
@@ -156,11 +158,11 @@ struct HomeViewLoading: View {
                                 
                                 
                                 
-                                Image(systemName: "arrow.forward")
+                                Image(systemName: "chevron.right")
                                     .resizable()
                                     .renderingMode(.template)
                                     .foregroundColor(.white)
-                                    .frame(width: 14, height: 14)
+                                    .frame(width: 12, height: 12)
                                     .padding(.trailing, 20)
                                     .scaledToFit()
                             }

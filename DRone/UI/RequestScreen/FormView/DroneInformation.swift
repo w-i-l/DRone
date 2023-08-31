@@ -20,13 +20,13 @@ struct DroneInformation: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Drone information")
-                            .font(.asket(size: 36))
+                            .font(.asket(size: 32))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.leading)
                         
                         Text("Complete the form with your drone information")
                             .font(.asket(size: 16))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("subtitle.gray"))
                             .multilineTextAlignment(.leading)
                     }
                     .padding(.top, 10)
@@ -37,8 +37,8 @@ struct DroneInformation: View {
                         // serial number
                         VStack(alignment: .leading, spacing: 7) {
                             Text("Serial number")
-                                .foregroundColor(.white)
-                                .font(.asket(size: 20))
+                                .foregroundColor(Color("subtitle.gray"))
+                                .font(.asket(size: 18))
                             
                             CustomTextField(
                                 text: $viewModel.serialNumber,
@@ -57,8 +57,8 @@ struct DroneInformation: View {
                         // drone type
                         VStack(alignment: .leading, spacing: 7) {
                             Text("Drone type")
-                                .foregroundColor(.white)
-                                .font(.asket(size: 20))
+                                .foregroundColor(Color("subtitle.gray"))
+                                .font(.asket(size: 18))
                             
                             Button(
                                 action: {
@@ -73,7 +73,7 @@ struct DroneInformation: View {
                                     
                                     Text("\(viewModel.droneType.associatedValues.type) drone")
                                         .foregroundColor(.white)
-                                        .font(.asket(size: 18))
+                                        .font(.asket(size: 16))
                                     
                                     Spacer()
                                     
@@ -84,7 +84,8 @@ struct DroneInformation: View {
                                         .frame(width: 12, height: 12)
                                         .scaledToFit()
                                 }
-                                .padding(10)
+                                .padding(.vertical, 15)
+                                .padding(.horizontal, 10)
                                 .background(Color("gray.background").cornerRadius(12))
                             })
                         }
@@ -95,44 +96,43 @@ struct DroneInformation: View {
                     
                     Spacer()
                     
+                    // next button
                     HStack {
                         Spacer()
-                        Button {
+                        
+                        Button (action: {
                             viewModel.droneNextButtonPressed.value = true
+                            self.dismissKeyboard()
                             
                             if viewModel.serialNumberValidation(){
                                 AppService.shared.screenIndex.value = 3
                                 viewModel.droneNextButtonPressed.value = false
                             }
-                            self.dismissKeyboard()
-                        } label: {
+                            
+                        }, label: {
                             ZStack {
                                 Color("accent.blue")
-                                    .cornerRadius(20)
-                                    .frame(height: 50)
+                                    .cornerRadius(12)
+                                    .frame(height: 60)
                                 
                                 HStack {
                                     Text("Next")
                                         .foregroundColor(.white)
-                                        .font(.asket(size: 32))
+                                        .font(.asket(size: 24))
                                     
-                                    Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .foregroundColor(.white)
-                                        .frame(width: 18, height: 18)
-                                        .scaledToFit()
+//                                    Image(systemName: "chevron.right")
+//                                        .resizable()
+//                                        .renderingMode(.template)
+//                                        .foregroundColor(.white)
+//                                        .frame(width: 10, height: 10)
+//                                        .scaledToFit()
                                 }
-                                .padding(15)
+                                .padding(.vertical, 10)
                             }
-                            .frame(width: 150 ,height: 50)
-                        }
-                        .padding(.top, UIScreen.main.bounds.height / 20)
+                        })
                         
-                        Spacer()
                     }
+                    
                     
                     
                 }
@@ -140,6 +140,7 @@ struct DroneInformation: View {
                 .frame(minHeight: proxy.size.height)
             }
         }
+        .ignoresSafeArea(.keyboard)
         .navigationBarTitleDisplayMode(.inline)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()

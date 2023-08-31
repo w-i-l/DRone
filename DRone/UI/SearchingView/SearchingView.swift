@@ -35,7 +35,7 @@ struct SearchingView: View {
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(Color("accent.blue"))
-                            .frame(width: 24, height: 24)
+                            .frame(width: 18, height: 18)
                             .scaledToFit()
                         
                         
@@ -43,13 +43,13 @@ struct SearchingView: View {
                             viewModel.predictedLocations = []
                         })
                             .foregroundColor(Color("background.first"))
-                            .font(.asket(size: 20))
+                            .font(.asket(size: 16))
                             .autocorrectionDisabled(true)
                             .keyboardType(.asciiCapable)
                             .autocapitalization(.words)
                             .placeholder(when: viewModel.textSearched.isEmpty) {
                                 Text("Search for a location")
-                                    .font(.asket(size: 20))
+                                    .font(.asket(size: 16))
                                     .foregroundColor(Color("subtitle.gray"))
                             }
                             .onTapGesture {
@@ -108,40 +108,52 @@ struct SearchingView: View {
                 // results
                 VStack(alignment: .leading) {
                     ScrollView(showsIndicators: false) {
-                        ForEach(viewModel.predictedLocations, id:\.addressID) { item in
-                            Button {
-                                viewModel.selectedAddress = item
-                                viewModel.textSearched = item.addressName
-                                viewModel.updateLocation()
-                                
-                                textFieldDidReturned = true
-                                viewModel.predictedLocations = []
-                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                
-                                if viewModel.showCurrentLocation {
-                                    dismiss()
-                                }
-                            } label: {
-                                HStack(spacing: 15) {
+                        VStack(spacing: 0) {
+                            ForEach(viewModel.predictedLocations, id:\.addressID) { item in
+                                VStack(spacing: 0) {
+                                    Button {
+                                        viewModel.selectedAddress = item
+                                        viewModel.textSearched = item.addressName
+                                        viewModel.updateLocation()
+                                        
+                                        textFieldDidReturned = true
+                                        viewModel.predictedLocations = []
+                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                        
+                                        if viewModel.showCurrentLocation {
+                                            dismiss()
+                                        }
+                                    } label: {
+                                        HStack(spacing: 15) {
+                                            
+                                            Image("map.pin")
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color("subtitle.gray"))
+                                                .frame(width: 14, height: 14)
+                                                .scaledToFit()
+                                            
+                                            
+                                            Text(item.addressName)
+                                                .foregroundColor(Color("background.first"))
+                                                .font(.asket(size: 16))
+                                                .multilineTextAlignment(.leading)
+                                            
+                                            Spacer()
+                                        }
+                                    }
                                     
-                                    Image(systemName: "mappin.circle.fill")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .foregroundColor(Color("subtitle.gray"))
-                                        .frame(width: 14, height: 14)
-                                        .scaledToFit()
-                                    
-                                    
-                                    Text(item.addressName)
-                                        .foregroundColor(Color("background.first"))
-                                        .font(.asket(size: 18))
-                                        .multilineTextAlignment(.leading)
-                                    
-                                    Spacer()
+                                    if let last = viewModel.predictedLocations.last, item != last {
+                                        Color("background.first").opacity(0.7)
+                                            .frame(height: 1)
+                                            .padding(.horizontal, 20)
+                                            .padding(.top, 10)
+                                    }
                                 }
                                 .padding(10)
                             }
                         }
+                        .padding(.vertical, 10)
                         .frame(maxWidth: .infinity)
                         .background(
                             Color.white

@@ -21,13 +21,13 @@ struct FlightInformation: View {
                         
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Flight information")
-                                .font(.asket(size: 36))
+                                .font(.asket(size: 32))
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.leading)
                             
                             Text("Complete the form with your flight information")
                                 .font(.asket(size: 16))
-                                .foregroundColor(.white)
+                                .foregroundColor(Color("subtitle.gray"))
                                 .multilineTextAlignment(.leading)
                         }
                         .padding(.top, 10)
@@ -39,8 +39,8 @@ struct FlightInformation: View {
                             // flight date
                             HStack(spacing: 8) {
                                 Text("Flight date")
-                                    .foregroundColor(.white)
-                                    .font(.asket(size: 20))
+                                    .foregroundColor(Color("subtitle.gray"))
+                                    .font(.asket(size: 18))
                                 
                                 Spacer()
                                 
@@ -49,7 +49,7 @@ struct FlightInformation: View {
                                            displayedComponents: .date) {
                                     Text("Date")
                                         .foregroundColor(.white)
-                                        .font(.asket(size: 20))
+                                        .font(.asket(size: 18))
                                 }
                                            .labelsHidden()
                                            .colorInvert()
@@ -63,15 +63,15 @@ struct FlightInformation: View {
                             HStack {
                                 VStack(spacing: 8) {
                                     Text("Takeoff time")
-                                        .foregroundColor(.white)
-                                        .font(.asket(size: 20))
+                                        .foregroundColor(Color("subtitle.gray"))
+                                        .font(.asket(size: 18))
                                     
                                     DatePicker(selection: $viewModel.takeoffTime,
                                                in: ...viewModel.sunsetHourToday,
                                                displayedComponents: .hourAndMinute) {
                                         Text("Date")
                                             .foregroundColor(.white)
-                                            .font(.asket(size: 20))
+                                            .font(.asket(size: 18))
                                     }
                                                .labelsHidden()
                                                .colorInvert()
@@ -85,8 +85,8 @@ struct FlightInformation: View {
                                 
                                 VStack(spacing: 8) {
                                     Text("Landing time")
-                                        .foregroundColor(.white)
-                                        .font(.asket(size: 20))
+                                        .foregroundColor(Color("subtitle.gray"))
+                                        .font(.asket(size: 18))
                                     
                                     // AT LEAST 10 MINUTES DIFFERENCE
                                     DatePicker(selection: $viewModel.landingTime,
@@ -94,7 +94,7 @@ struct FlightInformation: View {
                                                displayedComponents: .hourAndMinute) {
                                         Text("Date")
                                             .foregroundColor(.white)
-                                            .font(.asket(size: 20))
+                                            .font(.asket(size: 18))
                                     }
                                                .labelsHidden()
                                                .colorInvert()
@@ -110,8 +110,8 @@ struct FlightInformation: View {
                             // flight location
                             VStack(alignment: .leading, spacing: 7) {
                                 Text("Your flight location")
-                                    .foregroundColor(.white)
-                                    .font(.asket(size: 20))
+                                    .foregroundColor(Color("subtitle.gray"))
+                                    .font(.asket(size: 18))
                                 
                                 Button(
                                     action: {
@@ -129,11 +129,11 @@ struct FlightInformation: View {
                                         self.dismissKeyboard()
                                     }, label: {
                                         HStack(spacing: 14) {
-                                            Image(systemName: "mappin.circle")
+                                            Image("map.pin")
                                                 .resizable()
                                                 .renderingMode(.template)
                                                 .foregroundColor(.white)
-                                                .frame(width: 24, height: 24)
+                                                .frame(width: 20, height: 20)
                                                 .scaledToFit()
                                             
                                             VStack(alignment: .leading, spacing: 4) {
@@ -160,46 +160,40 @@ struct FlightInformation: View {
                         
                         Spacer()
                         
-                        
-                        // next
+                        // next button
                         HStack {
                             Spacer()
-                            Button(
-                                action: {
-                                    
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    
-                                    viewModel.getResponse()
-                                    viewModel.showNavigationLink = true
-                                    viewModel.postFlightRequestFor()
-                                    
-                                }, label: {
-                                    ZStack {
-                                        Color("accent.blue")
-                                            .cornerRadius(20)
-                                            .frame(height: 50)
-                                        
-                                        HStack {
-                                            Text("Next")
-                                                .foregroundColor(.white)
-                                                .font(.asket(size: 32))
-                                            
-                                            Spacer()
-                                            
-                                            Image(systemName: "chevron.right")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(.white)
-                                                .frame(width: 18, height: 18)
-                                                .scaledToFit()
-                                        }
-                                        .padding(15)
-                                    }
-                                    .frame(width: 150 ,height: 50)
-                                })
-                            .padding(.top, UIScreen.main.bounds.height / 20)
                             
-                            Spacer()
+                            Button (action: {
+                                
+                                self.dismissKeyboard()
+                                
+                                viewModel.getResponse()
+                                viewModel.showNavigationLink = true
+                                viewModel.postFlightRequestFor()
+                                
+                            }, label: {
+                                ZStack {
+                                    Color("accent.blue")
+                                        .cornerRadius(12)
+                                        .frame(height: 60)
+                                    
+                                    HStack {
+                                        Text("Send request")
+                                            .foregroundColor(.white)
+                                            .font(.asket(size: 24))
+                                        
+//                                        Image(systemName: "chevron.right")
+//                                            .resizable()
+//                                            .renderingMode(.template)
+//                                            .foregroundColor(.white)
+//                                            .frame(width: 10, height: 10)
+//                                            .scaledToFit()
+                                    }
+                                    .padding(.vertical, 10)
+                                }
+                            })
+                            
                         }
                         
                         

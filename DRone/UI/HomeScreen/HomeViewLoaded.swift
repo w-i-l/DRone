@@ -7,10 +7,31 @@
 
 import SwiftUI
 
+
+struct TriangleShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.move(to: .zero)
+        path.addLine(to: CGPoint(x: rect.maxX, y: 0))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.midY))
+        path.closeSubpath()
+        
+        return path
+    }
+    
+    enum Direction: Double {
+        case down = 0
+        case left = 90
+        case up = 180
+        case right = 270
+    }
+}
+
 struct HomeViewLoaded: View {
     
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var navigation: Navigation
+    @EnvironmentObject var navigationHome: Navigation
     @ObservedObject var viewModel: HomeViewModel
     
     var body: some View {
@@ -27,15 +48,25 @@ struct HomeViewLoaded: View {
                     HStack {
                         // current location
                         Button {
-                            navigation.push( ChangeLocationView(viewModel: viewModel.changeLocationViewModel)
+                            navigationHome.push( ChangeLocationView(viewModel: viewModel.changeLocationViewModel)
                                 .onAppear{ viewModel.changeLocationViewModel.searchLocationViewModel.textSearched = "" }.asDestination(), animated: true)
                         } label: {
                             HStack(spacing: 0) {
                                 VStack(alignment: .leading, spacing: 5) {
-                                    Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 20))
-                                        .font(.asket(size: 32))
-                                        .foregroundColor(.white)
-                                        .underline(!viewModel.isShowingAsChild)
+                                    HStack {
+                                        Text(viewModel.locationWeatherModel.mainLocation.limitLettersFormattedString(limit: 15))
+                                            .font(.asket(size: 32))
+                                            .foregroundColor(.white)
+                                        
+                                        if !viewModel.isShowingAsChild {
+                                            Image(systemName: "chevron.down")
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color.white.opacity(0.7))
+                                                .frame(width: 16, height: 10)
+                                                .scaledToFit()
+                                        }
+                                    }
                                     
                   
                                     
@@ -96,7 +127,7 @@ struct HomeViewLoaded: View {
                     .padding(.top, 32)
                     
                     Button {
-                        navigation.push(
+                        navigationHome.push(
                             WeatherVerdictView(viewModel: viewModel).asDestination(),
                             animated: true
                         )
@@ -113,10 +144,21 @@ struct HomeViewLoaded: View {
                             )
                             .cornerRadius(12)
                             
-                            Text(viewModel.weatherVerdict.0)
-                                .font(.asket(size: 32))
-                                .foregroundColor(Color("background.first"))
-                                .padding(.leading, 20)
+                            HStack {
+                                Text(viewModel.weatherVerdict.0)
+                                    .font(.asket(size: 32))
+                                    .foregroundColor(Color("background.first"))
+                                
+                                Spacer()
+                                
+                                Image(systemName: "info.circle.fill")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color("background.first"))
+                                    .frame(width: 24, height: 24)
+                                    .scaledToFit()
+                            }
+                            .padding(.horizontal, 20)
                         }
                         .frame(height: UIScreen.main.bounds.height / 10)
                         .padding(.top, 32)
@@ -130,14 +172,76 @@ struct HomeViewLoaded: View {
                             Color("gray.background")
                                 .cornerRadius(12)
                             
+                            
+                            // external link arrow
+                            Group {
+                                
+                                VStack {
+                                    
+                                    
+                                    Spacer()
+                                    
+                                    HStack {
+                                        
+                                        Spacer()
+                                        TriangleShape()
+                                            .fill(Color.white.opacity(0.3))
+                                            .frame(width: 60, height: 60)
+                                            .rotationEffect(.degrees(90))
+                                    }
+                                    
+                                }
+                                .offset(y: 30)
+                                .clipped()
+                                
+                                VStack {
+                                    
+                                    
+                                    Spacer()
+                                    
+                                    HStack {
+                                        
+                                        Spacer()
+                                        Color.white.opacity(0.7)
+                                            .frame(width: 1, height: 60)
+                                            .rotationEffect(.degrees(45))
+                                        
+                                    }
+                                    
+                                }
+                                .padding(.vertical, 0)
+                                .padding(.horizontal, 5)
+                                .offset(x: -5, y: 10)
+                                .clipped()
+                                
+                                VStack {
+                                    
+                                    Spacer()
+                                    
+                                    HStack {
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "arrow.right")
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .foregroundColor(.white)
+                                            .frame(width: 7, height: 7)
+                                            .scaledToFit()
+                                    }
+                                }
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 7)
+                            }
+                                
                             HStack {
                                 ForEach([
-                                    ("sunset", "Sunset", viewModel.locationWeatherModel.sunset),
-                                    ("cloud.rain", "Prec. prob.", "\(viewModel.locationWeatherModel.precipitationProbability)%"),
-                                    ("flag", "Wind speed", "\(viewModel.locationWeatherModel.windSpeed) km/h")
+                                    ("sunset.fill", "Sunset", viewModel.locationWeatherModel.sunset),
+                                    ("cloud.rain.fill", "Prec. prob.", "\(viewModel.locationWeatherModel.precipitationProbability)%"),
+                                    ("flag.fill", "Wind speed", "\(viewModel.locationWeatherModel.windSpeed) km/h")
                                 ], id: \.0) { item in
                                     Spacer()
-                                    VStack {
+                                    VStack(spacing: 0) {
                                         Image(systemName: item.0)
                                             .resizable()
                                             .renderingMode(.template)
@@ -146,11 +250,13 @@ struct HomeViewLoaded: View {
                                             .scaledToFit()
                                         
                                         Text(item.1)
-                                            .font(.asket(size: 16))
-                                            .foregroundColor(.white)
+                                            .font(.asket(size: 12))
+                                            .foregroundColor(.white.opacity(0.7))
+                                            .padding(.top, 10)
+                                            .padding(.bottom, 3)
                                         
                                         Text(item.2)
-                                            .font(.asket(size: 20))
+                                            .font(.asket(size: 16))
                                             .foregroundColor(.white)
                                     }
                                     Spacer()
@@ -185,17 +291,18 @@ struct HomeViewLoaded: View {
                                         Spacer()
                                         
                                         Text(item.0)
-                                            .font(.asket(size: 16))
-                                            .foregroundColor(.white)
+                                            .font(.asket(size: 14))
+                                            .foregroundColor(.white.opacity(0.7))
                                             .multilineTextAlignment(.center)
                                         
                                         Spacer()
                                         
                                         Text(item.1)
-                                            .font(.asket(size: 24))
+                                            .font(.asket(size: 20))
                                             .foregroundColor(.white)
                                             .padding(.bottom, 10)
                                     }
+                                    .padding(10)
                                     
                                 }
                             })
@@ -208,7 +315,7 @@ struct HomeViewLoaded: View {
                     if !viewModel.isShowingAsChild {
                         // see more button
                         Button {
-                            navigation.push(WeatherForecastView(viewModel: WeatherForecastViewModel(location: viewModel.addressToFetchLocation!)).asDestination(), animated: true)
+                            navigationHome.push(WeatherForecastView(viewModel: WeatherForecastViewModel(location: viewModel.addressToFetchLocation!)).asDestination(), animated: true)
                         } label: {
                             ZStack(alignment: .trailing) {
                                 Color("accent.blue")
@@ -223,11 +330,11 @@ struct HomeViewLoaded: View {
                                     
                                     
                                     
-                                    Image(systemName: "arrow.forward")
+                                    Image(systemName: "chevron.right")
                                         .resizable()
                                         .renderingMode(.template)
                                         .foregroundColor(.white)
-                                        .frame(width: 14, height: 14)
+                                        .frame(width: 12, height: 12)
                                         .padding(.trailing, 20)
                                         .scaledToFit()
                                 }
@@ -253,7 +360,6 @@ struct HomeViewLoaded: View {
     
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
-        self.navigation = SceneDelegate.navigation
     }
 }
 

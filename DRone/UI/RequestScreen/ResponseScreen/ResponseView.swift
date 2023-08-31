@@ -34,18 +34,22 @@ struct ResponseView: View {
     var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 0) {
+                
+                Spacer()
+                
                 Image(image)
                     .resizable()
-                    .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
+                    .frame(width: UIScreen.main.bounds.width * 0.6, height: UIScreen.main.bounds.width * 0.6)
+                
                 
                 Text(title)
                     .foregroundColor(.white)
-                    .font(.asket(size: 40))
+                    .font(.asket(size: 32))
                     .padding(.top, 33)
                 
                 Text(subtitle)
                     .foregroundColor(.white)
-                    .font(.asket(size: 24))
+                    .font(.asket(size: 20))
                     .multilineTextAlignment(.center)
                     .padding(.top, 4)
                 
@@ -62,13 +66,16 @@ struct ResponseView: View {
                         navigation.popToRoot(animated: false)
                     } label: {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(Color("accent.blue"))
-                                .frame(width: UIScreen.main.bounds.width / 2, height: 50)
+                            Color("accent.blue")
+                                .cornerRadius(12)
+                                .frame(height: 60)
                             
-                            Text(buttonText)
-                                .font(.asket(size: 20))
-                                .foregroundColor(.white)
+                            HStack {
+                                Text("View all requests")
+                                    .foregroundColor(.white)
+                                    .font(.asket(size: 24))
+                            }
+                            .padding(.vertical, 10)
                         }
                     }
                     .padding(.top, 4)
@@ -78,6 +85,7 @@ struct ResponseView: View {
             .frame(minHeight: proxy.size.height)
             .frame(minWidth: proxy.size.width)
         }
+        .padding(.horizontal, 20)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
@@ -108,7 +116,8 @@ struct SubmitedResponseView_Previews: PreviewProvider {
             image: "waiting.image",
             title: "Done!",
             subtitle: "Your submission is under review \n Submission ID: 312345",
-            captation: "You will receive a confirmation in a short time."
+            captation: "You will receive a confirmation in a short time.",
+            showButton: true
         )
     }
 }

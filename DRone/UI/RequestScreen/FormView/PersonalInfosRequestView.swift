@@ -22,13 +22,13 @@ struct PersonalInfosRequest: View {
                             
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Personal information")
-                                    .font(.asket(size: 36))
+                                    .font(.asket(size: 32))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.leading)
                                 
                                 Text("Complete the form with your personal information")
                                     .font(.asket(size: 16))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color("subtitle.gray"))
                                     .multilineTextAlignment(.leading)
                             }
                             .padding(.top, 10)
@@ -40,8 +40,8 @@ struct PersonalInfosRequest: View {
                                 // full name
                                 VStack(alignment: .leading, spacing: 7) {
                                     Text("Full name")
-                                        .foregroundColor(.white)
-                                        .font(.asket(size: 20))
+                                        .foregroundColor(Color("subtitle.gray"))
+                                        .font(.asket(size: 18))
                                     
                                     
                                     // first name
@@ -67,9 +67,9 @@ struct PersonalInfosRequest: View {
                                 
                                 // CNP
                                 VStack(alignment: .leading, spacing: 7) {
-                                    Text("Personal identification number")
-                                        .foregroundColor(.white)
-                                        .font(.asket(size: 20))
+                                    Text("Personal number")
+                                        .foregroundColor(Color("subtitle.gray"))
+                                        .font(.asket(size: 18))
                                     
                                 
                                     // first name
@@ -88,11 +88,14 @@ struct PersonalInfosRequest: View {
                                 
                             Spacer()
                             
+                            // next button
                             HStack {
                                 Spacer()
-                                Button {
+                                
+                                Button (action: {
                                     
                                     viewModel.personalNextButtonPressed.value = true
+                                    self.dismissKeyboard()
                                     
                                     if viewModel.firstNameValidation() &&
                                         viewModel.lastNameValidation() &&
@@ -103,35 +106,29 @@ struct PersonalInfosRequest: View {
                                         AppService.shared.screenIndex.value = 1
                                         viewModel.birthdayDate = viewModel.getBirthDayFromCNP()!
                                     }
-                                    self.dismissKeyboard()
+                                    
+                                }, label: {
+                                    ZStack {
+                                        Color("accent.blue")
+                                            .cornerRadius(12)
+                                            .frame(height: 60)
                                         
-                                    } label: {
-                                        ZStack {
-                                            Color("accent.blue")
-                                                .cornerRadius(20)
-                                                .frame(height: 50)
+                                        HStack {
+                                            Text("Next")
+                                                .foregroundColor(.white)
+                                                .font(.asket(size: 24))
                                             
-                                            HStack {
-                                                Text("Next")
-                                                    .foregroundColor(.white)
-                                                    .font(.asket(size: 32))
-                                                
-                                                Spacer()
-                                                
-                                                Image(systemName: "chevron.right")
-                                                    .resizable()
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(.white)
-                                                    .frame(width: 18, height: 18)
-                                                    .scaledToFit()
-                                            }
-                                            .padding(15)
+//                                            Image(systemName: "chevron.right")
+//                                                .resizable()
+//                                                .renderingMode(.template)
+//                                                .foregroundColor(.white)
+//                                                .frame(width: 10, height: 10)
+//                                                .scaledToFit()
                                         }
-                                        .frame(width: 150 ,height: 50)
+                                        .padding(.vertical, 10)
                                     }
-                                .padding(.top, UIScreen.main.bounds.height / 20)
+                                })
                                 
-                                Spacer()
                             }
                             
                             
@@ -148,6 +145,7 @@ struct PersonalInfosRequest: View {
         .onTapGesture {
             dismissKeyboard()
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 

@@ -33,13 +33,13 @@ struct WeatherForecastView: View {
                             HStack {
                                 Text("Weekly forecast")
                                     .foregroundColor(.white)
-                                    .font(.asket(size: 40))
+                                    .font(.asket(size: 34))
                                 
                                 Spacer()
                             }
                             
                             ForEach(0..<viewModel.daysOfWeek.count) { dayOfWeek in
-                                VStack(spacing: 24) {
+                                VStack(spacing: 10) {
                                     
                                     Button {
                                         
@@ -52,7 +52,7 @@ struct WeatherForecastView: View {
                                         // day of the week
                                         HStack {
                                             Text("\(viewModel.daysOfWeek[dayOfWeek]) - \(viewModel.daysOfWeekDate[dayOfWeek])")
-                                                .font(.asket(size: 24))
+                                                .font(.asket(size: 20))
                                                 .foregroundColor(.white)
                                             
                                             Spacer()
@@ -64,7 +64,7 @@ struct WeatherForecastView: View {
                                                 .renderingMode(.template)
                                                 .foregroundColor(.white)
                                                 .scaledToFit()
-                                                .frame(width: 16, height: 16)
+                                                .frame(width: 12, height: 12)
                                         }
                                         
                                     }
@@ -82,7 +82,7 @@ struct WeatherForecastView: View {
                                                         .cornerRadius(12)
                                                     
                                                     Text("\(viewModel.weaTherWeekForecast[dayOfWeek].temperature) ºC")
-                                                        .font(.asket(size: 36))
+                                                        .font(.asket(size: 28))
                                                         .foregroundColor(.white)
                                                 }
                                             })
@@ -102,7 +102,7 @@ struct WeatherForecastView: View {
                                                     Image(systemName: viewModel.weaTherWeekForecast[dayOfWeek].weatherIcon)
                                                         .resizable()
                                                         .foregroundColor(.white)
-                                                        .frame(width: UIScreen.main.bounds.width / 7, height: UIScreen.main.bounds.width / 7)
+                                                        .frame(width: UIScreen.main.bounds.width / 8, height: UIScreen.main.bounds.width / 8)
                                                         .scaledToFit()
                                                 }
                                             })
@@ -120,7 +120,7 @@ struct WeatherForecastView: View {
                                                         .cornerRadius(12)
                                                     
                                                     VStack   {
-                                                        Image(systemName: "flag")
+                                                        Image(systemName: "flag.fill")
                                                             .resizable()
                                                             .foregroundColor(.white)
                                                             .frame(width: UIScreen.main.bounds.width / 12, height: UIScreen.main.bounds.width / 12)
@@ -128,7 +128,7 @@ struct WeatherForecastView: View {
                                                         
                                                         Text("\(viewModel.weaTherWeekForecast[dayOfWeek].windSpeed) km/h")
                                                             .foregroundColor(.white)
-                                                            .font(.asket(size: 20))
+                                                            .font(.asket(size: 18))
                                                     }
                                                 }
                                             })

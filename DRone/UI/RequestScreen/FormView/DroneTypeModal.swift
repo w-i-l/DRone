@@ -40,6 +40,7 @@ struct DroneTypeModal: View {
                                 .foregroundColor(Color("subtitle.gray"))
                                 .font(.asket(size: 18))
                         }
+                        .padding(.vertical, 5)
                         
                         Spacer()
                     }

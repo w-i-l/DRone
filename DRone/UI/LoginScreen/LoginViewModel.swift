@@ -44,7 +44,7 @@ class LoginViewModel: BaseViewModel {
     
     var loginButtonPressed: CurrentValueSubject<Bool, Never> = .init(false)
     
-    @Published var rememberMe: Bool = false
+    @Published var rememberMe: Bool = true
     
     override init() {
         self._navigation = ObservedObject(wrappedValue: SceneDelegate.navigation)

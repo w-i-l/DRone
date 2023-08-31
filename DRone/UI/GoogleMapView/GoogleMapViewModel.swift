@@ -95,6 +95,8 @@ class GoogleMapsViewModel: BaseViewModel {
     @Published var searchingViewModel: SearchingViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
     @Published var bottomSheetPosition: BottomSheetPosition = .hidden
     
+    private var numberOfCircles: Int = 30
+    
     var noFlyZonesRendered: [GMSCircle] = []
     
     override init() {
@@ -207,7 +209,7 @@ class GoogleMapsViewModel: BaseViewModel {
         
         clearRenderedNoFlyZones()
         
-        for _ in 0...20 {
+        for _ in 0...self.numberOfCircles {
             
             let circle = FirebaseService.shared.generateSimulatedNoFlyZoneCircle(
                 latitudeRange: southWest.latitude...northEst.latitude,

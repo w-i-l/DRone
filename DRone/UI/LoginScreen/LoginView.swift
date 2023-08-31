@@ -125,23 +125,6 @@ struct LoginView: View {
                 }
                 .padding(.top, 40)
                 
-                // remember me toggle
-                HStack {
-                    
-                    Toggle(
-                        isOn: $viewModel.rememberMe) {
-                        }
-                        .frame(width: 70)
-                    
-                    Text("Remember me")
-                        .foregroundColor(.white)
-                        .font(.asket(size: 16))
-                    
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-                
-
                 Spacer()
                 
                 HStack {

@@ -165,9 +165,7 @@ struct WeatherVerdictView: View {
                                     
                                     Spacer()
                                     
-                                    Text("\(item.2.current)\(item.2.format)")
-                                        .foregroundColor(.white)
-                                        .font(.asket(size: 18))
+                                    
                                 }
                                 .frame(width: UIScreen.main.bounds.width - 150)
                                 
@@ -175,7 +173,7 @@ struct WeatherVerdictView: View {
                                 HStack {
                                     if item.4.isIdeal {
                                         Text("Ideal")
-                                            .foregroundColor(.white)
+                                            .foregroundColor(Color("subtitle.gray"))
                                             .font(.asket(size: 16))
                                         
                                         Circle()
@@ -183,7 +181,7 @@ struct WeatherVerdictView: View {
                                             .frame(width: 16)
                                     } else if item.4.isGood {
                                         Text("Good")
-                                            .foregroundColor(.white)
+                                            .foregroundColor(Color("subtitle.gray"))
                                             .font(.asket(size: 16))
                                         
                                         Circle()
@@ -191,7 +189,7 @@ struct WeatherVerdictView: View {
                                             .frame(width: 16)
                                     } else {
                                         Text("Bad")
-                                            .foregroundColor(.white)
+                                            .foregroundColor(Color("subtitle.gray"))
                                             .font(.asket(size: 16))
                                         
                                         Circle()
@@ -206,6 +204,11 @@ struct WeatherVerdictView: View {
                             
                             
                             Spacer()
+                            
+                            Text("\(item.2.current)\(item.2.format)")
+                                .foregroundColor(.white)
+                                .font(.asket(size: 18))
+                                .padding(.horizontal, 10)
                             
                             // info button
                             Button {
@@ -238,7 +241,6 @@ struct WeatherVerdictView: View {
                 viewModel.locationWeatherModel.precipitationProbability <= weatherVerdictModalModelArray[0].good
             ))
         }
-
         .enableTapToDismiss()
         .enableSwipeToDismiss()
         .bottomSheet(
@@ -251,7 +253,6 @@ struct WeatherVerdictView: View {
                     viewModel.locationWeatherModel.satellites >= weatherVerdictModalModelArray[1].good
                 ))
         }
-
         .enableTapToDismiss()
         .enableSwipeToDismiss()
         .bottomSheet(
@@ -263,7 +264,6 @@ struct WeatherVerdictView: View {
                     viewModel.locationWeatherModel.temperature >= weatherVerdictModalModelArray[2].good
                 ))
         }
-
         .enableTapToDismiss()
         .enableSwipeToDismiss()
         .bottomSheet(
@@ -275,7 +275,6 @@ struct WeatherVerdictView: View {
                 viewModel.locationWeatherModel.visibility >= weatherVerdictModalModelArray[3].good
             ))
         }
-
         .enableTapToDismiss()
         .enableSwipeToDismiss()
         .bottomSheet(
@@ -289,6 +288,7 @@ struct WeatherVerdictView: View {
         }
         .enableTapToDismiss()
         .enableSwipeToDismiss()
+        
     }
 }
 

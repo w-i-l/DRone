@@ -66,8 +66,9 @@ struct FlightRequestCardView: View {
                     VStack(alignment: .leading) {
                         Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)".limitLettersFormattedString(limit: 30))
                             .foregroundColor(.white)
-                            .font(.asket(size: 18))
+                            .font(.asket(size: 16))
                             .multilineTextAlignment(.leading)
+                            .lineLimit(1)
                         
                         // time interval
                         HStack {
@@ -103,10 +104,11 @@ struct FlightRequestCardView: View {
                         .resizable()
                         .renderingMode(.template)
                         .foregroundColor(completedFlight ? Color("gray.background").opacity(0.4) : .white)
-                        .frame(width: 16, height: 16)
+                        .frame(width: 12, height: 12)
                         .scaledToFit()
                         .padding(.trailing, 10)
                 }
+                .padding(.vertical, 10)
                 .padding(.leading, 5)
                 .overlay(completedFlight ?  Color("gray.background").opacity(0.4) : Color.clear)
                 
@@ -117,7 +119,7 @@ struct FlightRequestCardView: View {
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(.white)
-                            .frame(width: 16, height: 16)
+                            .frame(width: 12, height: 12)
                             .scaledToFit()
                     }
                     .padding(.trailing, 10)

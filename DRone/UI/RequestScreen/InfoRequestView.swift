@@ -31,11 +31,11 @@ struct InfoRequestView: View {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("REQUEST")
-                                        .font(.asket(size: 40))
+                                        .font(.asket(size: 32))
                                         .foregroundColor(.white)
                                     
                                     Text("a flight")
-                                        .font(.asket(size: 32))
+                                        .font(.asket(size: 24))
                                         .foregroundColor(.white)
                                 }
                                 
@@ -56,56 +56,45 @@ struct InfoRequestView: View {
                                         ZStack {
                                             Circle()
                                                 .fill(Color(red: 0.851, green: 0.851, blue: 0.851))
-                                                .frame(width: 56, height: 56)
+                                                .frame(width: 40, height: 40)
                                             
                                             Text("\(item.0)")
                                                 .foregroundColor(Color("background.first"))
-                                                .font(.asket(size: 36))
+                                                .font(.asket(size: 28))
                                         }
                                         
                                         Text(item.1)
                                             .foregroundColor(.white)
-                                            .font(.asket(size: 32))
+                                            .font(.asket(size: 24))
                                     }
                                     
                                 }
                             }
+                            .padding(.vertical, 40)
                             
                             // start button
                             HStack {
                                 Spacer()
                                 
-                                Button(
-                                    action: {
-                                        viewModel.clearData()
-                                        viewModel.syncDataWithCurrentUserInfo()
+                                Button (action: {
+                                    viewModel.clearData()
+                                    viewModel.syncDataWithCurrentUserInfo()
+                                    
+                                    navigation.push(RequestFormView(viewModel: viewModel).asDestination(), animated: true)
+                                }, label: {
+                                    ZStack {
+                                        Color("accent.blue")
+                                            .cornerRadius(12)
+                                            .frame(height: 60)
                                         
-                                        navigation.push(RequestFormView(viewModel: viewModel).asDestination(), animated: true)
-                                    }, label: {
-                                        ZStack {
-                                            Color("accent.blue")
-                                                .cornerRadius(20)
-                                                .frame(width: 150, height: 50)
-                                            
-                                            HStack {
-                                                Text("Start")
-                                                    .foregroundColor(.white)
-                                                    .font(.asket(size: 32))
-                                                
-                                                Spacer()
-                                                
-                                                Image(systemName: "chevron.right")
-                                                    .resizable()
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(.white)
-                                                    .frame(width: 18, height: 18)
-                                                    .scaledToFit()
-                                            }
-                                            .padding(15)
+                                        HStack {
+                                            Text("Start")
+                                                .foregroundColor(.white)
+                                                .font(.asket(size: 24))
                                         }
-                                        .frame(width: 150, height: 50)
+                                        .padding(.vertical, 10)
                                     }
-                                )
+                                })
                                 
                             }
                             
@@ -134,7 +123,6 @@ struct InfoRequestView: View {
                         )
                         
                     }
-                    .padding(.bottom, UIScreen.main.bounds.height / 11.3)
                     .frame(minHeight: proxy.size.height)
                 }
             }
@@ -143,6 +131,7 @@ struct InfoRequestView: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
+//        .padding(.bottom, UIScreen.main.bounds.height / 11.3)
     }
 }
 

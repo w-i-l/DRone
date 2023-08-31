@@ -97,6 +97,7 @@ struct WeatherVerdictModal: View {
             }
             .padding(.horizontal, 20)
         }
+        .background(Color("background.first"))
     }
 }
 

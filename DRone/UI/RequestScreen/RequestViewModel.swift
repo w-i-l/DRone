@@ -268,6 +268,7 @@ class RequestViewModel: BaseViewModel {
             // always pending
             self?.response = .pending
             formModel.responseModel.reason = value.reason
+            FirebaseService.shared.allFlightsRequests.value.append(formModel)
         }
         .store(in: &bag)
 

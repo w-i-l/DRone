@@ -19,13 +19,13 @@ struct AdditionalPersonalInformationView: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Additional information")
-                            .font(.asket(size: 36))
+                            .font(.asket(size: 32))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.leading)
                         
                         Text("Complete the form with your personal information")
                             .font(.asket(size: 16))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("subtitle.gray"))
                             .multilineTextAlignment(.leading)
                     }
                     .padding(.top, 10)
@@ -35,14 +35,11 @@ struct AdditionalPersonalInformationView: View {
                     VStack {
                         // birthday
                         VStack(alignment: .leading, spacing: 7) {
-                            Text("Birthday")
-                                .foregroundColor(.white)
-                                .font(.asket(size: 20))
                             
                             HStack {
-                                Text("Date")
-                                    .foregroundColor(.white)
-                                    .font(.asket(size: 20))
+                                Text("Birthday")
+                                    .foregroundColor(Color("subtitle.gray"))
+                                    .font(.asket(size: 18))
                                 
                                 Spacer()
                                 
@@ -67,11 +64,11 @@ struct AdditionalPersonalInformationView: View {
                         // current location
                         VStack(alignment: .leading, spacing: 7) {
                             Text("Your current location")
-                                .foregroundColor(.white)
-                                .font(.asket(size: 20))
+                                .foregroundColor(Color("subtitle.gray"))
+                                .font(.asket(size: 18))
                             
                             HStack(spacing: 14) {
-                                Image(systemName: "mappin.circle")
+                                Image("map.pin")
                                     .resizable()
                                     .renderingMode(.template)
                                     .foregroundColor(.white)
@@ -90,6 +87,12 @@ struct AdditionalPersonalInformationView: View {
                                 }
                                 Spacer()
                             }
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .strokeBorder(Color.white, lineWidth: 1)
+                                    .padding(-10)
+                            )
+                            .padding(10)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.top, 32)
@@ -98,37 +101,34 @@ struct AdditionalPersonalInformationView: View {
                     
                     Spacer()
                     
+                    // next button
                     HStack {
                         Spacer()
-                        Button {
-                            AppService.shared.screenIndex.value = 2
-                        } label: {
+                        
+                        Button (action: {
+                            AppService.shared.screenIndex.value = 2 
+                        }, label: {
                             ZStack {
                                 Color("accent.blue")
-                                    .cornerRadius(20)
-                                    .frame(height: 50)
+                                    .cornerRadius(12)
+                                    .frame(height: 60)
                                 
                                 HStack {
                                     Text("Next")
                                         .foregroundColor(.white)
-                                        .font(.asket(size: 32))
+                                        .font(.asket(size: 24))
                                     
-                                    Spacer()
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .foregroundColor(.white)
-                                        .frame(width: 18, height: 18)
-                                        .scaledToFit()
+//                                    Image(systemName: "chevron.right")
+//                                        .resizable()
+//                                        .renderingMode(.template)
+//                                        .foregroundColor(.white)
+//                                        .frame(width: 10, height: 10)
+//                                        .scaledToFit()
                                 }
-                                .padding(15)
+                                .padding(.vertical, 10)
                             }
-                            .frame(width: 150 ,height: 50)
-                        }
-                        .padding(.top, UIScreen.main.bounds.height / 20)
+                        })
                         
-                        Spacer()
                     }
                     
                     
@@ -137,6 +137,7 @@ struct AdditionalPersonalInformationView: View {
                 .frame(minHeight: proxy.size.height)
             }
         }
+        .ignoresSafeArea(.keyboard)
         .navigationBarTitleDisplayMode(.inline)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()

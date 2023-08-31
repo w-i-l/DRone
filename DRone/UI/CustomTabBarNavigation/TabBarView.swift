@@ -35,7 +35,7 @@ struct TabBar: View {
             if viewModel.isTabBarVisible {
                 ZStack {
                 
-                Color.white
+                    Color.white.opacity(0.2)
                     .cornerRadius(12, corners: [.topLeft, .topRight])
                     .offset(y: -2)
                 
@@ -56,7 +56,7 @@ struct TabBar: View {
                                     .renderingMode(.template)
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 24)
-                                    .foregroundColor(viewModel.selectedTab == item.0 ? Color("accent.blue") : .white)
+                                    .foregroundColor(viewModel.selectedTab == item.0 ? Color("accent.blue").opacity(0.7) : .white)
                                     .scaledToFit()
                                     .padding(.bottom, 20)
 //

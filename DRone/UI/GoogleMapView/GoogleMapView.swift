@@ -29,9 +29,13 @@ struct GoogleMapsView: View {
                 
                     TapGesture()
                         .onEnded({ _ in
-                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            dismissKeyboard()
+                            
                             viewModel.searchingViewModel.predictedLocations = []
                             
+                            if viewModel.bottomSheetPosition != .hidden {
+                                viewModel.bottomSheetPosition = .hidden
+                            }
                         })
                 )
 
@@ -87,7 +91,7 @@ struct GoogleMapsView: View {
                                     
                                     viewModel.goToCurrentLocation()
                                 } label: {
-                                    Image(systemName: "paperplane")
+                                    Image("current.location")
                                         .resizable()
                                         .renderingMode(.template)
                                         .foregroundColor(Color("background.first"))
@@ -115,7 +119,7 @@ struct GoogleMapsView: View {
                                     .frame(width: 50, height: 1)
                                 
                                 Button {
-                                    viewModel.bottomSheetPosition = .relativeTop(0.8)
+                                    viewModel.bottomSheetPosition = .relativeTop(0.6)
             
                                 } label: {
                                     Image(systemName: "info.circle")
@@ -163,11 +167,12 @@ struct GoogleMapsView: View {
         }
         .bottomSheet(
             bottomSheetPosition: $viewModel.bottomSheetPosition,
-            switchablePositions: [.relativeTop(0.8)],
+            switchablePositions: [.relativeTop(0.6)],
             content: {
                 NoFlyZoneInfoModal()
             }
         )
+        .customBackground(Color("background.first").ignoresSafeArea())
         .enableSwipeToDismiss()
         .enableTapToDismiss()
     }

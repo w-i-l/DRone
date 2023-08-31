@@ -95,7 +95,7 @@ class WeatherService: BaseViewModel {
                     locationWeatherModel.windSpeed <= windSpeedGoodCondition {
             return ("Be careful", [.yellow, Color("yellow")])
         } else {
-            return ("Can't take off", [.red, Color("red")])
+            return ("Can't take off", [Color("red"), .red])
         
             
         }
