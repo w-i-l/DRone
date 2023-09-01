@@ -71,6 +71,8 @@
 		17A7F2E22A939AED008721B7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 17A7F2E12A939AED008721B7 /* FirebaseFirestore */; };
 		17A7F2E42A939C86008721B7 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A7F2E32A939C86008721B7 /* FirestoreService.swift */; };
 		17A7F2E62A939DEC008721B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17A7F2E52A939DEC008721B7 /* GoogleService-Info.plist */; };
+		17A810592AA1BB94004881C5 /* NoLocationModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A810582AA1BB94004881C5 /* NoLocationModal.swift */; };
+		17A810612AA1C2FD004881C5 /* PilotingDrone.json in Resources */ = {isa = PBXBuildFile; fileRef = 17A810602AA1C2FD004881C5 /* PilotingDrone.json */; };
 		17B916AB2A8CB8E40024B82C /* DroneInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916AA2A8CB8E40024B82C /* DroneInformation.swift */; };
 		17B916AD2A8CBB510024B82C /* DroneTypeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916AC2A8CBB510024B82C /* DroneTypeModal.swift */; };
 		17B916AF2A8CC0730024B82C /* Floats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B916AE2A8CC0730024B82C /* Floats.swift */; };
@@ -163,6 +165,8 @@
 		17A7F2DA2A935114008721B7 /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		17A7F2E32A939C86008721B7 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		17A7F2E52A939DEC008721B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		17A810582AA1BB94004881C5 /* NoLocationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoLocationModal.swift; sourceTree = "<group>"; };
+		17A810602AA1C2FD004881C5 /* PilotingDrone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PilotingDrone.json; sourceTree = "<group>"; };
 		17B916AA2A8CB8E40024B82C /* DroneInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneInformation.swift; sourceTree = "<group>"; };
 		17B916AC2A8CBB510024B82C /* DroneTypeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneTypeModal.swift; sourceTree = "<group>"; };
 		17B916AE2A8CC0730024B82C /* Floats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floats.swift; sourceTree = "<group>"; };
@@ -323,6 +327,7 @@
 		17599F572A80DF4C00501E0A /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				17A810562AA1BB7A004881C5 /* NoServicesModals */,
 				17E21D552A9F3F610092494C /* SettingsScreen */,
 				178530252A9DEE7700EA18AC /* LoginScreen */,
 				17BDD6712A9CA61A009AC026 /* WeatherVerdictScreen */,
@@ -475,6 +480,14 @@
 			path = SearchingView;
 			sourceTree = "<group>";
 		};
+		17A810562AA1BB7A004881C5 /* NoServicesModals */ = {
+			isa = PBXGroup;
+			children = (
+				17A810582AA1BB94004881C5 /* NoLocationModal.swift */,
+			);
+			path = NoServicesModals;
+			sourceTree = "<group>";
+		};
 		17B916B22A8CD80C0024B82C /* ResponseScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,6 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				17E21D532A9F280F0092494C /* FlyingDrone.json */,
+				17A810602AA1C2FD004881C5 /* PilotingDrone.json */,
 				17BDD6902A9CF7F1009AC026 /* NoInternet.json */,
 				17BDD6862A9CED6C009AC026 /* NoLocation.json */,
 			);
@@ -637,6 +651,7 @@
 				17599F4B2A80DE3D00501E0A /* Assets.xcassets in Resources */,
 				17E21D542A9F280F0092494C /* FlyingDrone.json in Resources */,
 				17BDD6812A9CDEA7009AC026 /* asket.narrow-light.otf in Resources */,
+				17A810612AA1C2FD004881C5 /* PilotingDrone.json in Resources */,
 				17A7F2E62A939DEC008721B7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,6 +707,7 @@
 			files = (
 				17B916AF2A8CC0730024B82C /* Floats.swift in Sources */,
 				17B916B42A8CD8320024B82C /* ResponseView.swift in Sources */,
+				17A810592AA1BB94004881C5 /* NoLocationModal.swift in Sources */,
 				17A7F2DB2A935114008721B7 /* ResponseModel.swift in Sources */,
 				17A7F2D92A934D85008721B7 /* FlightRequestCardView.swift in Sources */,
 				1711B93C2A8680D600D4B2D8 /* AdditionalPersonalInformationView.swift in Sources */,

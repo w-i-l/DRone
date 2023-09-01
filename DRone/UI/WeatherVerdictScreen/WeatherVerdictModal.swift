@@ -87,7 +87,7 @@ struct WeatherVerdictModal: View {
                                 
                                 Text(item.2)
                                     .foregroundColor(.white)
-                                    .font(.asket(size: 18))
+                                    .font(.asket(size: 18))                                    
                             }
                         }
                     }
@@ -95,7 +95,7 @@ struct WeatherVerdictModal: View {
                 }
                 .padding(.top, 20)
             }
-            .padding(.horizontal, 20)
+            .padding(20)
         }
         .background(Color("background.first"))
     }
