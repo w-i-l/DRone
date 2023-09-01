@@ -161,6 +161,7 @@ struct AllFlightRequestView: View {
                                     
                                 }
                                 .padding(.bottom, 70)
+                                .padding(.bottom, UIScreen.main.bounds.height / 11.3)
                             }
                         }
                         

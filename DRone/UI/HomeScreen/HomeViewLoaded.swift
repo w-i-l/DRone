@@ -8,26 +8,6 @@
 import SwiftUI
 
 
-struct TriangleShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        
-        path.move(to: .zero)
-        path.addLine(to: CGPoint(x: rect.maxX, y: 0))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.midY))
-        path.closeSubpath()
-        
-        return path
-    }
-    
-    enum Direction: Double {
-        case down = 0
-        case left = 90
-        case up = 180
-        case right = 270
-    }
-}
-
 struct HomeViewLoaded: View {
     
     @Environment(\.dismiss) private var dismiss
@@ -184,10 +164,13 @@ struct HomeViewLoaded: View {
                                     HStack {
                                         
                                         Spacer()
-                                        TriangleShape()
-                                            .fill(Color.white.opacity(0.3))
+                                        
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .trim(from: 0.25, to: 0.5)
+                                            .fill(.white.opacity(0.3))
                                             .frame(width: 60, height: 60)
-                                            .rotationEffect(.degrees(90))
+                                            .rotationEffect(.degrees(-90))
+                                            .offset(y: -30)
                                     }
                                     
                                 }
@@ -317,32 +300,31 @@ struct HomeViewLoaded: View {
                         Button {
                             navigationHome.push(WeatherForecastView(viewModel: WeatherForecastViewModel(location: viewModel.addressToFetchLocation!)).asDestination(), animated: true)
                         } label: {
-                            ZStack(alignment: .trailing) {
+                            ZStack() {
                                 Color("accent.blue")
                                     .cornerRadius(12)
+                                    .frame(width: 200)
+                                    .frame(height: 55)
                                 HStack {
                                     
-                                    Text("See more infos ")
+                                    Text("Weekly forecast")
                                         .font(.asket(size: 20))
                                         .foregroundColor(.white)
                                         .padding(.vertical, 12)
                                         .padding(.horizontal, 5)
                                     
-                                    
-                                    
-                                    Image(systemName: "chevron.right")
-                                        .resizable()
-                                        .renderingMode(.template)
-                                        .foregroundColor(.white)
-                                        .frame(width: 12, height: 12)
-                                        .padding(.trailing, 20)
-                                        .scaledToFit()
+//                                    Image(systemName: "chevron.right")
+//                                        .resizable()
+//                                        .renderingMode(.template)
+//                                        .foregroundColor(.white)
+//                                        .frame(width: 12, height: 12)
+//                                        .padding(.trailing, 20)
+//                                        .scaledToFit()
                                 }
                                 
                             }
                         }
-                        .frame(width: 200)
-                        .frame(height: 55)
+                        
                         .padding(.top, 30)
                     }
                     

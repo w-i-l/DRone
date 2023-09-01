@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import LottieSwiftUI
 
 struct InfoRequestView: View {
     
@@ -107,15 +108,19 @@ struct InfoRequestView: View {
                             VStack(alignment: .trailing) {
                                 HStack {
                                     Spacer()
-                                    
-                                    Image("drone.image")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: UIScreen.main.bounds.width / 1)
-                                        .offset(y: -60)
-                                        .scaledToFit()
+
+//                                    Image("drone.image")
+//                                        .resizable()
+//                                        .aspectRatio(contentMode: .fit)
+//                                        .frame(width: UIScreen.main.bounds.width / 1)
+//                                        .offset(y: -60)
+//                                        .scaledToFit()
+                                    LottieView(name: "PilotingDrone")
+                                        .lottieLoopMode(.autoReverse)
+                                        .frame(width: 350, height: 350)
+                                        .offset(x: 50)
                                 }
-                                
+
                                 Spacer()
                             }
                                 .padding(.horizontal, 0)
