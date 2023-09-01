@@ -102,131 +102,127 @@ struct WeatherVerdictView: View {
                         .padding(.top, 48)
                         .padding(.bottom, 24)
                     
-                    VStack {
-                        ForEach([
+                    ForEach([
+                        (
+                            "Precipitation probability",
+                            "\(viewModel.locationWeatherModel.precipitationProbability)%",
+                            weatherVerdictModalModelArray[0],
+                            verdictViewModel.displayPrecipitationBottomSheet,
                             (
-                                "Precipitation probability",
-                                "\(viewModel.locationWeatherModel.precipitationProbability)%",
-                                weatherVerdictModalModelArray[0],
-                                verdictViewModel.displayPrecipitationBottomSheet,
-                                (
-                                    isIdeal: viewModel.locationWeatherModel.precipitationProbability <= weatherVerdictModalModelArray[0].ideal,
-                                    isGood: viewModel.locationWeatherModel.precipitationProbability <= weatherVerdictModalModelArray[0].good
-                                )
-                            ),
-                            (
-                                "Satellites available",
-                                "\(viewModel.locationWeatherModel.satellites)",
-                                weatherVerdictModalModelArray[1],
-                                verdictViewModel.displaySatellitesBottomSheet,
-                                (
-                                    isIdeal: viewModel.locationWeatherModel.satellites >= weatherVerdictModalModelArray[1].ideal,
-                                    isGood: viewModel.locationWeatherModel.satellites >= weatherVerdictModalModelArray[1].good
-                                )
-                            ),
-                            (
-                                "Temperature",
-                                "\(viewModel.locationWeatherModel.temperature)º C",
-                                weatherVerdictModalModelArray[2],
-                                verdictViewModel.displayTemperatureBottomSheet,
-                                (
-                                    isIdeal: viewModel.locationWeatherModel.temperature >= weatherVerdictModalModelArray[2].ideal,
-                                    isGood: viewModel.locationWeatherModel.temperature >= weatherVerdictModalModelArray[2].good
-                                )
-                            ),
-                            (
-                                "Visibility",
-                                "\(viewModel.locationWeatherModel.visibility) km",
-                                weatherVerdictModalModelArray[3],
-                                verdictViewModel.displayVisibilityBottomSheet,
-                                (
-                                    isIdeal: viewModel.locationWeatherModel.visibility >= weatherVerdictModalModelArray[3].ideal,
-                                    isGood: viewModel.locationWeatherModel.visibility >= weatherVerdictModalModelArray[3].good
-                                )
-                            ),
-                            (
-                                "Wind speed",
-                                "\(viewModel.locationWeatherModel.windSpeed) km/h",
-                                weatherVerdictModalModelArray[4],
-                                verdictViewModel.displayWindSpeedBottomSheet,
-                                (
-                                    isIdeal: viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].ideal,
-                                    isGood: viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].good
-                                )
+                                isIdeal: viewModel.locationWeatherModel.precipitationProbability <= weatherVerdictModalModelArray[0].ideal,
+                                isGood: viewModel.locationWeatherModel.precipitationProbability <= weatherVerdictModalModelArray[0].good
                             )
-                        ], id: \.0) { item in
-                            HStack {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    
-                                    // current values
-                                    HStack {
-                                        Text(item.0)
-                                            .foregroundColor(.white)
-                                            .font(.asket(size: 18))
-                                        
-                                        Spacer()
-                                        
-                                        
-                                    }
-                                    .frame(width: UIScreen.main.bounds.width - 150)
-                                    
-                                    // condition review
-                                    HStack {
-                                        if item.4.isIdeal {
-                                            Text("Ideal")
-                                                .foregroundColor(Color("subtitle.gray"))
-                                                .font(.asket(size: 16))
-                                            
-                                            Circle()
-                                                .fill(Color("green"))
-                                                .frame(width: 16)
-                                        } else if item.4.isGood {
-                                            Text("Good")
-                                                .foregroundColor(Color("subtitle.gray"))
-                                                .font(.asket(size: 16))
-                                            
-                                            Circle()
-                                                .fill(Color("yellow"))
-                                                .frame(width: 16)
-                                        } else {
-                                            Text("Bad")
-                                                .foregroundColor(Color("subtitle.gray"))
-                                                .font(.asket(size: 16))
-                                            
-                                            Circle()
-                                                .fill(Color("red"))
-                                                .frame(width: 16)
-                                        }
-                                    }
-                                    
-                                    
-                                }
-                                .padding(.top, 24)
+                        ),
+                        (
+                            "Satellites available",
+                            "\(viewModel.locationWeatherModel.satellites)",
+                            weatherVerdictModalModelArray[1],
+                            verdictViewModel.displaySatellitesBottomSheet,
+                            (
+                                isIdeal: viewModel.locationWeatherModel.satellites >= weatherVerdictModalModelArray[1].ideal,
+                                isGood: viewModel.locationWeatherModel.satellites >= weatherVerdictModalModelArray[1].good
+                            )
+                        ),
+                        (
+                            "Temperature",
+                            "\(viewModel.locationWeatherModel.temperature)º C",
+                            weatherVerdictModalModelArray[2],
+                            verdictViewModel.displayTemperatureBottomSheet,
+                            (
+                                isIdeal: viewModel.locationWeatherModel.temperature >= weatherVerdictModalModelArray[2].ideal,
+                                isGood: viewModel.locationWeatherModel.temperature >= weatherVerdictModalModelArray[2].good
+                            )
+                        ),
+                        (
+                            "Visibility",
+                            "\(viewModel.locationWeatherModel.visibility) km",
+                            weatherVerdictModalModelArray[3],
+                            verdictViewModel.displayVisibilityBottomSheet,
+                            (
+                                isIdeal: viewModel.locationWeatherModel.visibility >= weatherVerdictModalModelArray[3].ideal,
+                                isGood: viewModel.locationWeatherModel.visibility >= weatherVerdictModalModelArray[3].good
+                            )
+                        ),
+                        (
+                            "Wind speed",
+                            "\(viewModel.locationWeatherModel.windSpeed) km/h",
+                            weatherVerdictModalModelArray[4],
+                            verdictViewModel.displayWindSpeedBottomSheet,
+                            (
+                                isIdeal: viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].ideal,
+                                isGood: viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].good
+                            )
+                        )
+                    ], id: \.0) { item in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
                                 
-                                
-                                Spacer()
-                                
-                                Text("\(item.2.current)\(item.2.format)")
-                                    .foregroundColor(.white)
-                                    .font(.asket(size: 18))
-                                    .padding(.trailing, 20)
-                                
-                                // info button
-                                Button {
-                                    item.3()
-                                } label: {
-                                    Image(systemName: "info.circle")
-                                        .resizable()
-                                        .renderingMode(.template)
+                                // current values
+                                HStack {
+                                    Text(item.0)
                                         .foregroundColor(.white)
-                                        .frame(width: 24, height: 24)
+                                        .font(.asket(size: 18))
+                                    
+                                    Spacer()
+                                    
+                                    
                                 }
+                                .frame(width: UIScreen.main.bounds.width - 150)
+                                
+                                // condition review
+                                HStack {
+                                    if item.4.isIdeal {
+                                        Text("Ideal")
+                                            .foregroundColor(Color("subtitle.gray"))
+                                            .font(.asket(size: 16))
+                                        
+                                        Circle()
+                                            .fill(Color("green"))
+                                            .frame(width: 16)
+                                    } else if item.4.isGood {
+                                        Text("Good")
+                                            .foregroundColor(Color("subtitle.gray"))
+                                            .font(.asket(size: 16))
+                                        
+                                        Circle()
+                                            .fill(Color("yellow"))
+                                            .frame(width: 16)
+                                    } else {
+                                        Text("Bad")
+                                            .foregroundColor(Color("subtitle.gray"))
+                                            .font(.asket(size: 16))
+                                        
+                                        Circle()
+                                            .fill(Color("red"))
+                                            .frame(width: 16)
+                                    }
+                                }
+                                
                                 
                             }
+                            .padding(.top, 24)
                             
+                            
+                            Spacer()
+                            
+                            Text("\(item.2.current)\(item.2.format)")
+                                .foregroundColor(.white)
+                                .font(.asket(size: 18))
+                                .padding(.horizontal, 10)
+                            
+                            // info button
+                            Button {
+                                item.3()
+                            } label: {
+                                Image(systemName: "info.circle")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(.white)
+                                    .frame(width: 24, height: 24)
+                            }
+
                         }
                     }
-                    .frame(maxWidth: .infinity)
                 }
             }
             
@@ -246,11 +242,7 @@ struct WeatherVerdictView: View {
             ))
         }
         .enableTapToDismiss()
-        .enableSwipeToDismiss(true)
-        .customBackground {
-            Color("background.first")
-        }
-        
+        .enableSwipeToDismiss()
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.satellitesBottomSheetPosition,
             switchablePositions: [.relativeTop(0.4)]) {
@@ -263,10 +255,6 @@ struct WeatherVerdictView: View {
         }
         .enableTapToDismiss()
         .enableSwipeToDismiss()
-        .customBackground {
-            Color("background.first")
-        }
-        
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.temperatureBottomSheetPosition,
             switchablePositions: [.relativeTop(0.4)]) {
@@ -278,10 +266,6 @@ struct WeatherVerdictView: View {
         }
         .enableTapToDismiss()
         .enableSwipeToDismiss()
-        .customBackground {
-            Color("background.first")
-        }
-        
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.visibilityBottomSheetPosition,
             switchablePositions: [.relativeTop(0.4)]) {
@@ -293,24 +277,18 @@ struct WeatherVerdictView: View {
         }
         .enableTapToDismiss()
         .enableSwipeToDismiss()
-        .customBackground {
-            Color("background.first")
-        }
-        
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.windSpeedBottomSheetPosition,
             switchablePositions: [.relativeTop(0.4)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[4],
-            condition: (
+            condition:(
                 viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].ideal,
                 viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].good
             ))
         }
         .enableTapToDismiss()
-        .enableSwipeToDismiss(true)
-        .customBackground {
-            Color("background.first")
-        }
+        .enableSwipeToDismiss()
+        
     }
 }
 

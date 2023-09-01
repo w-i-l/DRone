@@ -216,7 +216,6 @@ struct FlightInformation: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        .ignoresSafeArea(.keyboard)
     }
 }
 

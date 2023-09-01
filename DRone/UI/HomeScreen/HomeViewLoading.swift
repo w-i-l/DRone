@@ -146,25 +146,25 @@ struct HomeViewLoading: View {
                     Button {
                         
                     } label: {
-                        ZStack() {
+                        ZStack(alignment: .trailing) {
                             Color("gray.background")
                                 .cornerRadius(12)
                             HStack {
                                 
-                                Text("Weekly forecast")
+                                Text("See more infos ")
                                     .font(.asket(size: 20))
                                     .foregroundColor(.white)
                                     .padding(.vertical, 12)
                                 
                                 
                                 
-//                                Image(systemName: "chevron.right")
-//                                    .resizable()
-//                                    .renderingMode(.template)
-//                                    .foregroundColor(.white)
-//                                    .frame(width: 12, height: 12)
-//                                    .padding(.trailing, 20)
-//                                    .scaledToFit()
+                                Image(systemName: "chevron.right")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(.white)
+                                    .frame(width: 12, height: 12)
+                                    .padding(.trailing, 20)
+                                    .scaledToFit()
                             }
                             
                         }

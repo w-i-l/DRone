@@ -16,7 +16,6 @@ struct CustomTextField: View {
     @Binding var errorText: String
     let keyboardType: UIKeyboardType
     @Binding var isTextFieldSecured: Bool
-    let showEye: Bool
     
     @StateObject var viewModel: CustomTextFieldViewModel
     @State private var textFieldDidReturn: Bool = false
@@ -34,8 +33,7 @@ struct CustomTextField: View {
         errorText: Binding<String>,
         viewModel: CustomTextFieldViewModel,
         keyboardType: UIKeyboardType = .default,
-        isTextFieldSecured: Binding<Bool> = .constant(false),
-        showEye: Bool = false
+        isTextFieldSecured: Binding<Bool> = .constant(false)
     ) {
         self._text = text
         self.placeholderText = placeholderText
@@ -45,7 +43,6 @@ struct CustomTextField: View {
         CustomTextField.textFieldIndex += 1
         self.keyboardType = keyboardType
         self._isTextFieldSecured = isTextFieldSecured
-        self.showEye = showEye
         
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -74,47 +71,33 @@ struct CustomTextField: View {
                     .onTapGesture {
                         isFocused = true
                     }
-                HStack {
-                    Group {
-                        if isTextFieldSecured {
-                            SecureField(
-                                "",
-                                text: $text) {
-                                    textFieldDidReturn = true
-                                }
-                        } else {
-                            TextField("", text: $text, onEditingChanged: { _ in
-                                showError = false
-                                strokeColor = Color("accent.blue")
-                            }, onCommit: {
-                                textFieldDidReturn = true
-                            })
-                            
-                        }
-                    }
-                    .placeholder(when: text.isEmpty) {
-                        Text(placeholderText)
-                            .foregroundColor(Color("subtitle.gray"))
-                            .font(.asket(size: 16))
-                    }
-                    
-                    .foregroundColor(Color("background.first"))
-                    .frame(height: 40)
-                    .keyboardType(keyboardType)
                 
-                    if showEye {
-                        Button {
-                            isTextFieldSecured.toggle()
-                        } label: {
-                            Image(systemName: isTextFieldSecured ? "eye.slash" : "eye")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Color("accent.blue"))
-                                .frame(width: 24, height: 18)
-                        }
+                Group {
+                    if isTextFieldSecured {
+                        SecureField(
+                            "",
+                            text: $text) {
+                                textFieldDidReturn = true
+                            }
+                    } else {
+                        TextField("", text: $text, onEditingChanged: { _ in
+                            showError = false
+                            strokeColor = Color("accent.blue")
+                        }, onCommit: {
+                            textFieldDidReturn = true
+                        })
+                       
                     }
                 }
+                .placeholder(when: text.isEmpty) {
+                    Text(placeholderText)
+                        .foregroundColor(Color("subtitle.gray"))
+                        .font(.asket(size: 16))
+                }
                 .padding(12)
+                .foregroundColor(Color("background.first"))
+                .frame(height: 40)
+                .keyboardType(keyboardType)
                 
             }
         }
@@ -139,6 +122,7 @@ struct CustomTextField: View {
             self.textFieldDidReturn = false
         }
         .onChange(of: viewModel.nextButtonPressed) { newValue in
+//            guard newValue == true else { return }
             self.strokeColor = isTextGood() ? .white : Color("red")
             viewModel.nextButtonPressed = false
             if !isTextGood() {
@@ -168,8 +152,7 @@ struct CustomTextField_Previews: PreviewProvider {
                     .random()
                 },
                 errorText: .constant("some error"),
-                viewModel: CustomTextFieldViewModel(nextButtonPressed: CurrentValueSubject<Bool, Never>.init(false)),
-                showEye: true
+                viewModel: CustomTextFieldViewModel(nextButtonPressed: CurrentValueSubject<Bool, Never>.init(false))
             )
 
         }
