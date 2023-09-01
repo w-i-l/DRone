@@ -260,9 +260,9 @@ struct HomeViewLoaded: View {
                         ], id: \.0) { item in
                             
                             //
-                            Link (
-                                destination: viewModel.weatherURL,
-                                label: {
+//                            Link (
+//                                destination: viewModel.weatherURL,
+//                                label: {
                                 ZStack {
                                     
                                     Color("gray.background")
@@ -288,7 +288,7 @@ struct HomeViewLoaded: View {
                                     .padding(10)
                                     
                                 }
-                            })
+//                            })
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -304,7 +304,7 @@ struct HomeViewLoaded: View {
                                 Color("accent.blue")
                                     .cornerRadius(12)
                                     .frame(width: 200)
-                                    .frame(height: 55)
+                                    .frame(height: 60)
                                 HStack {
                                     
                                     Text("Weekly forecast")

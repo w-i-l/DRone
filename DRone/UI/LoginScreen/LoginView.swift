@@ -12,197 +12,232 @@ import AlertToast
 
 struct LoginView: View {
     
-    @StateObject var viewModel: LoginViewModel
+    private let navigation = SceneDelegate.mainNavigation
+    @StateObject private var viewModel = LoginViewModel()
+    
+    let isPresentedAsFirstScreen: Bool
+    
+    init(isPresentedAsFirstScreen: Bool = true) {
+        self.isPresentedAsFirstScreen = isPresentedAsFirstScreen
+        navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
+    }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack {
+        
+        VStack {
+            
+            if !isPresentedAsFirstScreen {
+                BackButton(text: "Settings")
+                    .padding(.top, 30)
+            }
+            
+            GeometryReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
 
-                LottieView(name: "FlyingDrone")
-                    .lottieLoopMode(.autoReverse)
-                    .frame(width: UIScreen.main.bounds.width, height: 300)
-                
-                
-                HStack {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Login")
-                            .foregroundColor(.white)
-                            .font(.asket(size: 36))
+
                         
-                        Text("Enter you email and password")
-                            .foregroundColor(.white)
-                            .font(.asket(size: 20))
-                    }
-                    
-                    Spacer()
-                }
-                .padding(.top, 20)
-                .padding(.horizontal, 20)
-                
-                // email and password
-                VStack(spacing: 4) {
-                    
-                    HStack(spacing: 10) {
-                        Image(systemName: "envelope")
-                            .resizable()
-                            .renderingMode(.template)
-                            .foregroundColor(.white)
-                            .frame(width: 20, height: 15)
-                            .scaledToFit()
-                        
-                        Color("accent.blue")
-                            .frame(width: 1, height: 40)
-                        
-                        CustomTextField(
-                            text: $viewModel.email,
-                            placeholderText: "email",
-                            isTextGood: viewModel.emailValidation,
-                            errorText: $viewModel.emailError,
-                            viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed),
-                            keyboardType: .emailAddress
-                        )
-                        .frame(width: UIScreen.main.bounds.width / 1.5)
-                        .padding(.trailing, 10)
-                        
-                        Button {
+                        LottieView(name: "FlyingDrone")
+                            .lottieLoopMode(.autoReverse)
+                            .frame(height: 200)
                             
-                        } label: {
-                            Image(systemName: "")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Color("accent.blue"))
-                                .frame(width: 20, height: 15)
-                                .scaledToFit()
-                            
-                        }
-                    }
-                    
-                    Color("accent.blue")
-                        .frame(height: 1)
-                        .padding(.horizontal, 35)
-                        .padding(.vertical, 10)
-                    
-                    HStack(spacing: 10) {
-                        Image(systemName: "lock")
-                            .resizable()
-                            .renderingMode(.template)
-                            .foregroundColor(.white)
-                            .frame(width: 20, height: 20)
-                            .scaledToFit()
+                        Spacer()
                         
-                        Color("accent.blue")
-                            .frame(width: 1, height: 40)
                         
-                        CustomTextField(
-                            text: $viewModel.password,
-                            placeholderText: "password",
-                            isTextGood: viewModel.passwordValidation,
-                            errorText: $viewModel.passwordError,
-                            viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed),
-                            isTextFieldSecured: $viewModel.isTextFieldSecures
-                            
-                        )
-                        .frame(width: UIScreen.main.bounds.width / 1.5)
-                        .padding(.trailing, 10)
-                        
-                        Button {
-                            viewModel.isTextFieldSecures.toggle()
-                        } label: {
-                            Image(systemName: viewModel.isTextFieldSecures ? "eye.slash.fill" : "eye")
-                                .resizable()
-                                .renderingMode(.template)
-                                .foregroundColor(Color("accent.blue"))
-                                .frame(width: 20, height: 15)
-                                .scaledToFit()
-                        }
-                        
-                    }
-                    
-                    Color("accent.blue")
-                        .frame(height: 1)
-                        .padding(.horizontal, 35)
-                        .padding(.vertical, 10)
-                }
-                .padding(.top, 40)
-                
-                Spacer()
-                
-                HStack {
-                    Button {
-                        viewModel.loginButtonPressed.value = true
-                        dismissKeyboard()
-                        
-                        viewModel.login()
-                        
-                    } label: {
-                        ZStack {
-                            Color("accent.blue")
-                                .frame(height: 50)
-                                .cornerRadius(12)
-                            
-                            Text("Login")
-                                .foregroundColor(.white)
-                                .font(.asket(size: 20))
-                        }
-                    }
-                    
-                    Button {
-                        dismissKeyboard()
-                        
-                        viewModel.continueAsGuest()
-                        
-                    } label: {
-                        ZStack {
-                            Color.white
-                                .frame(height: 50)
-                                .cornerRadius(12)
-                            
-                            HStack {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("Login")
+                                    .foregroundColor(.white)
+                                    .font(.asket(size: 36))
                                 
-                                Image(systemName: "person")
+                                Text("Enter you email and password")
+                                    .foregroundColor(.white)
+                                    .font(.asket(size: 20))
+                            }
+                            
+                            Spacer()
+                        }
+                        .padding(.top, 20)
+                        .padding(.horizontal, 20)
+                        
+
+                        // email and password
+                        VStack(spacing: 0) {
+                            
+                            HStack(spacing: 10) {
+                                Image(systemName: "envelope.fill")
                                     .resizable()
                                     .renderingMode(.template)
-                                    .foregroundColor(Color("background.first"))
-                                    .frame(width: 16, height: 16)
-                                    .scaledToFit()
+                                    .foregroundColor(.white)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20, height: 15)
                                 
-                                Text("Continue as guest")
-                                    .foregroundColor(Color("background.first"))
-                                .font(.asket(size: 16))
+                                Color("accent.blue")
+                                    .frame(width: 1, height: 50)
+                                
+                                CustomTextField(
+                                    text: $viewModel.email,
+                                    placeholderText: "email",
+                                    isTextGood: viewModel.emailValidation,
+                                    errorText: $viewModel.emailError,
+                                    viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed),
+                                    keyboardType: .emailAddress
+                                )
+                                .frame(width: UIScreen.main.bounds.width / 1.3)
+                                .padding(.trailing, 10)
                             }
+                            
+                            Color("accent.blue")
+                                .frame(height: 1)
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 5)
+                            
+                            HStack(spacing: 10) {
+                                Image(systemName: "lock.fill")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(.white)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20, height: 16)
+                                
+                                Color("accent.blue")
+                                    .frame(width: 1, height: 50)
+                                
+                                CustomTextField(
+                                    text: $viewModel.password,
+                                    placeholderText: "password",
+                                    isTextGood: viewModel.passwordValidation,
+                                    errorText: $viewModel.passwordError,
+                                    viewModel: CustomTextFieldViewModel(nextButtonPressed: viewModel.loginButtonPressed),
+                                    isTextFieldSecured: $viewModel.isTextFieldSecures,
+                                    showEye: true
+                                    
+                                )
+                                .frame(width: UIScreen.main.bounds.width / 1.3)
+                                .padding(.trailing, 10)
+                            }
+                            
+                            Color("accent.blue")
+                                .frame(height: 1)
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 5)
                         }
+                        .padding(.top, 20)
+                        
+                        
+                            Button {
+                                viewModel.loginButtonPressed.value = true
+                                dismissKeyboard()
+                                
+                                viewModel.login()
+                                
+                            } label: {
+                                ZStack {
+                                    Color("accent.blue")
+                                        .frame(height: 50)
+                                        .cornerRadius(12)
+                                    
+                                    Text("Login")
+                                        .foregroundColor(.white)
+                                        .font(.asket(size: 20))
+                                }
+                            }
+                            .padding(.top, 20)
+                            
+                        Spacer()
+                        
+                        // sign up
+                        HStack {
+                            Text("Don't have an account?")
+                                .foregroundColor(.white)
+                                .font(.asket(size: 16))
+                            
+                            Button {
+                                viewModel.goToAuth()
+                            } label: {
+                                Text("Sign up")
+                                    .foregroundColor(Color("accent.blue"))
+                                    .font(.asket(size: 20))
+                            }
+
+                        }
+                        .padding(.vertical, 5)
+                        
+                            // separator
+                            HStack {
+                                Color("subtitle.gray")
+                                    .frame(height: 1)
+                                
+                                Text("or")
+                                    .foregroundColor(Color("subtitle.gray"))
+                                    .font(.asket(size: 18))
+                                
+                                Color("subtitle.gray")
+                                    .frame(height: 1)
+                            }
+                            .padding(.top, 5)
+                            
+                        
+
+                        
+                        // continue as guest
+                            Button {
+                                dismissKeyboard()
+                                
+                                viewModel.continueAsGuest()
+                                
+                            } label: {
+                                ZStack {
+                                    Color.clear
+                                        .frame(height: 40)
+                                        .cornerRadius(12)
+                                    
+                                    HStack {
+                                        
+                                        Image(systemName: "person.fill")
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .foregroundColor(.white)
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 16, height: 16)
+                                        
+                                        Text("Continue as guest")
+                                            .foregroundColor(.white)
+                                            .font(.asket(size: 16))
+                                    }
+                                }
+                            }
+                        
+
+                        
                     }
-                }
-                .padding(.top, 10)
-                .padding(.horizontal, 20)
-                
-                HStack {
-                    Text("Don't have an account?")
-                        .foregroundColor(.white)
-                        .font(.asket(size: 16))
-                    
-                    Button {
-                        viewModel.goToAuth()
-                    } label: {
-                        Text("Sign up")
-                            .foregroundColor(Color("accent.blue"))
-                            .font(.asket(size: 20))
-                    }
+                    .frame(minHeight: proxy.size.height)
+                    .frame(width: proxy.size.width)
 
                 }
-                .padding(.top, 10)
-
                 
             }
-
         }
-        .padding(.horizontal, 20)
+        .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
+//        .onReceive(viewModel.eventSubject, perform: { event in
+//            switch event {
+//            case .goToMainView:
+//                navigation.push(MainView().asDestination(), animated: true)
+//            default:
+//                break
+//            }
+//        })
+//        .onAppear {
+//            viewModel.bind()
+//        }
         .onTapGesture {
             dismissKeyboard()
+        
+            viewModel.clearToasts()
         }
         .toast(
             isPresenting: $viewModel.showWrongPasswordToast,
@@ -266,12 +301,8 @@ struct LoginView: View {
                     type: .loading
                 )
             }
-        )
+    )
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView(viewModel: LoginViewModel())
-    }
-}
+

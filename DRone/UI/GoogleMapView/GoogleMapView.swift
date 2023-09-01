@@ -119,7 +119,7 @@ struct GoogleMapsView: View {
                                     .frame(width: 50, height: 1)
                                 
                                 Button {
-                                    viewModel.bottomSheetPosition = .relativeTop(0.6)
+                                    viewModel.bottomSheetPosition = .relativeTop(0.7)
             
                                 } label: {
                                     Image(systemName: "info.circle")
@@ -167,7 +167,7 @@ struct GoogleMapsView: View {
         }
         .bottomSheet(
             bottomSheetPosition: $viewModel.bottomSheetPosition,
-            switchablePositions: [.relativeTop(0.6)],
+            switchablePositions: [.relativeTop(0.7)],
             content: {
                 NoFlyZoneInfoModal()
             }

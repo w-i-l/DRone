@@ -131,22 +131,27 @@ struct FlightRequestCardView: View {
 
 struct FlightRequestCardView_Previews: PreviewProvider {
     static var previews: some View {
-        FlightRequestCardView(flightRequest: RequestFormModel(
-            firstName: "dsad",
-            lastName: "dsadas",
-            CNP: "3123124141",
-            birthday: Date(),
-            currentLocation: CLLocationCoordinate2D(),
-            serialNumber: "123d12adsd12",
-            droneType: .agricultural,
-            takeoffTime: Date(),
-            landingTime: Date() + 3600,
-            flightLocation: CLLocationCoordinate2D(),
-            responseModel: ResponseModel(
-                response: .accepted,
-                ID: "12312",
-                reason: "31EAS"
-            )
-        ))
+        VStack {
+            FlightRequestCardView(flightRequest: RequestFormModel(
+                firstName: "dsad",
+                lastName: "dsadas",
+                CNP: "3123124141",
+                birthday: Date(),
+                currentLocation: CLLocationCoordinate2D(),
+                serialNumber: "123d12adsd12",
+                droneType: .agricultural,
+                takeoffTime: Date(),
+                landingTime: Date() + 3600,
+                flightLocation: CLLocationCoordinate2D(),
+                flightDate: Date() + 1321312312,
+                responseModel: ResponseModel(
+                    response: .accepted,
+                    ID: "12312",
+                    reason: "31EAS"
+                )
+            ))
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black)
     }
 }

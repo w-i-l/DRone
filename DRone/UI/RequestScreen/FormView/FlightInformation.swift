@@ -148,7 +148,7 @@ struct FlightInformation: View {
                                             }
                                             Spacer()
                                         }
-                                        .padding(.vertical, 4)
+                                        .padding(.vertical, 10)
                                         .padding(.horizontal, 10)
                                         .background(Color("gray.background").cornerRadius(12))
                                     })
@@ -216,7 +216,6 @@ struct FlightInformation: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
-        .ignoresSafeArea(.keyboard)
     }
 }
 

@@ -140,7 +140,6 @@ struct DroneInformation: View {
                 .frame(minHeight: proxy.size.height)
             }
         }
-        .ignoresSafeArea(.keyboard)
         .navigationBarTitleDisplayMode(.inline)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()

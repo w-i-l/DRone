@@ -8,21 +8,22 @@
 import UIKit
 import SwiftUI
 
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    static var navigation: Navigation = Navigation()
+    static var mainNavigation: Navigation = Navigation()
+    
     var window: UIWindow?
         
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+        Self.mainNavigation.setRoot(
+            LoginView()
+                .preferredColorScheme(.dark)
+                .ignoresSafeArea()
+                .asDestination()
+            , animated: true)
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            SceneDelegate.navigation = Navigation(root:
-                LoginView(viewModel: LoginViewModel())
-                .environmentObject(SceneDelegate.navigation)
-                    .preferredColorScheme(.dark)
-                    .asDestination()
-            )
-            window.rootViewController = UIHostingController(rootView: RootView(navigation: SceneDelegate.navigation))
+            window.rootViewController = UIHostingController(rootView: RootView())
             self.window = window
             window.makeKeyAndVisible()
         }

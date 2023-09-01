@@ -48,7 +48,14 @@ struct TabBar: View {
                         Spacer()
                         
                         Button(action: {
+                            if item.0 == .home && AppService.shared.selectedTab.value == .home {
+                                MainView.homeNavigation.popToRoot(animated: true)
+                                return
+                            }
+
                             AppService.shared.selectedTab.value = item.0
+                            
+                            
                         }, label: {
                             VStack {
                                 Image(systemName: item.1)

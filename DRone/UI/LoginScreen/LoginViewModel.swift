@@ -9,9 +9,14 @@ import SwiftUI
 import Combine
 import FirebaseAuth
 
+enum LoginViewModelEvent {
+    case goToMainView
+    case goToAuth
+}
+
 class LoginViewModel: BaseViewModel {
     
-    @ObservedObject private var navigation: Navigation
+    let navigation = SceneDelegate.mainNavigation
     
     @Published var email: String = ""
     @Published var emailError: String = ""
@@ -47,7 +52,6 @@ class LoginViewModel: BaseViewModel {
     @Published var rememberMe: Bool = true
     
     override init() {
-        self._navigation = ObservedObject(wrappedValue: SceneDelegate.navigation)
         
         super.init()
         
@@ -55,6 +59,18 @@ class LoginViewModel: BaseViewModel {
             self.navigation.replaceNavigationStack([MainView().asDestination()], animated: true)
         }
     }
+    
+//    let eventSubject = PassthroughSubject<LoginViewModelEvent, Never>()
+//
+//    private var isBinded = false
+//
+//    func bind() {
+//        if isBinded == true {return}
+//        isBinded = true
+//        if AppService.shared.loginState.value == .loggedIn {
+//            self.eventSubject.send(.goToMainView)
+//        }
+//    }
     
     func passwordValidation() -> Bool {
         if password.count < 10 {
@@ -162,6 +178,8 @@ class LoginViewModel: BaseViewModel {
                     let emailCopy = self!.email
                     self?.clear()
                     self?.email = emailCopy
+                    self?.password = ""
+                    self?.isTextFieldSecures = true
                 default:
                     break
                 }
@@ -198,7 +216,7 @@ class LoginViewModel: BaseViewModel {
                     self?.showLoginSuccesfulToast = true
                     AppService.shared.loginState.value = .loggedIn
                     
-                    self?.navigation.replaceNavigationStack([MainView().asDestination()], animated: true)
+                    self?.navigation.replaceNavigationStack([MainView().preferredColorScheme(.dark).asDestination()], animated: true)
                     self?.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
                     
                     if self!.rememberMe {
@@ -226,8 +244,6 @@ class LoginViewModel: BaseViewModel {
     }
     
     func continueAsGuest() {
-        AppService.shared.loginState.value = .notLoggedIn
-        AppService.shared.syncUser()
         
         do {
             try Auth.auth().signOut()
@@ -235,8 +251,10 @@ class LoginViewModel: BaseViewModel {
             
         }
         UserDefaults.standard.removeObject(forKey: "userUID")
+        AppService.shared.loginState.value = .notLoggedIn
+        AppService.shared.syncUser()
         
-        navigation.replaceNavigationStack([MainView().asDestination()], animated: true)
+        navigation.replaceNavigationStack([MainView().preferredColorScheme(.dark).asDestination()], animated: true)
         
         clear()
     }
@@ -291,8 +309,8 @@ class LoginViewModel: BaseViewModel {
     
     func goToAuth() {
         clear()
-        navigation.push(AuthView(viewModel: self).asDestination(), animated: true)
-        self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
+        navigation.push(AuthView(viewModel: self).onDisappear().asDestination(), animated: true)
+        self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     func verifyAvailableEmail() {
@@ -318,5 +336,17 @@ class LoginViewModel: BaseViewModel {
     func sameCredentialsAsSnapshot() -> Bool {
         return snapshot.email == email && snapshot.password == password
     }
+    
+    func clearToasts() {
+     
+        showWrongPasswordToast = false
+        showTooManyRequestsToast = false
+        showEmailNotVerifiedToast = false
+        showLoginSuccesfulToast = false
+        showLoadingToast = false
+        showEmailALreadyExistsToast = false
+        showNoUserFoundToast = false
+    }
+    
     
 }

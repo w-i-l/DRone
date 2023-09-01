@@ -25,17 +25,28 @@ struct SettingView: View {
                             
                             Spacer()
                             
+                            
                             Button {
                                 viewModel.logOut()
                             } label: {
                                 ZStack {
                                     Color("red")
                                         .cornerRadius(12)
-                                        .frame(width: 150, height: 60)
+                                        .frame(height: 60)
                                     
-                                    Text("Sign out")
-                                        .foregroundColor(.white)
-                                        .font(.asket(size: 20))
+                                    HStack {
+                                        Text("Logout")
+                                            .foregroundColor(.white)
+                                            .font(.asket(size: 24))
+                                        
+        //                                        Image(systemName: "chevron.right")
+        //                                            .resizable()
+        //                                            .renderingMode(.template)
+        //                                            .foregroundColor(.white)
+        //                                            .frame(width: 10, height: 10)
+        //                                            .scaledToFit()
+                                    }
+                                    .padding(.vertical, 10)
                                 }
                             }
                             
@@ -53,19 +64,32 @@ struct SettingView: View {
                     
                     Spacer()
                     
-                    Button {
-                        navigation.replaceNavigationStack([LoginView(viewModel: LoginViewModel()).asDestination()], animated: true)
-                    } label: {
+                    Button (action: {
+                        
+//                        navigation.replaceNavigationStack([LoginView(isPresentedAsFirstScreen: false).asDestination()], animated: true)
+                        navigation.push(LoginView(isPresentedAsFirstScreen: false).ignoresSafeArea().asDestination(), animated: true)
+                        
+                    }, label: {
                         ZStack {
                             Color("accent.blue")
                                 .cornerRadius(12)
-                                .frame(width: 150, height: 60)
+                                .frame(height: 60)
                             
-                            Text("Login")
-                                .foregroundColor(.white)
-                                .font(.asket(size: 20))
+                            HStack {
+                                Text("Login")
+                                    .foregroundColor(.white)
+                                    .font(.asket(size: 24))
+                                
+//                                        Image(systemName: "chevron.right")
+//                                            .resizable()
+//                                            .renderingMode(.template)
+//                                            .foregroundColor(.white)
+//                                            .frame(width: 10, height: 10)
+//                                            .scaledToFit()
+                            }
+                            .padding(.vertical, 10)
                         }
-                    }
+                    })
                 }
                 .padding(.bottom, UIScreen.main.bounds.height / 11.3)
             }

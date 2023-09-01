@@ -107,9 +107,9 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
       print("Message ID from userNotificationCenter didReceive: \(messageID)")
     }
 
-      SceneDelegate.navigation.popToRoot(animated: false)
+      SceneDelegate.mainNavigation.popToRoot(animated: false)
       AppService.shared.selectedTab.value = .request
-      SceneDelegate.navigation.push(
+      SceneDelegate.mainNavigation.push(
         RequestDetailsView(viewModel: RequestDetailsViewModel(formModel: FirebaseService.shared.allFlightsRequests.value[FirebaseService.shared.indexOfModifiedFlightRequest.value])).asDestination(),
         animated: false
       )

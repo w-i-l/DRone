@@ -9,18 +9,20 @@ import SwiftUI
 import LottieSwiftUI
 
 struct MainView: View {
-    @EnvironmentObject private var navigation: Navigation
+     
+    private let navigation: Navigation = SceneDelegate.mainNavigation
+    
     @StateObject private var viewModel = MainViewModel()
     
+    static let homeNavigation = Navigation(root: HomeView(viewModel: HomeViewModel(isShowingAsChild: false)).asDestination())
+    
     var body: some View {
-            ZStack{
+            ZStack {
                 
                 
-                HomeView(
-                    viewModel: HomeViewModel(isShowingAsChild: false)                    
-                )
+                NavigationHostView(navigation: MainView.homeNavigation)
                 .opacity(viewModel.selectedTab == .home ? 1 : 0)
-                .environmentObject(navigation)
+                .ignoresSafeArea()
                 
                 
                 AllFlightRequestView(viewModel: RequestViewModel())

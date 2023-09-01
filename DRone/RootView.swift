@@ -12,11 +12,10 @@ import CoreLocation
 
 struct RootView: View {
     
-    @ObservedObject var navigation: Navigation
+    private let mainNavigation = SceneDelegate.mainNavigation
     
     var body: some View {
-        NavigationHostView(navigation: navigation)
-            .environmentObject(navigation)
+        NavigationHostView(navigation: mainNavigation)
             .ignoresSafeArea()
     }
 }

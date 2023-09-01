@@ -145,7 +145,6 @@ struct PersonalInfosRequest: View {
         .onTapGesture {
             dismissKeyboard()
         }
-        .ignoresSafeArea(.keyboard)
     }
 }
 
