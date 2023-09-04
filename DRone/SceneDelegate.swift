@@ -15,11 +15,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
         
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        Self.mainNavigation.setRoot(
-            LoginView()
-                .preferredColorScheme(.dark)
-                .asDestination(tag: "LoginView")
-            , animated: true)
+        
+
+        if let _ =  UserDefaults.standard.object(forKey: "userUID") {
+            Self.mainNavigation.setRoot(
+                MainView()
+                    .preferredColorScheme(.dark)
+                    .asDestination(),
+                animated: false
+            )
+        } else {
+            
+            Self.mainNavigation.setRoot(
+                AnyView(OnBoardView())
+                    .preferredColorScheme(.dark)
+                    .asDestination()
+                , animated: true)
+        }
+        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: RootView())

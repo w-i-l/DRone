@@ -40,6 +40,10 @@
 		17599F702A80FB7400501E0A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F6F2A80FB7400501E0A /* MainView.swift */; };
 		17599F742A80FC0900501E0A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F732A80FC0900501E0A /* MainViewModel.swift */; };
 		17599F762A80FD0600501E0A /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17599F752A80FD0600501E0A /* TabBarViewModel.swift */; };
+		176190692AA5DEAD00616AA5 /* OnBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176190682AA5DEAD00616AA5 /* OnBoardView.swift */; };
+		1761906B2AA5DED000616AA5 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1761906A2AA5DED000616AA5 /* SplashView.swift */; };
+		1761906D2AA5F6A200616AA5 /* OnBoardMockUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1761906C2AA5F6A200616AA5 /* OnBoardMockUpView.swift */; };
+		1761906F2AA5F8A400616AA5 /* OnBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1761906E2AA5F8A400616AA5 /* OnBoardViewModel.swift */; };
 		178263F72A94B0470008529B /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178263F62A94B0470008529B /* GoogleMapView.swift */; };
 		178263F92A94DD1C0008529B /* GoogleMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */; };
 		178530272A9DEE8C00EA18AC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178530262A9DEE8C00EA18AC /* LoginView.swift */; };
@@ -136,6 +140,10 @@
 		17599F6F2A80FB7400501E0A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		17599F732A80FC0900501E0A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		17599F752A80FD0600501E0A /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		176190682AA5DEAD00616AA5 /* OnBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardView.swift; sourceTree = "<group>"; };
+		1761906A2AA5DED000616AA5 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		1761906C2AA5F6A200616AA5 /* OnBoardMockUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardMockUpView.swift; sourceTree = "<group>"; };
+		1761906E2AA5F8A400616AA5 /* OnBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardViewModel.swift; sourceTree = "<group>"; };
 		178263F62A94B0470008529B /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		178263F82A94DD1C0008529B /* GoogleMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapViewModel.swift; sourceTree = "<group>"; };
 		178530262A9DEE8C00EA18AC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -327,6 +335,7 @@
 		17599F572A80DF4C00501E0A /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				176190672AA5D6ED00616AA5 /* OnBoardScreen */,
 				17A810562AA1BB7A004881C5 /* NoServicesModals */,
 				17E21D552A9F3F610092494C /* SettingsScreen */,
 				178530252A9DEE7700EA18AC /* LoginScreen */,
@@ -407,6 +416,17 @@
 				17599F732A80FC0900501E0A /* MainViewModel.swift */,
 			);
 			path = MainView;
+			sourceTree = "<group>";
+		};
+		176190672AA5D6ED00616AA5 /* OnBoardScreen */ = {
+			isa = PBXGroup;
+			children = (
+				176190682AA5DEAD00616AA5 /* OnBoardView.swift */,
+				1761906A2AA5DED000616AA5 /* SplashView.swift */,
+				1761906C2AA5F6A200616AA5 /* OnBoardMockUpView.swift */,
+				1761906E2AA5F8A400616AA5 /* OnBoardViewModel.swift */,
+			);
+			path = OnBoardScreen;
 			sourceTree = "<group>";
 		};
 		178263F52A94B0310008529B /* GoogleMapView */ = {
@@ -739,6 +759,7 @@
 				178263F92A94DD1C0008529B /* GoogleMapViewModel.swift in Sources */,
 				178689292A84D8F3002B908E /* CLLocation.swift in Sources */,
 				1729B1AF2A8E51660083785C /* BackButton.swift in Sources */,
+				1761906B2AA5DED000616AA5 /* SplashView.swift in Sources */,
 				172D63E62A8118D5006621F4 /* WeatherService.swift in Sources */,
 				17F796472A8283AE005E4135 /* CardShimmer.swift in Sources */,
 				172D63EB2A811EB0006621F4 /* LocationService.swift in Sources */,
@@ -757,6 +778,7 @@
 				17B916AD2A8CBB510024B82C /* DroneTypeModal.swift in Sources */,
 				17B916BC2A8CFE650024B82C /* ResponseScreen.swift in Sources */,
 				17E21D572A9F3F750092494C /* SettingsView.swift in Sources */,
+				176190692AA5DEAD00616AA5 /* OnBoardView.swift in Sources */,
 				17599F642A80E94D00501E0A /* HomeView.swift in Sources */,
 				1729B1AB2A8E29C40083785C /* AppDelegate.swift in Sources */,
 				17BDD68F2A9CF4FF009AC026 /* NetworkService.swift in Sources */,
@@ -771,6 +793,8 @@
 				172D63DF2A81137B006621F4 /* WeatherAPI.swift in Sources */,
 				17BDD6752A9CB26F009AC026 /* WeatherVerdictModal.swift in Sources */,
 				1729B1AD2A8E29F10083785C /* Navigation.swift in Sources */,
+				1761906D2AA5F6A200616AA5 /* OnBoardMockUpView.swift in Sources */,
+				1761906F2AA5F8A400616AA5 /* OnBoardViewModel.swift in Sources */,
 				179D6AD72A8393F0005700B8 /* LocationAPI.swift in Sources */,
 				179D6ADF2A83C75C005700B8 /* LoaderView.swift in Sources */,
 				1720150F2A9613AB008A6D3C /* NoFlyZoneInfoModal.swift in Sources */,

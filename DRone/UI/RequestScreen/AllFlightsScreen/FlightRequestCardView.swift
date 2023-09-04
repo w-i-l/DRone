@@ -169,7 +169,7 @@ struct FlightRequestCardView: View {
                                 if offset <= -100 && completedFlight == true {
                                     viewModel.deleteFlightRequest(ID: self.flightRequest.responseModel.ID)
                                     cardOffset = -UIScreen.main.bounds.width
-                                } else if completedFlight == false {
+                                } else if offset <= -100 && completedFlight == false {
                                     viewModel.shouldDeleteUpcomingFlight = .relative(0.5)
                                     viewModel.flightIDToBeDeleted = self.flightRequest.responseModel.ID
                                 }
