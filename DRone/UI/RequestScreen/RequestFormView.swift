@@ -43,7 +43,7 @@ struct RequestFormView: View {
                         VStack(spacing: 0){
                             if !viewModel.showNavigationLink {
                                 BackButton(
-                                    text: viewModel.screenIndex == 0 ? "Personal infos" : "Back",
+                                    text: viewModel.screenIndex == 0 ? "Request steps" : "Back",
                                     action:
                                             viewModel.screenIndex == 0 ? {dismiss()} : {AppService.shared.screenIndex.value -= 1}
                                 )

@@ -110,9 +110,12 @@ class LoginViewModel: BaseViewModel {
         } else if firstName.contains(where: { $0 == " " }) {
             firstNameError = "Enter only a first name!"
             return false
+        } else if onlyStringValidation(string: firstName) == false {
+            firstNameError = "Enter a valid first name!"
+            return false
         }
         
-        return onlyStringValidation(string: firstName)
+        return true
     }
     
     func lastNameValidation() -> Bool {
@@ -123,9 +126,12 @@ class LoginViewModel: BaseViewModel {
         } else if firstName.contains(where: { $0 == " " }) {
             lastNameError = "Enter only a last name!"
             return false
+        } else if onlyStringValidation(string: lastName) == false {
+            lastNameError = "Enter a valid first name!"
+            return false
         }
         
-        return onlyStringValidation(string: lastName)
+        return true
     }
     
     func cnpValidation() -> Bool {
@@ -172,7 +178,7 @@ class LoginViewModel: BaseViewModel {
                         email: self!.email
                     )
                     
-                    self?.navigation.popToRoot(animated: true)
+                    self?.navigation.popTo(tag: "LoginView", animated: true)
                     self?.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = false
                     
                     let emailCopy = self!.email

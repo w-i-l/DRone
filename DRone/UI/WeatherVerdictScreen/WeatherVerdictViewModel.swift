@@ -17,19 +17,19 @@ class WeatherVerdictViewModel: BaseViewModel {
     @Published var visibilityBottomSheetPosition: BottomSheetPosition = .hidden
     
     func displayPrecipitationBottomSheet() {
-        precipitationBottomSheetPosition = .relativeTop(0.4)
+        precipitationBottomSheetPosition = .relativeTop(0.5)
     }
     func displaySatellitesBottomSheet() {
-        satellitesBottomSheetPosition = .relativeTop(0.4)
+        satellitesBottomSheetPosition = .relativeTop(0.5)
     }
     func displayWindSpeedBottomSheet() {
-        windSpeedBottomSheetPosition = .relativeTop(0.4)
+        windSpeedBottomSheetPosition = .relativeTop(0.5)
     }
     func displayTemperatureBottomSheet() {
-        temperatureBottomSheetPosition = .relativeTop(0.4)
+        temperatureBottomSheetPosition = .relativeTop(0.5)
     }
     func displayVisibilityBottomSheet() {
-        visibilityBottomSheetPosition = .relativeTop(0.4)
+        visibilityBottomSheetPosition = .relativeTop(0.5)
     }
     
 }

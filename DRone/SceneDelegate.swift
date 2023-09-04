@@ -18,8 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Self.mainNavigation.setRoot(
             LoginView()
                 .preferredColorScheme(.dark)
-                .ignoresSafeArea()
-                .asDestination()
+                .asDestination(tag: "LoginView")
             , animated: true)
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

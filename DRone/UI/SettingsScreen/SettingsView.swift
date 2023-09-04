@@ -67,7 +67,7 @@ struct SettingView: View {
                     Button (action: {
                         
 //                        navigation.replaceNavigationStack([LoginView(isPresentedAsFirstScreen: false).asDestination()], animated: true)
-                        navigation.push(LoginView(isPresentedAsFirstScreen: false).ignoresSafeArea().asDestination(), animated: true)
+                        navigation.push(LoginView(isPresentedAsFirstScreen: false).asDestination(tag: "LoginView"), animated: true)
                         
                     }, label: {
                         ZStack {

@@ -28,7 +28,7 @@ struct LoginView: View {
             
             if !isPresentedAsFirstScreen {
                 BackButton(text: "Settings")
-                    .padding(.top, 30)
+//                    .padding(.top, 30)
             }
             
             GeometryReader { proxy in
@@ -218,7 +218,7 @@ struct LoginView: View {
                 
             }
         }
-        .padding(20)
+        .padding(.horizontal, 20)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()

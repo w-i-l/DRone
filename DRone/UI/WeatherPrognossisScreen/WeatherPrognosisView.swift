@@ -90,48 +90,41 @@ struct WeatherForecastView: View {
                                         Spacer()
                                         
                                         // weather icon
-                                        Link(
-                                            destination: viewModel.weatherURL,
-                                            label: {
-                                                ZStack {
-                                                    
-                                                    Color("accent.blue")
-                                                        .frame(width: UIScreen.main.bounds.width / 4,  height: UIScreen.main.bounds.width / 4)
-                                                        .cornerRadius(12)
-                                                    
-                                                    Image(systemName: viewModel.weaTherWeekForecast[dayOfWeek].weatherIcon)
-                                                        .resizable()
-                                                        .foregroundColor(.white)
-                                                        .frame(width: UIScreen.main.bounds.width / 8, height: UIScreen.main.bounds.width / 8)
-                                                        .scaledToFit()
-                                                }
-                                            })
+                            
+                                        ZStack {
+                                            
+                                            Color("accent.blue")
+                                                .frame(width: UIScreen.main.bounds.width / 4,  height: UIScreen.main.bounds.width / 4)
+                                                .cornerRadius(12)
+                                            
+                                            Image(systemName: viewModel.weaTherWeekForecast[dayOfWeek].weatherIcon)
+                                                .resizable()
+                                                .foregroundColor(.white)
+                                                .frame(width: UIScreen.main.bounds.width / 8, height: UIScreen.main.bounds.width / 8)
+                                                .scaledToFit()
+                                        }
                                         
                                         Spacer()
-                                        
-                                        Link(
-                                            destination: viewModel.weatherURL,
-                                            label: {
+
                                                 // wind speed
-                                                ZStack {
-                                                    
-                                                    Color("accent.blue")
-                                                        .frame(width: UIScreen.main.bounds.width / 4,  height: UIScreen.main.bounds.width / 4)
-                                                        .cornerRadius(12)
-                                                    
-                                                    VStack   {
-                                                        Image(systemName: "flag.fill")
-                                                            .resizable()
-                                                            .foregroundColor(.white)
-                                                            .frame(width: UIScreen.main.bounds.width / 12, height: UIScreen.main.bounds.width / 12)
-                                                            .scaledToFit()
-                                                        
-                                                        Text("\(viewModel.weaTherWeekForecast[dayOfWeek].windSpeed) km/h")
-                                                            .foregroundColor(.white)
-                                                            .font(.asket(size: 18))
-                                                    }
-                                                }
-                                            })
+                                        ZStack {
+                                            
+                                            Color("accent.blue")
+                                                .frame(width: UIScreen.main.bounds.width / 4,  height: UIScreen.main.bounds.width / 4)
+                                                .cornerRadius(12)
+                                            
+                                            VStack   {
+                                                Image(systemName: "flag.fill")
+                                                    .resizable()
+                                                    .foregroundColor(.white)
+                                                    .frame(width: UIScreen.main.bounds.width / 12, height: UIScreen.main.bounds.width / 12)
+                                                    .scaledToFit()
+                                                
+                                                Text("\(viewModel.weaTherWeekForecast[dayOfWeek].windSpeed) km/h")
+                                                    .foregroundColor(.white)
+                                                    .font(.asket(size: 18))
+                                            }
+                                        }
                                     }
                                 }
                             }

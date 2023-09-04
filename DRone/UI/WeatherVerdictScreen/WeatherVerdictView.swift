@@ -75,7 +75,8 @@ struct WeatherVerdictView: View {
     
     var body: some View {
         VStack {
-            BackButton(text: "Home")
+            
+            BackButton(text: viewModel.isShowingAsChild ? "Back" : "Home")
             
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -238,7 +239,7 @@ struct WeatherVerdictView: View {
         )
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.precipitationBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.4)]) {
+            switchablePositions: [.relativeTop(0.5)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[0],
             condition: (
                 viewModel.locationWeatherModel.precipitationProbability <= weatherVerdictModalModelArray[0].ideal,
@@ -253,7 +254,7 @@ struct WeatherVerdictView: View {
         
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.satellitesBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.4)]) {
+            switchablePositions: [.relativeTop(0.5)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[1],
             condition:
                 (
@@ -269,7 +270,7 @@ struct WeatherVerdictView: View {
         
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.temperatureBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.4)]) {
+            switchablePositions: [.relativeTop(0.5)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[2],
                 condition: (
                     viewModel.locationWeatherModel.temperature >= weatherVerdictModalModelArray[2].ideal,
@@ -284,7 +285,7 @@ struct WeatherVerdictView: View {
         
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.visibilityBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.4)]) {
+            switchablePositions: [.relativeTop(0.5)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[3],
             condition: (
                 viewModel.locationWeatherModel.visibility >= weatherVerdictModalModelArray[3].ideal,
@@ -299,7 +300,7 @@ struct WeatherVerdictView: View {
         
         .bottomSheet(
             bottomSheetPosition: $verdictViewModel.windSpeedBottomSheetPosition,
-            switchablePositions: [.relativeTop(0.4)]) {
+            switchablePositions: [.relativeTop(0.5)]) {
                 WeatherVerdictModal(weatherVerdictModalModel: self.weatherVerdictModalModelArray[4],
             condition: (
                 viewModel.locationWeatherModel.windSpeed <= weatherVerdictModalModelArray[4].ideal,
