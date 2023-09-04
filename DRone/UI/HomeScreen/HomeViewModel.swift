@@ -118,7 +118,7 @@ class HomeViewModel : BaseViewModel {
     
         self.fetchingState = .loading
         
-        if let addressToFetchLocation {
+        if let addressToFetchLocation, addressToFetchLocation != CLLocationCoordinate2D() {
             WeatherService.shared.getWeatherFor(location: addressToFetchLocation)
                 .zip(LocationService.shared.getAdressForLocation(location: addressToFetchLocation))
                 .receive(on: DispatchQueue.main)

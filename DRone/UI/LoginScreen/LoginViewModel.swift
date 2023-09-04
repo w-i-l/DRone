@@ -315,7 +315,11 @@ class LoginViewModel: BaseViewModel {
     
     func goToAuth() {
         clear()
-        navigation.push(AuthView(viewModel: self).onDisappear().asDestination(), animated: true)
+        navigation.push(
+            AuthView(viewModel: self)
+                .asDestination(),
+            animated: true
+        )
         self.navigation.navigationController.interactivePopGestureRecognizer?.isEnabled = true
     }
     

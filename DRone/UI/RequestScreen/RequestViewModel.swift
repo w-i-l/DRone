@@ -167,6 +167,9 @@ class RequestViewModel: BaseViewModel {
     @Published var allFlightsRequest = [RequestFormModel]()
     @Published var fetchingState: FetchingState = .loading
     
+    @Published var shouldDeleteUpcomingFlight: BottomSheetPosition = .hidden
+    @Published var flightIDToBeDeleted: String = ""
+    
     var upcomingFlights: [RequestFormModel] {
         allFlightsRequest.sorted(by: { $0.flightDate > $1.flightDate }).filter { $0.flightDate >= Date() }
     }
@@ -272,6 +275,10 @@ class RequestViewModel: BaseViewModel {
         }
         .store(in: &bag)
 
+    }
+    
+    func deleteFlightRequest(ID: String) {
+        FirebaseService.shared.deleteFlyRequest(ID: ID)
     }
     
     func clearData() {

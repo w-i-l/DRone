@@ -137,6 +137,15 @@ class GoogleMapsViewModel: BaseViewModel {
                 }
             }
             .store(in: &bag)
+        
+        AppService.shared.locationStatus
+            .receive(on: DispatchQueue.main)
+            .sink { value in
+                if value == .authorizedAlways || value == .authorizedWhenInUse {
+                    self.map.mapView.isMyLocationEnabled = true
+                }
+            }
+            .store(in: &bag)
 
     }
     

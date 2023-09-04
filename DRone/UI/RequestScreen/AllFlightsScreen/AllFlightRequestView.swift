@@ -106,7 +106,10 @@ struct AllFlightRequestView: View {
                                             ForEach(viewModel.upcomingFlights, id: \.self) { flightRequest in
                                                 VStack(spacing: 12) {
                                                     
-                                                    FlightRequestCardView(flightRequest: flightRequest)
+                                                    FlightRequestCardView(
+                                                        flightRequest: flightRequest,
+                                                        viewModel: viewModel
+                                                    )
                                                     
                                                     if flightRequest != viewModel.upcomingFlights.last! {
                                                         Color("accent.blue")
@@ -149,7 +152,10 @@ struct AllFlightRequestView: View {
                                         ForEach(viewModel.completedFlights, id: \.self) { flightRequest in
                                             VStack(spacing: 12) {
                                                 
-                                                FlightRequestCardView(flightRequest: flightRequest)
+                                                FlightRequestCardView(
+                                                    flightRequest: flightRequest,
+                                                    viewModel: viewModel
+                                                )
                                                 
                                                 if flightRequest != viewModel.completedFlights.last! {
                                                     Color("accent.blue")
@@ -220,6 +226,65 @@ struct AllFlightRequestView: View {
         .background(LinearGradient(colors: [Color("background.first"), Color("background.second")], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
         )
+        .bottomSheet(
+            bottomSheetPosition: $viewModel.shouldDeleteUpcomingFlight,
+            switchablePositions: [.relative(0.5)]) {
+                VStack {
+                    Text("You are about to delete an upcoming flight request!")
+                        .font(.asket(size: 20))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                    
+                    Text("By continuing you will also cancel it.")
+                        .font(.asket(size: 16))
+                        .foregroundColor(Color("subtitle.gray"))
+                    
+                    
+                    Button (action: {
+                        viewModel.deleteFlightRequest(ID: viewModel.flightIDToBeDeleted)
+                        viewModel.shouldDeleteUpcomingFlight = .hidden
+                    }, label: {
+                        ZStack {
+                            Color("accent.blue")
+                                .cornerRadius(12)
+                                .frame(height: 60)
+                            
+                            HStack {
+                                Text("Continue")
+                                    .foregroundColor(.white)
+                                    .font(.asket(size: 18))
+                            }
+                            .padding(.vertical, 10)
+                        }
+                    })
+                    .padding(.top, 10)
+                    
+                    Button (action: {
+                        viewModel.shouldDeleteUpcomingFlight = .hidden
+                    }, label: {
+                        ZStack {
+                            Color("red")
+                                .cornerRadius(12)
+                                .frame(height: 60)
+                            
+                            HStack {
+                                Text("Cancel")
+                                    .foregroundColor(Color("background.first"))
+                                    .font(.asket(size: 18))
+                            }
+                            .padding(.vertical, 10)
+                        }
+                    })
+
+                    
+                }
+                .padding(.horizontal, 20)
+            }
+            .customBackground(content: {
+                Color("background.first")
+            })
+            .enableSwipeToDismiss(true)
+            .enableTapToDismiss(true)
     }
 }
 

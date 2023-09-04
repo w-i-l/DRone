@@ -37,6 +37,26 @@ class FirebaseService: BaseViewModel {
         isCollectionListened = false
     }
     
+    func deleteFlyRequest(ID: String) {
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        db.collection("users").document(uid).collection("fly-requests").getDocuments { querrySnapshot, error in
+            guard error == nil else { print(error!.localizedDescription); return }
+            guard let querrySnapshot else { return }
+            
+            if let document = querrySnapshot.documents.first(where: { ($0["ID"] as! String) == ID }) {
+                self.db.collection("users").document(uid).collection("fly-requests").document(document.documentID).delete { error in
+                    if error == nil {
+                        self.allFlightsRequests.value.removeAll {
+                            $0.responseModel.ID == ID
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func listenToFlightRequest(user uid: String) {
        
         guard self.isCollectionListened == false else {
