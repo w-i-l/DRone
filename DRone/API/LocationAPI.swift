@@ -13,8 +13,8 @@ import SwiftyJSON
 
 class LocationAPI {
     
-    static let GOOGLE_PLACES_API_KEY = "AIzaSyDesWSxP-UzdOqphqUQTF42thMrm0nqyhI"
-    static let GOOGLE_GEO_API_KEY = "AIzaSyCYSsg0ZYwdf86R_7N3vW0O6A-D8y-4qpk"
+    static let GOOGLE_PLACES_API_KEY = ""
+    static let GOOGLE_GEO_API_KEY = ""
     
     static let shared = LocationAPI()
     

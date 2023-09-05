@@ -1,6 +1,6 @@
 <h1>DRone</h1>
 <h3>Your flight buddy, up in the sky</h3>
-<img src="./ReadMe - images/home.mock.png" height="400px">
+<img src="./ReadMe - images/home.view.png" height="400px">
 
 <br>
 <hr>
