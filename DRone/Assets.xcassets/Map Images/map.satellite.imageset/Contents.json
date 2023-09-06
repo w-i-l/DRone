@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "map.satellite.png",
+      "filename" : "map.satellite-min.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "map.satellite 1.png",
+      "filename" : "map.satellite 1-min.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "map.satellite 2.png",
+      "filename" : "map.satellite 2-min.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "drone image.png",
+      "filename" : "drone image-min.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "drone image 1.png",
+      "filename" : "drone image 1-min.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "drone image 2.png",
+      "filename" : "drone image 2-min.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
