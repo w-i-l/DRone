@@ -133,7 +133,8 @@ class WeatherAPI {
                         visibility: Int(json["hourly"]["visibility"][arrayIndex].intValue / 1000),
                         satellites: Int.random(in: 0..<20),
                         mainLocation: "",
-                        secondaryLocation: ""
+                        secondaryLocation: "",
+                        coordinates: location
                     )
                     promise(.success(weather))
                     
@@ -211,7 +212,8 @@ class WeatherAPI {
                             visibility: Int(json["hourly"]["visibility"][arrayIndex].intValue / 1000),
                             satellites: Int.random(in: 0..<20),
                             mainLocation: "",
-                            secondaryLocation: ""
+                            secondaryLocation: "",
+                            coordinates: location
                         )
                         
                         arrayToReturn.append(weather)

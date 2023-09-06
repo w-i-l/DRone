@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct LocationWeatherModel {
     let temperature: Int
@@ -19,4 +20,5 @@ struct LocationWeatherModel {
     let satellites: Int
     let mainLocation: String
     let secondaryLocation: String
+    let coordinates: CLLocationCoordinate2D
 }

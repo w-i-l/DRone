@@ -11,59 +11,76 @@ import CoreLocation
 
 class WeatherService: BaseViewModel {
     static let shared = WeatherService()
-    //    private lazy var cachedCurrentLocationWeather = ReactiveData { [weak self] in
-    //        WeatherAPI.shared.getWeatherFor(location: LocationService.shared.locationManager.location!.coordinate)
-    //            .eraseToAnyPublisher()
-    //    }
-    private var cachedCurrentLocationWeather: LocationWeatherModel?
-    private var lastTimeCached: Date? = nil
-    private var isFetching: Bool = false
+
+    private var singleLocationCachedCurrentLocationWeather: LocationWeatherModel?
+    private var singleLocationLastTimeCached: Date? = nil
+
+    private var weeklyForecastLocationsCached: [LocationWeatherModel]?
+    private var weeklyForecastLastTimeCached: Date?
     
     private override init() {}
     
     func getWeatherFor(location: CLLocationCoordinate2D) -> AnyPublisher<LocationWeatherModel, Error> {
         
         // if we cached in past
-        // and if it passes 1h mark
-        if lastTimeCached == nil ||
-            cachedCurrentLocationWeather == nil ||
-            Date().timeIntervalSince(lastTimeCached!) >= 1 {
-            
-            //caching
-            lastTimeCached = Date()
-            
-            if !isFetching {
+        // or if it passes 1h mark
+        // or we're asked for other location
+        if singleLocationLastTimeCached == nil ||
+            singleLocationCachedCurrentLocationWeather == nil ||
+            Date().timeIntervalSince(singleLocationLastTimeCached!) >= 3600 ||
+            singleLocationCachedCurrentLocationWeather?.coordinates != location
+        {
+              
+            return Future<LocationWeatherModel, Error> { [weak self] promise in
                 WeatherAPI.shared.getWeatherFor(location: location)
                     .sink(receiveCompletion: { _ in
                         
                     }, receiveValue: { value in
-                        self.cachedCurrentLocationWeather = value
+
+                        self?.singleLocationLastTimeCached = Date()
+                        self?.singleLocationCachedCurrentLocationWeather = value
+                        promise(.success(value))
                     })
-                    .store(in: &bag)
-                
-                isFetching.toggle()
+                    .store(in: &self!.bag)
             }
-            
-            // we fecth the data again
-            return WeatherAPI.shared.getWeatherFor(location: location)
-                .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
+
         } else {
             
-            //caching
-            lastTimeCached = Date()
-            
             return Future<LocationWeatherModel, Error> { [weak self] promise in
-                promise(.success((self?.cachedCurrentLocationWeather)!))
+                promise(.success((self?.singleLocationCachedCurrentLocationWeather)!))
             }
             .eraseToAnyPublisher()
         }
-        
-        //        cachedCurrentLocationWeather.getPublisher()
     }
     
     func getWeatherForLocationWeekForecast(location: CLLocationCoordinate2D) -> AnyPublisher<[LocationWeatherModel], Error> {
-        WeatherAPI.shared.getWeatherForLocationWeekForecast(location: location)
+        
+        if weeklyForecastLocationsCached == nil ||
+            weeklyForecastLastTimeCached == nil ||
+            Date().timeIntervalSince(weeklyForecastLastTimeCached!) >= 3600 ||
+            weeklyForecastLocationsCached!.first!.coordinates != location {
+            
+            return Future<[LocationWeatherModel], Error> { [weak self] promise in
+                
+                WeatherAPI.shared.getWeatherForLocationWeekForecast(location: location)
+                    .sink { _ in
+                        
+                    } receiveValue: { value in
+                        self?.weeklyForecastLastTimeCached = Date()
+                        self?.weeklyForecastLocationsCached = value
+                        promise(.success(value))
+                    }
+                    .store(in: &self!.bag)
+
+            }
+                .eraseToAnyPublisher()
+        } else {
+            return Future<[LocationWeatherModel], Error> { [weak self] promise in
+                promise(.success((self?.weeklyForecastLocationsCached)!))
+            }
             .eraseToAnyPublisher()
+        }
     }
     
     let precipitationProbabilityIdealCondition: Int = 10
