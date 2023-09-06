@@ -137,11 +137,11 @@ struct FlightInformation: View {
                                                 .scaledToFit()
                                             
                                             VStack(alignment: .leading, spacing: 4) {
-                                                Text(viewModel.flightLocation.mainAdress.limitLettersFormattedString(limit: 30))
+                                                Text(viewModel.flightLocation.mainAddress.limitLettersFormattedString(limit: 30))
                                                     .foregroundColor(.white)
                                                     .font(.asket(size: 16))
                                                 
-                                                Text(viewModel.flightLocation.secondaryAdress.limitLettersFormattedString(limit: 30))
+                                                Text(viewModel.flightLocation.secondaryAddress.limitLettersFormattedString(limit: 30))
                                                     .foregroundColor(Color("subtitle.gray"))
                                                     .font(.asket(size: 12))
                                                 

@@ -12,11 +12,11 @@ import Combine
 class ChangeLocationViewModel: BaseViewModel {
 
     var searchLocationViewModel: SearchingViewModel
-    var adressToFetchLocation: Binding<CLLocationCoordinate2D?>
+    var addressToFetchLocation: Binding<CLLocationCoordinate2D?>
     
-    init(adressToFetchLocation: Binding<CLLocationCoordinate2D?>) {
-        self.adressToFetchLocation = adressToFetchLocation
-        self.searchLocationViewModel = SearchingViewModel(adressToFetchLocation: adressToFetchLocation)
+    init(addressToFetchLocation: Binding<CLLocationCoordinate2D?>) {
+        self.addressToFetchLocation = addressToFetchLocation
+        self.searchLocationViewModel = SearchingViewModel(addressToFetchLocation: addressToFetchLocation)
     }
     
 }

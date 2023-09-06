@@ -92,7 +92,7 @@ class GoogleMapsViewModel: BaseViewModel {
     var map = GoogleMapsViewBridge()
     
     @Published var addressToFetchLocation: CLLocationCoordinate2D? = CLLocationCoordinate2D()
-    @Published var searchingViewModel: SearchingViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
+    @Published var searchingViewModel: SearchingViewModel = .init(addressToFetchLocation: .constant(CLLocationCoordinate2D()))
     @Published var bottomSheetPosition: BottomSheetPosition = .hidden
     
     private var numberOfCircles: Int = 30
@@ -112,7 +112,7 @@ class GoogleMapsViewModel: BaseViewModel {
         })
         
         searchingViewModel = .init(
-            adressToFetchLocation: addressToFetchLocationBinding,
+            addressToFetchLocation: addressToFetchLocationBinding,
             showCurrentLocation: false
         )
         
@@ -307,8 +307,8 @@ class GoogleMapsDelegate: NSObject, GMSMapViewDelegate {
             )
         }
         
-        if abs((parent?.searchingViewModel.adressToFetchLocation!.latitude)! - center.latitude) > 2 ||
-            abs((parent?.searchingViewModel.adressToFetchLocation!.longitude)! - center.longitude) > 3 {
+        if abs((parent?.searchingViewModel.addressToFetchLocation!.latitude)! - center.latitude) > 2 ||
+            abs((parent?.searchingViewModel.addressToFetchLocation!.longitude)! - center.longitude) > 3 {
             parent?.searchingViewModel.textSearched = ""
         }
     }

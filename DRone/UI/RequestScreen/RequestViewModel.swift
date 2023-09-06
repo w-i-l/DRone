@@ -89,7 +89,7 @@ class RequestViewModel: BaseViewModel {
     
     // additional
     @Published var birthdayDate: Date = .init()
-    @Published var currentLocation: (mainAdress: String, secondaryAdress: String) = ("", "")
+    @Published var currentLocation: (mainAddress: String, secondaryAddress: String) = ("", "")
     
     // drone
     @Published var serialNumber: String = ""
@@ -113,7 +113,7 @@ class RequestViewModel: BaseViewModel {
     // flight
     @Published var takeoffTime: Date = Date()
     @Published var landingTime: Date = Date()
-    @Published var flightLocation: (mainAdress: String, secondaryAdress: String) = ("", "")
+    @Published var flightLocation: (mainAddress: String, secondaryAddress: String) = ("", "")
     @Published var flightDate: Date = Date()
     
     // response sttaus
@@ -145,12 +145,12 @@ class RequestViewModel: BaseViewModel {
             set: { newValue in
                 
                 self.flightCoordinates.value = newValue
-                LocationService.shared.getAdressForLocation(location: newValue!)
+                LocationService.shared.getAddressForLocation(location: newValue!)
                     .receive(on: DispatchQueue.main)
                     .sink { _ in
                         
-                    } receiveValue: { newAdress in
-                        self.flightLocation = newAdress
+                    } receiveValue: { newAddress in
+                        self.flightLocation = newAddress
                     }
                     .store(in: &self.bag)
             }
@@ -180,7 +180,7 @@ class RequestViewModel: BaseViewModel {
     
     @Published var screenIndex = 0
 
-    var changeLocationViewModel: ChangeLocationViewModel = .init(adressToFetchLocation: .constant(nil))
+    var changeLocationViewModel: ChangeLocationViewModel = .init(addressToFetchLocation: .constant(nil))
     
     override init() {
         
@@ -190,7 +190,7 @@ class RequestViewModel: BaseViewModel {
         
         super.init()
         
-        changeLocationViewModel = ChangeLocationViewModel(adressToFetchLocation: self.flightCoordinatesBinding)
+        changeLocationViewModel = ChangeLocationViewModel(addressToFetchLocation: self.flightCoordinatesBinding)
 
         AppService.shared.screenIndex
             .receive(on: DispatchQueue.main)
@@ -199,7 +199,7 @@ class RequestViewModel: BaseViewModel {
             }
             .store(in: &bag)
         
-        LocationService.shared.getAdressForCurrentLocation()
+        LocationService.shared.getAddressForCurrentLocation()
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
@@ -253,7 +253,7 @@ class RequestViewModel: BaseViewModel {
             landingTime: landingTime,
             flightLocation: flightCoordinates.value!,
             flightDate: flightDate,
-            flightAdress: self.flightLocation,
+            flightAddress: self.flightLocation,
             responseModel: ResponseModel(
                 response: .pending,
                 ID: ID,
@@ -301,7 +301,7 @@ class RequestViewModel: BaseViewModel {
         
         showNavigationLink = false
         
-        LocationService.shared.getAdressForCurrentLocation()
+        LocationService.shared.getAddressForCurrentLocation()
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
@@ -369,7 +369,7 @@ class RequestViewModel: BaseViewModel {
             landingTime: landingTime,
             flightLocation: flightCoordinates.value!,
             flightDate: flightDate,
-            flightAdress: self.flightLocation,
+            flightAddress: self.flightLocation,
             responseModel: ResponseModel(
                 response: allFlightsRequest.last!.responseModel.response,
                 ID: allFlightsRequest.last!.responseModel.ID,

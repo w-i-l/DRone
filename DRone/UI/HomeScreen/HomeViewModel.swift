@@ -29,7 +29,7 @@ class HomeViewModel : BaseViewModel {
     )
     @Published var weatherVerdict: (String, [Color]) = ("", [])
     @Published var addressToFetchLocation: CLLocationCoordinate2D?
-    @Published var changeLocationViewModel: ChangeLocationViewModel = .init(adressToFetchLocation: .constant(CLLocationCoordinate2D()))
+    @Published var changeLocationViewModel: ChangeLocationViewModel = .init(addressToFetchLocation: .constant(CLLocationCoordinate2D()))
     
     @Published var shouldDisplayLocationToast: Bool = false
 
@@ -75,7 +75,7 @@ class HomeViewModel : BaseViewModel {
             self.addressToFetchLocation = newValue
         })
         
-        self.changeLocationViewModel = .init(adressToFetchLocation: addressToFetchLocationBinding)
+        self.changeLocationViewModel = .init(addressToFetchLocation: addressToFetchLocationBinding)
         
     }
     
@@ -112,7 +112,7 @@ class HomeViewModel : BaseViewModel {
             self.addressToFetchLocation = newValue
         })
         
-        self.changeLocationViewModel = .init(adressToFetchLocation: addressToFetchLocationBinding)
+        self.changeLocationViewModel = .init(addressToFetchLocation: addressToFetchLocationBinding)
     }
     
     func updateUI() {
@@ -121,7 +121,7 @@ class HomeViewModel : BaseViewModel {
         
         if let addressToFetchLocation, addressToFetchLocation != CLLocationCoordinate2D() {
             WeatherService.shared.getWeatherFor(location: addressToFetchLocation)
-                .zip(LocationService.shared.getAdressForLocation(location: addressToFetchLocation))
+                .zip(LocationService.shared.getAddressForLocation(location: addressToFetchLocation))
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
                     
@@ -138,8 +138,8 @@ class HomeViewModel : BaseViewModel {
                         windDirection: value.0.windDirection,
                         visibility: value.0.visibility,
                         satellites: value.0.satellites,
-                        mainLocation: value.1.mainAdress,
-                        secondaryLocation: value.1.secondaryAdress,
+                        mainLocation: value.1.mainAddress,
+                        secondaryLocation: value.1.secondaryAddress,
                         coordinates: addressToFetchLocation
                     )
                     self?.fetchingState = .loaded
@@ -152,7 +152,7 @@ class HomeViewModel : BaseViewModel {
         if let location = LocationService.shared.locationManager.location?.coordinate{
             
             WeatherService.shared.getWeatherFor(location: location)
-                .zip(LocationService.shared.getAdressForCurrentLocation())
+                .zip(LocationService.shared.getAddressForCurrentLocation())
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
                     
@@ -169,8 +169,8 @@ class HomeViewModel : BaseViewModel {
                         windDirection: value.0.windDirection,
                         visibility: value.0.visibility,
                         satellites: value.0.satellites,
-                        mainLocation: value.1.mainAdress,
-                        secondaryLocation: value.1.secondaryAdress,
+                        mainLocation: value.1.mainAddress,
+                        secondaryLocation: value.1.secondaryAddress,
                         coordinates: location
                     )
                     self?.fetchingState = .loaded

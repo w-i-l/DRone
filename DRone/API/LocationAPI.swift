@@ -20,9 +20,9 @@ class LocationAPI {
     
     private init() {}
     
-    func getAdressForCurrentLocation(location: CLLocationCoordinate2D) -> Future<(mainAdress: String, secondaryAdress: String), Error> {
+    func getAddressForCurrentLocation(location: CLLocationCoordinate2D) -> Future<(mainAddress: String, secondaryAddress: String), Error> {
         
-        Future<(mainAdress: String, secondaryAdress: String), Error> { promise in
+        Future<(mainAddress: String, secondaryAddress: String), Error> { promise in
             
             var urlComponents = URLComponents(string: "https://maps.googleapis.com/maps/api/geocode/json")
             urlComponents?.queryItems = [
@@ -42,8 +42,8 @@ class LocationAPI {
                     // no locations
                     guard !json["results"].arrayValue.isEmpty else {
                         promise(.success((
-                            mainAdress: "No location found",
-                            secondaryAdress: ""
+                            mainAddress: "No location found",
+                            secondaryAddress: ""
                         )))
                         return
                     }
@@ -51,33 +51,33 @@ class LocationAPI {
                     // for the plus_code regions
                     guard !json["results"][0]["types"].arrayValue.contains("plus_code") else {
                         promise(.success((
-                            mainAdress: json["results"][0]["formatted_address"].stringValue,
-                            secondaryAdress: ""
+                            mainAddress: json["results"][0]["formatted_address"].stringValue,
+                            secondaryAddress: ""
                         )))
                         return
                     }
                     
                     // get the first array
-                    let adressComponents = json["results"][0]["address_components"].arrayValue
+                    let addressComponents = json["results"][0]["address_components"].arrayValue
                     
                     
                     // fetching for the format City, COUNTRY
                     // we guard if can't find the city
-                    guard let cityName = adressComponents.first(where: { $0["types"].arrayValue.contains("administrative_area_level_1")})?["long_name"].stringValue else {
+                    guard let cityName = addressComponents.first(where: { $0["types"].arrayValue.contains("administrative_area_level_1")})?["long_name"].stringValue else {
                         promise(.success((
-                            mainAdress: adressComponents.first { $0["types"].arrayValue.contains("country")}!["short_name"].stringValue,
-                            secondaryAdress: "No street"
+                            mainAddress: addressComponents.first { $0["types"].arrayValue.contains("country")}!["short_name"].stringValue,
+                            secondaryAddress: "No street"
                         )))
                         return
                     }
-                    let shortCountry = adressComponents.first { $0["types"].arrayValue.contains("country")}!["short_name"].stringValue
+                    let shortCountry = addressComponents.first { $0["types"].arrayValue.contains("country")}!["short_name"].stringValue
                     
                     // for some location we can't fetch the street
-                    if let street = adressComponents.first(where: { $0["types"].arrayValue.contains("route")}){
-                        if let streetNumber = adressComponents.first(where: { $0["types"].arrayValue.contains("street_number")}){
+                    if let street = addressComponents.first(where: { $0["types"].arrayValue.contains("route")}){
+                        if let streetNumber = addressComponents.first(where: { $0["types"].arrayValue.contains("street_number")}){
                             promise(.success((
-                                mainAdress: cityName + ", " + shortCountry,
-                                secondaryAdress: street["long_name"].stringValue + ", " + streetNumber["long_name"].stringValue
+                                mainAddress: cityName + ", " + shortCountry,
+                                secondaryAddress: street["long_name"].stringValue + ", " + streetNumber["long_name"].stringValue
                             )))
                             return
                         }
@@ -85,8 +85,8 @@ class LocationAPI {
                     
                     // we return this when we can't fetch street
                     promise(.success((
-                        mainAdress: cityName + ", " + shortCountry,
-                        secondaryAdress: "No street"
+                        mainAddress: cityName + ", " + shortCountry,
+                        secondaryAddress: "No street"
                     )))
                     
                 } catch (let error) {
@@ -99,7 +99,7 @@ class LocationAPI {
         
     }
     
-    func getAdressIDForCurrentLocation(location: CLLocationCoordinate2D) -> Future<String, Error> {
+    func getAddressIDForCurrentLocation(location: CLLocationCoordinate2D) -> Future<String, Error> {
         
         Future<String, Error> { promise in
             

@@ -175,7 +175,7 @@ struct SearchingView: View {
 struct SearchingView_Previews: PreviewProvider {
     static var previews: some View {
         VStack{
-            SearchingView(viewModel: SearchingViewModel(adressToFetchLocation: .constant(CLLocationCoordinate2D())))
+            SearchingView(viewModel: SearchingViewModel(addressToFetchLocation: .constant(CLLocationCoordinate2D())))
                 .frame(height: 50)
                 .padding(20)
         }

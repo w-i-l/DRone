@@ -18,12 +18,12 @@ class SearchingViewModel: BaseViewModel {
     @Published var selectedAddress: (addressName: String, addressID: String) = ("", "")
     @Published var predictedLocations: [(addressName: String, addressID: String)] = []
     
-    @Binding var adressToFetchLocation: CLLocationCoordinate2D?
+    @Binding var addressToFetchLocation: CLLocationCoordinate2D?
     
     let showCurrentLocation: Bool
     
-    init(adressToFetchLocation: Binding<CLLocationCoordinate2D?>, showCurrentLocation: Bool = true) {
-        self._adressToFetchLocation = adressToFetchLocation
+    init(addressToFetchLocation: Binding<CLLocationCoordinate2D?>, showCurrentLocation: Bool = true) {
+        self._addressToFetchLocation = addressToFetchLocation
         self.showCurrentLocation = showCurrentLocation
     }
     
@@ -40,7 +40,7 @@ class SearchingViewModel: BaseViewModel {
     }
     
     func matchLocationWithCurrentLocation(location: CLLocationCoordinate2D) {
-        LocationService.shared.getAdressIDForCurrentLocation(location: location)
+        LocationService.shared.getAddressIDForCurrentLocation(location: location)
             .receive(on: DispatchQueue.main)
             .sink { _ in
                 
@@ -49,7 +49,7 @@ class SearchingViewModel: BaseViewModel {
                 self?.updateLocation()
             }
             .store(in: &bag)
-        adressToFetchLocation = location
+        addressToFetchLocation = location
     }
     
     func updateLocation() {
@@ -58,7 +58,7 @@ class SearchingViewModel: BaseViewModel {
             .sink { _ in
                 
             } receiveValue: { [weak self] value in
-                self?.adressToFetchLocation = value
+                self?.addressToFetchLocation = value
             }
             .store(in: &bag)
 

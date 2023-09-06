@@ -65,7 +65,7 @@ struct RequestDetailsView: View {
                     Flight Location Latitude: \(viewModel.formModel.flightLocation.latitude)
                     Flight Location Longitude: \(viewModel.formModel.flightLocation.longitude)
                     Flight Date: \(dateFormatter.string(from: viewModel.formModel.flightDate))
-                    Flight Address: \(viewModel.formModel.flightAdress.mainAdress)
+                    Flight Address: \(viewModel.formModel.flightAddress.mainAddress)
                     Response ID: \(viewModel.formModel.responseModel.ID)
                     Response: \(viewModel.formModel.responseModel.response.rawValue)
                     \(viewModel.formModel.responseModel.response == .rejected ? "Reason: \(viewModel.formModel.responseModel.reason)" : "" )
@@ -161,7 +161,7 @@ struct RequestDetailsView: View {
                         ("Flight Date", dateFormatter.string(from: viewModel.formModel.flightDate)),
                         ("Takeoff time", hourFormatter.string(from: viewModel.formModel.takeoffTime)),
                         ("Landing time", hourFormatter.string(from: viewModel.formModel.landingTime)),
-                        ("Location", "\(viewModel.formModel.flightAdress.secondaryAdress), \(viewModel.formModel.flightAdress.mainAdress)".limitLettersFormattedString(limit: 30))
+                        ("Location", "\(viewModel.formModel.flightAddress.secondaryAddress), \(viewModel.formModel.flightAddress.mainAddress)".limitLettersFormattedString(limit: 30))
                     ])
                 ], id: \.0) { item in
                     VStack(alignment: .leading, spacing: 0) {

@@ -76,11 +76,11 @@ struct AdditionalPersonalInformationView: View {
                                     .scaledToFit()
                                 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(viewModel.currentLocation.mainAdress.limitLettersFormattedString(limit: 30))
+                                    Text(viewModel.currentLocation.mainAddress.limitLettersFormattedString(limit: 30))
                                         .foregroundColor(.white)
                                         .font(.asket(size: 16))
                                     
-                                    Text(viewModel.currentLocation.secondaryAdress.limitLettersFormattedString(limit: 30))
+                                    Text(viewModel.currentLocation.secondaryAddress.limitLettersFormattedString(limit: 30))
                                         .foregroundColor(Color("subtitle.gray"))
                                         .font(.asket(size: 12))
                                     

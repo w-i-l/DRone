@@ -32,6 +32,6 @@ struct ChangeLocationView: View {
 
 struct ChangeLocationView_Previews: PreviewProvider {
     static var previews: some View {
-        ChangeLocationView(viewModel: ChangeLocationViewModel(adressToFetchLocation: .constant(CLLocationCoordinate2D())))
+        ChangeLocationView(viewModel: ChangeLocationViewModel(addressToFetchLocation: .constant(CLLocationCoordinate2D())))
     }
 }

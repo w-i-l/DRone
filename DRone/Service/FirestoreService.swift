@@ -181,9 +181,9 @@ class FirebaseService: BaseViewModel {
                             longitude: flightLocation.longitude
                         ),
                         flightDate: (data["flight-date"] as! Timestamp).dateValue(),
-                        flightAdress: (
-                            mainAdress: data["flight-adress-secondary"] as! String,
-                            secondaryAdress: data["flight-adress-main"] as! String
+                        flightAddress: (
+                            mainAddress: data["flight-address-secondary"] as! String,
+                            secondaryAddress: data["flight-address-main"] as! String
                         ),
                         responseModel: ResponseModel(
                             response: respose,
@@ -215,8 +215,8 @@ class FirebaseService: BaseViewModel {
             "response": formModel.responseModel.response.rawValue.lowercased(),
             "reason": formModel.responseModel.reason,
             "drone-type": formModel.droneType.associatedValues.type,
-            "flight-adress-main": formModel.flightAdress.mainAdress,
-            "flight-adress-secondary": formModel.flightAdress.secondaryAdress,
+            "flight-address-main": formModel.flightAddress.mainAddress,
+            "flight-address-secondary": formModel.flightAddress.secondaryAddress,
             "flight-date": Timestamp(date: formModel.flightDate),
             "flight-location": GeoPoint(
                 latitude: formModel.flightLocation.latitude,

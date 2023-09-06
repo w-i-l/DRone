@@ -95,7 +95,7 @@ struct FlightRequestCardView: View {
                         }
                         
                         VStack(alignment: .leading) {
-                            Text("\(flightRequest.flightAdress.secondaryAdress), \(flightRequest.flightAdress.mainAdress)".limitLettersFormattedString(limit: 30))
+                            Text("\(flightRequest.flightAddress.secondaryAddress), \(flightRequest.flightAddress.mainAddress)".limitLettersFormattedString(limit: 30))
                                 .foregroundColor(.white)
                                 .font(.asket(size: 16))
                                 .multilineTextAlignment(.leading)

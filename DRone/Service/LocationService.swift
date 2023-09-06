@@ -26,7 +26,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
     var bag = Set<AnyCancellable>()
     
     private var singleAddressCoordinatesCached: CLLocationCoordinate2D?
-    private var singleAddressLocationCached: (mainAdress: String, secondaryAdress: String)?
+    private var singleAddressLocationCached: (mainAddress: String, secondaryAddress: String)?
     
     private override init() {
         super.init()
@@ -40,7 +40,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
         
     }
     
-    func getAdressForCurrentLocation() -> AnyPublisher<(mainAdress: String, secondaryAdress: String), Error> {
+    func getAddressForCurrentLocation() -> AnyPublisher<(mainAddress: String, secondaryAddress: String), Error> {
         
         guard let location = locationManager.location?.coordinate else {
             print("No location! NO OUTPUT!")
@@ -48,17 +48,17 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
             
         }
         
-        return self.getAdressForLocation(location: location)
+        return self.getAddressForLocation(location: location)
         
     }
     
-    func getAdressForLocation(location: CLLocationCoordinate2D) -> AnyPublisher<(mainAdress: String, secondaryAdress: String), Error> {
+    func getAddressForLocation(location: CLLocationCoordinate2D) -> AnyPublisher<(mainAddress: String, secondaryAddress: String), Error> {
 
         if singleAddressCoordinatesCached == nil ||
             singleAddressCoordinatesCached != location {
             
-            return Future<(mainAdress: String, secondaryAdress: String), Error> { [weak self] promise in
-                LocationAPI.shared.getAdressForCurrentLocation(location: location)
+            return Future<(mainAddress: String, secondaryAddress: String), Error> { [weak self] promise in
+                LocationAPI.shared.getAddressForCurrentLocation(location: location)
                     .sink { _ in
                         
                     } receiveValue: { value in
@@ -70,7 +70,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
             }
             .eraseToAnyPublisher()
         } else {
-            return Future<(mainAdress: String, secondaryAdress: String), Error> { [weak self] promise in
+            return Future<(mainAddress: String, secondaryAddress: String), Error> { [weak self] promise in
                 promise(.success((self?.singleAddressLocationCached)!))
             }
             .eraseToAnyPublisher()
@@ -78,8 +78,8 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
         
     }
     
-    func getAdressIDForCurrentLocation(location: CLLocationCoordinate2D) -> AnyPublisher<String, Error> {
-        LocationAPI.shared.getAdressIDForCurrentLocation(location: location)
+    func getAddressIDForCurrentLocation(location: CLLocationCoordinate2D) -> AnyPublisher<String, Error> {
+        LocationAPI.shared.getAddressIDForCurrentLocation(location: location)
             .eraseToAnyPublisher()
     }
     

@@ -21,7 +21,7 @@ struct RequestFormModel {
     let landingTime: Date
     let flightLocation: CLLocationCoordinate2D
     var flightDate = Date()
-    var flightAdress: (mainAdress: String, secondaryAdress: String) = ("", "")
+    var flightAddress: (mainAddress: String, secondaryAddress: String) = ("", "")
     var responseModel: ResponseModel
 }
 
@@ -98,7 +98,7 @@ extension RequestFormModel {
             landingTime: self.landingTime ,
             flightLocation: self.flightLocation,
             flightDate: self.flightDate,
-            flightAdress: flightAdress,
+            flightAddress: flightAddress,
             responseModel: ResponseModel(
                 response: state,
                 ID: self.responseModel.ID,

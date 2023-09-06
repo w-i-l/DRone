@@ -95,7 +95,7 @@ class LoginViewModel: BaseViewModel {
     
     func emailValidation() -> Bool {
         if isValidEmail(email) == false {
-            emailError = "Please enter a valid email adress"
+            emailError = "Please enter a valid email address"
             return false
         }
         
