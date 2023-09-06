@@ -24,7 +24,8 @@ class HomeViewModel : BaseViewModel {
         visibility: 0,
         satellites: Int.random(in: 0..<20),
         mainLocation: "",
-        secondaryLocation: ""
+        secondaryLocation: "",
+        coordinates: CLLocationCoordinate2D()
     )
     @Published var weatherVerdict: (String, [Color]) = ("", [])
     @Published var addressToFetchLocation: CLLocationCoordinate2D?
@@ -138,7 +139,8 @@ class HomeViewModel : BaseViewModel {
                         visibility: value.0.visibility,
                         satellites: value.0.satellites,
                         mainLocation: value.1.mainAdress,
-                        secondaryLocation: value.1.secondaryAdress
+                        secondaryLocation: value.1.secondaryAdress,
+                        coordinates: addressToFetchLocation
                     )
                     self?.fetchingState = .loaded
                 }
@@ -168,7 +170,8 @@ class HomeViewModel : BaseViewModel {
                         visibility: value.0.visibility,
                         satellites: value.0.satellites,
                         mainLocation: value.1.mainAdress,
-                        secondaryLocation: value.1.secondaryAdress
+                        secondaryLocation: value.1.secondaryAdress,
+                        coordinates: location
                     )
                     self?.fetchingState = .loaded
                 }

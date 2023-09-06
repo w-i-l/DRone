@@ -23,6 +23,11 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
         )
     ))
     
+    var bag = Set<AnyCancellable>()
+    
+    private var singleAddressCoordinatesCached: CLLocationCoordinate2D?
+    private var singleAddressLocationCached: (mainAdress: String, secondaryAdress: String)?
+    
     private override init() {
         super.init()
         
@@ -43,20 +48,48 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
             
         }
         
-        return LocationAPI.shared.getAdressForCurrentLocation(location: location)
-            .eraseToAnyPublisher()
+        return self.getAdressForLocation(location: location)
         
     }
     
     func getAdressForLocation(location: CLLocationCoordinate2D) -> AnyPublisher<(mainAdress: String, secondaryAdress: String), Error> {
 
-        return LocationAPI.shared.getAdressForCurrentLocation(location: location)
+        if singleAddressCoordinatesCached == nil ||
+            singleAddressCoordinatesCached != location {
+            
+            return Future<(mainAdress: String, secondaryAdress: String), Error> { [weak self] promise in
+                LocationAPI.shared.getAdressForCurrentLocation(location: location)
+                    .sink { _ in
+                        
+                    } receiveValue: { value in
+                        self?.singleAddressCoordinatesCached = location
+                        self?.singleAddressLocationCached = value
+                        promise(.success(value))
+                    }
+                    .store(in: &self!.bag)
+            }
             .eraseToAnyPublisher()
+        } else {
+            return Future<(mainAdress: String, secondaryAdress: String), Error> { [weak self] promise in
+                promise(.success((self?.singleAddressLocationCached)!))
+            }
+            .eraseToAnyPublisher()
+        }
         
     }
     
     func getAdressIDForCurrentLocation(location: CLLocationCoordinate2D) -> AnyPublisher<String, Error> {
         LocationAPI.shared.getAdressIDForCurrentLocation(location: location)
+            .eraseToAnyPublisher()
+    }
+    
+    func getCoordinatesFromLocationID(ID: String) -> AnyPublisher<CLLocationCoordinate2D, Error> {
+        LocationAPI.shared.getCoordinatesFromLocationID(ID: ID)
+            .eraseToAnyPublisher()
+    }
+    
+    func getPredictionsFromInput(textSearched: String) -> AnyPublisher<[(addressName: String, addressID: String)], Error> {
+        LocationAPI.shared.getPredictionsFromInput(textSearched: textSearched)
             .eraseToAnyPublisher()
     }
     
@@ -98,15 +131,4 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject {
             )
         }
     }
-    
-    func getPredictionsFromInput(textSearched: String) -> AnyPublisher<[(addressName: String, addressID: String)], Error> {
-        LocationAPI.shared.getPredictionsFromInput(textSearched: textSearched)
-            .eraseToAnyPublisher()
-    }
-    
-    func getCoordinatesFromLocationID(ID: String) -> AnyPublisher<CLLocationCoordinate2D, Error> {
-        LocationAPI.shared.getCoordinatesFromLocationID(ID: ID)
-            .eraseToAnyPublisher()
-    }
-    
 }

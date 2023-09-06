@@ -69,7 +69,8 @@ class WeatherForecastViewModel: BaseViewModel {
                             visibility: item.visibility,
                             satellites: item.satellites,
                             mainLocation: self!.daysOfWeek[$0],
-                            secondaryLocation: ""
+                            secondaryLocation: "",
+                            coordinates: location
                         )
                     }
                 self?.fetchingState = .loaded
